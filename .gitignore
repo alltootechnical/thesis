@@ -1,0 +1,12 @@
+# Vim swap files
+*.swp
+
+# LaTeX temp files
+*.aux
+*.log
+*.synctex.gz
+*.toc
+*.out
+*.bbl
+*.blg
+*.idx
