@@ -268,7 +268,7 @@ In other words, a trapdoor function is a one-way function which can be easily ev
 }
 
 @incollection{sen_homomorphic_2013,
-	title = {Homomorphic {Encryption} — {Theory} and {Application}},
+	title = {Homomorphic {Encryption}: {Theory} and {Application}},
 	isbn = {978-953-51-1176-4},
 	url = {http://www.intechopen.com/books/theory-and-practice-of-cryptography-and-network-security-protocols-and-technologies/homomorphic-encryption-theory-and-application},
 	language = {en},
@@ -281,4 +281,26 @@ In other words, a trapdoor function is a one-way function which can be easily ev
 	year = {2013},
 	doi = {10.5772/56687},
 	file = {Sen - 2013 - Homomorphic Encryption — Theory and Application.pdf:C\:\\Users\\Brian\\Zotero\\storage\\E765UU5J\\Sen - 2013 - Homomorphic Encryption — Theory and Application.pdf:application/pdf}
+}
+
+@inproceedings{gentry_fully_2009,
+	address = {New York, NY, USA},
+	series = {{STOC} '09},
+	title = {Fully {Homomorphic} {Encryption} {Using} {Ideal} {Lattices}},
+	isbn = {978-1-60558-506-2},
+	url = {http://doi.acm.org/10.1145/1536414.1536440},
+	doi = {10.1145/1536414.1536440},
+	abstract = {We propose a fully homomorphic encryption scheme -- i.e., a scheme that allows one to evaluate circuits over encrypted data without being able to decrypt. Our solution comes in three steps. First, we provide a general result -- that, to construct an encryption scheme that permits evaluation of arbitrary circuits, it suffices to construct an encryption scheme that can evaluate (slightly augmented versions of) its own decryption circuit; we call a scheme that can evaluate its (augmented) decryption circuit bootstrappable.
+
+Next, we describe a public key encryption scheme using ideal lattices that is almost bootstrappable.
+
+Lattice-based cryptosystems typically have decryption algorithms with low circuit complexity, often dominated by an inner product computation that is in NC1. Also, ideal lattices provide both additive and multiplicative homomorphisms (modulo a public-key ideal in a polynomial ring that is represented as a lattice), as needed to evaluate general circuits.
+
+Unfortunately, our initial scheme is not quite bootstrappable -- i.e., the depth that the scheme can correctly evaluate can be logarithmic in the lattice dimension, just like the depth of the decryption circuit, but the latter is greater than the former. In the final step, we show how to modify the scheme to reduce the depth of the decryption circuit, and thereby obtain a bootstrappable encryption scheme, without reducing the depth that the scheme can evaluate. Abstractly, we accomplish this by enabling the encrypter to start the decryption process, leaving less work for the decrypter, much like the server leaves less work for the decrypter in a server-aided cryptosystem.},
+	booktitle = {Proceedings of the {Forty}-first {Annual} {ACM} {Symposium} on {Theory} of {Computing}},
+	publisher = {ACM Press},
+	author = {Gentry, Craig},
+	year = {2009},
+	keywords = {fully homomorphic encryption},
+	pages = {169--178}
 }
