@@ -11,5 +11,6 @@
 *.blg
 *.idx
 *.lof
+*.lot
 *.fls
 *.fdb_latexmk
