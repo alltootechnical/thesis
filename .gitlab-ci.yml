@@ -1,0 +1,7 @@
+compile_pdf:
+    image: aergus/latex
+    script:
+        - make
+    artifacts:
+        paths:
+            - FinalManuscript_orig.pdf
