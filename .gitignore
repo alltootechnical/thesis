@@ -10,3 +10,6 @@
 *.bbl
 *.blg
 *.idx
+*.lof
+*.fls
+*.fdb_latexmk
