@@ -2,8 +2,8 @@ LATEX=latexmk
 LFLAGS=-pdf -pdflatex="pdflatex -interaction=nonstopmode -file-line-error" -bibtex -f
 BIB=bibtex
 
-#TEXFILE=thesis
-TEXFILE=FinalManuscript_orig
+TEXFILE=thesis
+#TEXFILE=FinalManuscript_orig
 BIBFILE=thesis_refs.bib
 
 all: thesis

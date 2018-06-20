@@ -1,28 +1,75 @@
-\documentclass[oneside,12pt]{discsugthesis}
+\documentclass[oneside,12pt]{discsthesis}
+\usepackage{graphicx}
+%\usepackage{multirow}
+%\usepackage{fancyvrb}
+\usepackage{tabularx}
+%\usepackage[titletoc]{appendix} 
+\usepackage{subcaption}
+%%\usepackage{rotating}
+%%\usepackage{pdfpages}
+%\usepackage{lscape}
+%\usepackage{adjustbox}
+%\usepackage{longtable}
+%\usepackage{url}
+
+\title{FinalManuscript_DISCS_UG}
+\author{acalab.imagegroup }
+\date{March 1, 2018}
 
 \begin{document}
-\ThesisAuthor{John H. Smith}
-\ThesisTitle{THIS IS A THESIS TITLE}
-\ThesisDegree{Computer Science}
-\ThesisDefenseYear{2019}
-\DefenseDate{}
-\DepartmentHead{The Head}
-\SchoolHead{The Head 2}
-\FirstThesisAdviser{Ayun}
-\FirstPanelMember{}
-\SecondPanelMember{}
-\ThirdPanelMember{}
 
-\FrontMatter
-\ThesisTitlePage
-\input{parts/abstract.tex}
+\ThesisAuthor{Aldrich Ellis C. Asuncion \\ Brian Christopher T. Guadalupe}
+\ThesisTitle{RANDOM THESIS TITLE}
+\ThesisArea{Computer Science}
+\ThesisDefenseYear{2019}
+\DefenseDate{March 1, 2018}
+ 
+
+\DepartmentHead{ANDREI D. CORONEL, Ph.D.}
+\SchoolHead{EVANGELINE P. BAUTISTA, Ph.D.}
+\ThesisAdviser{MARLENE M. DE LEON, Ph.D.}
+\FirstPanelMember{MA. MERCEDES T. RODRIGO, Ph.D.}
+\SecondPanelMember{JOHN PAUL C. VERGARA, Ph.D.}
+\ThirdPanelMember{MA. REGINA JUSTINA E. ESTUAR, Ph.D.}
+
+\ThesisStyle{MS}{Draft}{-10pt}{15pt}
+  
+%% Choices for the 1st argument: MS, PhD
+%% Choices for the 2nd argument: Final, FinalWithCorner, Draft
+
+%\FrontMatter
+\input{parts/00_abstract}
+\input{parts/00_acknowledgements}
 \tableofcontents
 \listoffigures
+\listoftables
 
-\MainMatter
-\input{parts/chapter1.tex}
+%\MainMatter
+\input{parts/01_introduction_00}
+\input{parts/02_relatedliterature}
+\input{parts/03_methodology}
+\input{parts/04_results}
+%\input{parts/04_results_pub}
+%\input{parts/04_results_unpub}
+\input{parts/05_conclusions}
+%\input{parts/06_recommendations}
 
-\bibliography{thesis_refs}
+% BIBLIOGRAPHY
+%\bibliographystyle{abbrv}
+%\bibliography{sigproc}
+%\input{parts/09_references}
+%\BackMatter
 \bibliographystyle{acm}
+\bibliography{thesis_refs}
 \nocite{*}
+
+%\addappheadtotoc
+%\begin{appendices}
+%\chapter{INTRODUCTION AND SAMPLE GUIDE QUESTIONS}
+%\input{parts/08_appendices_a_introductionandsampleguidequestions}
+%\chapter{THESIS FORMATTING GUIDELINES}
+%\input{parts/08_appendices_b_thesisformattingguidelines}
+%\end{appendices}
+
+
 \end{document}
