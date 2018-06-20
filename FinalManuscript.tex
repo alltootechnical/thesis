@@ -1,0 +1,77 @@
+\documentclass[oneside,12pt]{discsthesis}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{fancyvrb}
+\usepackage{tabularx}
+\usepackage[titletoc]{appendix} 
+\usepackage{subcaption}
+\usepackage{amsmath}
+%\usepackage{rotating}
+%\usepackage{pdfpages}
+\usepackage{lscape}
+\usepackage{adjustbox}
+\usepackage{longtable}
+\usepackage{url}
+
+\title{FinalManuscript_DISCS_UG}
+\author{acalab.imagegroup }
+\date{March 1, 2018}
+
+\begin{document}
+
+\ThesisAuthor{Chiara Maria Angelique S. Ledesma \\ Maria Mikaela E. Jazmines \\ Leo Isaiah P. Yap III}
+\ThesisTitle{RANDOM THESIS TITLE}
+\ThesisArea{Computer Science}
+\ThesisDefenseYear{March, 2019}
+\DefenseDate{March 1, 2018}
+ 
+\DepartmentHead{ANDREI D. CORONEL, Ph.D.}
+\SchoolHead{EVANGELINE P. BAUTISTA, Ph.D.}
+\ThesisAdviser{MARLENE M. DE LEON, Ph.D.}
+\FirstPanelMember{MA. MERCEDES T. RODRIGO, Ph.D.}
+\SecondPanelMember{JOHN PAUL C. VERGARA, Ph.D.}
+\ThirdPanelMember{MA. REGINA JUSTINA E. ESTUAR, Ph.D.}
+
+\ThesisStyle{MS}{Draft}{-10pt}{15pt}
+  
+%% Choices for the 1st argument: MS, PhD
+%% Choices for the 2nd argument: Final, FinalWithCorner, Draft
+
+\FrontMatter
+%\input{acknowledgments}
+\input{00_abstract}
+\input{00_acknowledgements}
+\tableofcontents
+\listoffigures
+\listoftables
+
+\MainMatter
+\input{00_abstract}
+
+\input{01_introduction_00}
+\input{02_relatedliterature}
+\input{03_methodology}
+\input{04_results}
+%\input{04_results_pub}
+%\input{04_results_unpub}
+\input{05_conclusions}
+%\input{06_recommendations}
+
+% BIBLIOGRAPHY
+%\bibliographystyle{abbrv}
+%\bibliography{sigproc}
+%\input{09_references}
+\BackMatter
+\bibliographystyle{plain}
+\bibliography{Proposal_Manuscript}
+
+%\addappheadtotoc
+\begin{appendices}
+\chapter{INTRODUCTION AND SAMPLE GUIDE QUESTIONS}
+\input{08_appendices_a_introductionandsampleguidequestions}
+\chapter{THESIS FORMATTING GUIDELINES}
+\input{08_appendices_b_thesisformattingguidelines}
+\end{appendices}
+
+
+\end{document}

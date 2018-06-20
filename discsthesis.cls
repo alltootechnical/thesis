@@ -1,23 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%
-%%% File: discsugthesis.cls, version 4.0, June 6, 2006
-%%% Modifications for DISCS thesis format for undergrads are copyrighted (c) 2006 by
-%%% Reena Estuar.  All rights reserved.
-%%%
-%%% Please note that most of the instructions below are not valid for this
-%%% version.  We will probably need to integrate our changes with the Math
-%%% department's template in the future.
-%%% New in this version:
-%%% 
-%%% Removal of Recommendations Page
-%%% Change of Degree to Bachelor of Science
-%%% Change of Graduate Faculty to Loyola Schools Faculty
-%%%
-%%% Original copyright notice follows.
-%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%
-%%% File: discsthesis.cls, version 3.0, October 2, 2005
+%%% File: discsthesis.cls, version 3.1, October 10, 2005
 %%% Modifications for DISCS thesis format are copyrighted (c) 2005 by
 %%% Andrei Coronel, Reena Estuar, JP Vergara and Eric Vidal.  All rights
 %%% reserved.
@@ -90,7 +73,7 @@
 %%%
 %%% ALL command names used in this file that are used to format the
 %%% thesis begin with "thesis" (e.g., \ThesisAuthor).  All of these
-%%% commands can be changed by the user using 
+%%% commands can be changed by the user using
 %%%
 %%% \ThesisAuthor{Felix P. Muga II}
 %%%
@@ -104,8 +87,7 @@
 %%% \DateOfDefense %% Date of Thesis Defense; defaults to "10 May 2005".
 %%% \ThesisDefenseYear %% Year of graduation; defaults to "2005".
 %%% \ThesisTitle       %% Full title of dissertation; defaults to "Title".
-%%% \FirstThesisAdviser     %% Name of thesis adviser; defaults to "Adviser"
-%%% \SecondThesisAdviser    %% Name of thesis adviser; defaults to "Adviser"
+%%% \ThesisAdviser     %% Name of thesis adviser; defaults to "Adviser"
 %%% \ThesisType        %% Type of thesis; defaults to "M.S.".
 %%% \ThesisDegree      %% Degree for which thesis is submitted; defaults to
 %%%                    %% "Master of Science".
@@ -115,7 +97,7 @@
 %%% \SchoolHeadPosition      %% Actual Position, either Dean or Acting Dean
 %%% \DepartmentName   %% Name of the Department or Program
 %%% \DepartmentHead   %% Chair of the Department or Program
-%%% \DepartmentHeadPosition     %% Actual Position, either Chair, Acting Chair, or 
+%%% \DepartmentHeadPosition     %% Actual Position, either Chair, Acting Chair, or
 %%% \FirstPanelMember  %% Thesis/Dissertation Panel Member
 %%% \SecondPanelMember %% Thesis/Dissertation Panel Member
 %%% \ThirdPanelMember  %% Thesis/Dissertation Panel Member
@@ -164,10 +146,17 @@
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \NeedsTeXFormat{LaTeX2e}
- \ProvidesClass{discsugthesis}[2005/05/11 v3.0 Ateneo de Manila University Thesis Class]
- \RequirePackage{amsmath,fancyhdr,newcent,curves,epic,eepic,floatfig,epsfig,
-                 amssymb,calc,multicol,array,rotating,tabularx,pifont,fancybox,
-                 ulem,enumerate,latexsym,ifthen} 
+ \ProvidesClass{discsthesis}[2005/05/11 v3.0 Ateneo de Manila University DISCS Thesis Class]
+% \RequirePackage{amsmath,fancyhdr,newcent,curves,epic,eepic,floatfig,epsfig,
+ %                amssymb,calc,multicol,array,rotating,tabularx,pifont,fancybox,
+  %               ulem,enumerate,latexsym,ifthen}
+\RequirePackage[a4paper]{geometry}
+\RequirePackage{amsmath,newcent,epsfig,
+                amssymb,calc,multicol,array,tabularx,pifont,
+                enumerate,latexsym,ifthen}
+% packages declared in the tex file should be here
+%\RequirePackage{graphicx,multirow,fancyvrb,tabularx,subcaption,lscape,adjustbox,longtable,url}
+%\RequirePackage[titletoc]{appendix}
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newif\if@thdraft{}
  \newcommand\droptnm{final}
@@ -178,11 +167,13 @@
  \ProcessOptions \LoadClass[12pt]{report}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \typeout{*************************************************************}
- \typeout{** ADMU Thesis Class File, version 3.0, 11 May 2005}
- \typeout{** Written by Felix Pozon Muga II }
- \typeout{**            Mathematics Department }
- \typeout{**            Ateneo de Manila University }
- \typeout{**            fmuga@ateneo.edu}
+ \typeout{** ADMU DISCS Thesis Class File, version 3.1, 10 Oct 2005}
+ \typeout{** Originally Written by Felix Pozon Muga II }
+ \typeout{**                       Mathematics Department }
+ \typeout{**                       Ateneo de Manila University }
+ \typeout{**                       fmuga@ateneo.edu}
+ \typeout{** With modifications by Andrei Coronel, Reena Estuar, }
+ \typeout{**                       JP Vergara and Eric Vidal }
  \typeout{*************************************************************}
 
 
@@ -196,12 +187,13 @@
  \setlength{\topmargin}{0.0in}
  \setlength{\headheight}{12pt}
  \setlength{\headsep}{20pt}
- \setlength{\parindent}{12mm}
+ \setlength{\parindent}{0.5truein}
  \setlength\headheight{.375truein}%{.
  \setlength\marginparwidth{0pt}
  \setlength\marginparsep{0pt}
  %\setlength\footskip{.375truein}
  \setlength\footskip{0truein}
+ \newcommand{\@parindent}{1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Set up default values.
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -225,10 +217,6 @@
   \newcommand{\DepartmentHeadPosition}[1]{\gdef\@DepartmentHeadPosition{#1}}
   \newcommand{\@ThesisAdviser}{1}
   \newcommand{\ThesisAdviser}[1]{\gdef\@ThesisAdviser{#1}}
-  \newcommand{\@FirstThesisAdviser}{1}
-  \newcommand{\FirstThesisAdviser}[1]{\gdef\@FirstThesisAdviser{#1}}
-  \newcommand{\@SecondThesisAdviser}{1}
-  \newcommand{\SecondThesisAdviser}[1]{\gdef\@SecondThesisAdviser{#1}}
   \newcommand{\@SchoolHead}{1}
   \newcommand{\SchoolHead}[1]{\gdef\@SchoolHead{#1}}
   \newcommand{\@SchoolHeadPosition}{1}
@@ -251,13 +239,13 @@
   \newcommand{\ThesisArea}[1]{\gdef\@ThesisArea{#1}}
   \newcommand{\@ThesisType}{1}
   \newcommand{\ThesisType}[1]{\gdef\@ThesisType{#1}}
-  
+
  % \ThesisTitle{My paper}
-  \ThesisType{Thesis}
- % \ThesisAuthor{Mr. Author} 
-  \ThesisDefenseYear{2005}
+ % \ThesisType{Thesis}
+ % \ThesisAuthor{Mr. Author}
+  \ThesisDefenseYear{2008}
  % \CompreDatesPassed{March 9,16 and 23, 2001}
-  \DepartmentHead{MA. MERCEDES T. RODRIGO, Ph.D.}
+  \DepartmentHead{JOHN PAUL C. VERGARA, Ph.D.}
  % \DepartmentName{Department of Information Systems and Computer Science}
   \DepartmentHeadPosition{Chair}
  % \ThesisAdviser{FELIX P. MUGA II, Ph.D.}
@@ -271,7 +259,7 @@
  % \FourthPanelMember{JUMELA P. SARMIENTO, Ph.D.}
  % \ThesisGrade{ABOVE AVERAGE}
  % \DefenseDate{May 12, 2005}
-  \ThesisDegree{Bachelor of Science}
+  \ThesisDegree{Master of Science}
   \ThesisArea{Computer Science}
   \UniversityName{Ateneo de Manila University}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -281,24 +269,22 @@
   \newcommand{\MainMatter}{%
   \setlength{\baselineskip}{30pt}
   \addtocontents{toc}{\protect\contentsline{part}{\normalsize\textnormal{CHAPTER}}{}}
-  }  
-  
-  % Gretch: Commented this out because we have no appendix
-  %\newcommand{\BackMatter}{%
-  %\setlength{\baselineskip}{30pt}
-  %\addtocontents{toc}{\protect\contentsline{part}{\normalsize\textnormal{APPENDIX}}{}}
-  %}  
-  
+  }
+  \newcommand{\BackMatter}{%
+  \setlength{\baselineskip}{30pt}
+  \addtocontents{toc}{\vspace*{-15pt}\protect\contentsline{part}{\normalsize\textnormal{APPENDIX}}{}}
+  }
+
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %% Adjusting the Column of MS Approval Sheet
   \newcommand{\@FirstColumnAdjust}{1}
   \newcommand{\FirstColumnAdjust}[1]{\gdef\@FirstColumnAdjust{#1}}
   \newcommand{\@SecondColumnAdjust}{1}
   \newcommand{\SecondColumnAdjust}[1]{\gdef\@SecondColumnAdjust{#1}}
-  
+
   \FirstColumnAdjust{\hspace*{0pt}}
   \SecondColumnAdjust{\hspace*{0pt}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Set up other commands.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newcommand{\@defaultbaselinestretch}{1.8}
@@ -309,18 +295,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Command for masters theses.
 %%% \phdthesis is provided for symmetry.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newcommand{\ThesisStyle}[4]{
   \FirstColumnAdjust{\hspace*{#3}}
   \SecondColumnAdjust{\hspace*{#4}}
    \ifthenelse{\equal{#1}{MS}}
               {\ThesisType{Thesis}
-               \ThesisDegree{Bachelor of Science}
+               \ThesisDegree{Master of Science}
                \newcommand{\ThesisDegreeAbbreviation}{M.S.}
-               \ifthenelse{\equal{#2}{FinalWithCorner}}   
+               \ifthenelse{\equal{#2}{FinalWithCorner}}
                           {\ThesisTitlePage
-                        %   \ThesisRecommendationPage
-                           \MSThesisAcceptancePage}                           
+                           \ThesisRecommendationPage
+                           \MSThesisAcceptancePage}
                           {\ifthenelse{\equal{#2}{Final}}
                                       {\thesisdraft
                                       \ThesisTitlePage
@@ -328,12 +314,12 @@
                                       \MSThesisAcceptancePage
                                       }
                                      {\thesisdraft
-                                      \ThesisTitlePage}} 
+                                      \ThesisTitlePage}}
               }
               {\ThesisType{Dissertation}
                \ThesisDegree{Doctor of Philosophy}
                \newcommand{\ThesisDegreeAbbreviation}{Ph.D.}
-              \ifthenelse{\equal{#2}{FinalWithCorner}}   
+              \ifthenelse{\equal{#2}{FinalWithCorner}}
               {\ThesisTitlePage
                \ThesisRecommendationPage
                \PhDThesisAcceptancePage}
@@ -344,7 +330,7 @@
                                       \PhDThesisAcceptancePage
                                       }
                                      {\thesisdraft
-                                      \ThesisTitlePage}} 
+                                      \ThesisTitlePage}}
               }
     }%%%%
 
@@ -375,14 +361,23 @@
    \newcommand{\cornerhead}{
    \setlength{\unitlength}{1mm}
    \begin{picture}(0,0)
-         \linethickness{2pt}
-         \put(-7,7){\path(0,-4)(0,0)(4,0)}
-         \put(158,7){\path(-4,0)(0,0)(0,-4)}
-         \put(158,-222){\path(-4,0)(0,0)(0,4)}
-         \put(-7,-222){\path(0,4)(0,0)(4,0)}
+         % ericvids - fixed so that corners work with pdflatex
+         \linethickness{0.3pt}
+         \put(-7,7){\line(0,-1){4}}
+         \put(-7,7){\line(1,0){4}}
+         %{\path(0,-4)(0,0)(4,0)}
+         \put(158,7){\line(-1,0){4}}
+         \put(158,7){\line(0,-1){4}}
+         %{\path(-4,0)(0,0)(0,-4)}
+         \put(158,-222){\line(-1,0){4}}
+         \put(158,-222){\line(0,1){4}}
+         %{\path(-4,0)(0,0)(0,4)}
+         \put(-7,-222){\line(0,1){4}}
+         \put(-7,-222){\line(1,0){4}}
+         %{\path(0,4)(0,0)(4,0)}
        \end{picture}
  }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newcommand{\@chaptertype}{\chaptername}
  \newcommand{\@appendix}{0}
  %%%
@@ -425,11 +420,26 @@
 %%% Command to generate title page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newcommand{\ThesisTitlePage}{
+         
    \pagestyle{empty}
   \begin{center}
+  
+%  ATENEO DE MANILA UNIVERSITY
+  
+%  \vspace{1cm}
+  
   \textbf{\@ThesisTitle}
-
+%  \vspace{1cm}
   \vfill
+  
+%     A THESIS
+%     
+%   PRESENTED TO  THE
+
+%   DEPARTMENT OF INFORMATION SYSTEMS AND COMPUTER SCIENCE
+
+%   ATENEO DE MANILA UNIVERSITY
+
   A \@ThesisType
 
  Presented to the
@@ -438,21 +448,32 @@
 
  and Computer Science
 
-
  \@UniversityName
- 
- \vfill
- In Partial Fulfillment
 
- of the Requirements for the Degree
+%\vspace{1cm}
+\vfill
+In Partial Fulfillment 
 
- Bachelor of Science in \@ThesisDegree
+of the Requirements for the Degree% of 
 
+Bachelor of Science in Computer Science
 
+ %\vspace{1cm}
  \vfill
  by
 
+%[Full Names of Authors, Format: <FirstName> <M.I.> <LastName>]
+
+%[e.g. Chiara Maria Angelique S. Ledesma
+% 
+% Maria Mikaela E. Jazmines
+% 
+% Leo Isaiah P. Yap III ]
  \@ThesisAuthor
+ 
+ %\vspace{1cm}
+
+% QUEZON CITY, PHILIPPINES
 
  \@ThesisDefenseYear
 \end{center}
@@ -467,36 +488,38 @@
   \setlength{\topmargin}{0.0in}
    \pagestyle{\@textpagestyle}
 
- The \lowercase\expandafter{\@ThesisType} entitled:
- 
-  
+ \paragraph{}The \lowercase\expandafter{\@ThesisType} entitled:
+
+
  \begin{center}
- \textbf{\@ThesisTitle}
+ {\@ThesisTitle}
  \end{center}
-  
+
  \noindent submitted by \@ThesisAuthor{} has been examined and is recommended for Oral Defense.
- 
+
   \vfill
   \begin{center}
-  \begin{tabular}{ll}
-   \@FirstColumnAdjust\shortstack{
+  \begin{tabular}{lcl}
+   \@FirstColumnAdjust\shortstack[]{
     \underline{\phantom{\@DepartmentHead}}\\[0pt]
     \@DepartmentHead\\[0pt]
     \@DepartmentHeadPosition\\[0pt]}
-   & 
-   \@SecondColumnAdjust\shortstack{
+   &
+   \quad
+   &
+   \@SecondColumnAdjust\shortstack[]{
     \underline{\phantom{\@ThesisAdviser}}\\[0pt]
     \@ThesisAdviser\\[0pt]
     Adviser\\[0pt]
     % \phantom{ADviser}
     }
- \end{tabular}    
+ \end{tabular}
  \end{center}
- 
+
  \vfill
- 
+
   \begin{center}
- \begin{tabular}{c}  
+ \begin{tabular}{c}
  \shortstack{
  \underline{\phantom{\@SchoolHead}}\\[0pt]
  \@SchoolHead\\[0pt]
@@ -504,7 +527,7 @@
  \@SchoolName}
  \end{tabular}
  \end{center}
- 
+
  \strut\vfill
  %\noindent Comprehensive Examinations Passed \@CompreDatesPassed{}.
 
@@ -515,53 +538,51 @@
 %%% Command to generate acceptance page for MS and MST.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newcommand{\MSThesisAcceptancePage}{
-    \setlength{\topmargin}{0.0in}
-    \pagestyle{\@textpagestyle}
-   The Faculty of the Loyola Schools of 
-   \@UniversityName{}\\ 
+    \setlength{\topmargin}{-0.2in}
+      \pagestyle{\@textpagestyle}
+   The Faculty of the Graduate School of
+   \@UniversityName{}\\
    \mbox{accepts} the \lowercase\expandafter{\@ThesisType} entitled:
-  
+
   \vfill
   \begin{center}
   \textbf{\@ThesisTitle}
   \end{center}
-  
+
    \vfill
   \noindent submitted by \@ThesisAuthor{} in partial fulfillment of the requirements for the Degree of
   \@ThesisDegree{} in \@ThesisArea.
-  
-  \vfill
+
+  \vfill  
   \begin{center}
-  \begin{tabular}{ll}
+  \begin{tabular}{lll}
    \@FirstColumnAdjust\shortstack{
     \underline{\phantom{\@FirstPanelMember}}\\[0pt]
     \@FirstPanelMember\\[0pt]
     Member}
-   & 
+   &
    \@SecondColumnAdjust\shortstack{
-    \underline{\phantom{\@SecondPanelMember}}\\[0pt]
+    \underline{\phantom{\@ThesisAdviser}}\\[0pt]
     \@SecondPanelMember\\[0pt]
     Member}\\[28pt]
 
-  
   \@FirstColumnAdjust\shortstack{
-   \underline{\phantom{\@FirstThesisAdviser}}\\[0pt]
-   \@FirstThesisAdviser\\[0pt]
-   Adviser 
+   \underline{\phantom{\@FirstPanelMember}}\\[0pt]
+   \@ThirdPanelMember\\[0pt]
+   Member
    }
    &
    \@SecondColumnAdjust\shortstack{
-   \underline{\phantom{\@SecondThesisAdviser}}\\[0pt]
-   \@SecondThesisAdviser\\[0pt]
+   \underline{\phantom{\@ThesisAdviser}}\\[0pt]
+   \@ThesisAdviser\\[0pt]
    Adviser
    }
-   
   \end{tabular}
   \end{center}
-   
+
  \vfill
    \begin{center}
-  \begin{tabular}{c} 
+  \begin{tabular}{c}
   \shortstack{
   \underline{\phantom{\@SchoolHead}}\\[0pt]
  \@SchoolHead\\[0pt]
@@ -569,7 +590,7 @@
  \@SchoolName}
  \end{tabular}
  \end{center}
-  
+
  \vfill
  \noindent Grade: \textbf{\@ThesisGrade}\\[8pt]
   Date:$\;\;\;$ \@DefenseDate
@@ -580,39 +601,42 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newcommand{\PhDThesisAcceptancePage}{
     \setlength{\topmargin}{0.0in}
-    The Faculty of the Graduate School of \@UniversityName\\ 
-    accepts the 
+    The Faculty of the Graduate School of \@UniversityName\\
+    accepts the
     \lowercase\expandafter{\@ThesisType} entitled:
-  
+
   \begin{center}
-  \textbf{\@ThesisTitle}
+  {\@ThesisTitle}
   \end{center}
-  
+
    \vfill
   \noindent submitted by \@ThesisAuthor{} in partial fulfillment of the requirements for the Degree of
   \@ThesisDegree{} in \@ThesisArea.
-  
   \vfill
-  
+
    \vfill
-   \begin{center}   
-  \begin{tabular}{ll}
+   \begin{center}
+  \begin{tabular}{lcl}
    \@FirstColumnAdjust\shortstack{
     \underline{\phantom{\@FirstPanelMember}}\\[0pt]
     \@FirstPanelMember\\[0pt]
     Member}
-   & 
+   &
+     \quad \;\:
+   &
    \@SecondColumnAdjust\shortstack{
     \underline{\phantom{\@SecondPanelMember}}\\[0pt]
     \@SecondPanelMember\\[0pt]
     Member}\\[28pt]
-  
+
   \@FirstColumnAdjust\shortstack{
    \underline{\phantom{\@ThirdPanelMember}}\\[0pt]
    \@ThirdPanelMember\\[0pt]
-   Member 
+   Member
    }
-   & 
+   &
+     \quad 
+   &
    \@SecondColumnAdjust\shortstack{
    \underline{\phantom{\@FourthPanelMember}}\\[0pt]
    \@FourthPanelMember\\[0pt]
@@ -620,29 +644,18 @@
    }
   \end{tabular}
   \end{center}
-  
+
   \vfill
   \begin{center}
   \begin{tabular}{c}
   \shortstack{
-  \underline{\phantom{\@FirstThesisAdviser}}\\[0pt]
-   \@FirstThesisAdviser\\[0pt]
+  \underline{\phantom{\@ThesisAdviser}}\\[0pt]
+   \@ThesisAdviser\\[0pt]
    Adviser
    }
-  \end{tabular}  
+  \end{tabular}
  \end{center}
 
-\vfill
-  \begin{center}
-  \begin{tabular}{c}
-  \shortstack{
-  \underline{\phantom{\@SecondThesisAdviser}}\\[0pt]
-   \@SecondThesisAdviser\\[0pt]
-   Adviser
-   }
-  \end{tabular}  
- \end{center}
- 
  \vfill
   \begin{center}
   \begin{tabular}{c}
@@ -654,9 +667,9 @@
  }
  \end{tabular}
  \end{center}
-  
+
  \vfill
- \noindent Grade: \textbf{\@ThesisGrade}\\[8pt]
+ \noindent Grade: {\@ThesisGrade}\\[8pt]
  Date:$\;\;\;$ \@DefenseDate
  \newpage}
 %%%
@@ -666,11 +679,12 @@
  \newenvironment{acknowledgments}{
   \pagestyle{\@textpagestyle}
 
-  \vspace*{-1.5cm}
+  \vspace*{0cm}
      \centerline{\textbf{ACKNOWLEDGMENTS}}
      \addcontentsline{toc}{chapter}{ACKNOWLEDGMENTS}
-     
+     %\renewcommand{\parindent}{20pt}
      \vspace*{18pt}
+     \renewcommand{\@parindent}{20truein}
      \renewcommand{\@defaultbaselinestretch}{2}
      \begin{spacing}{\@defaultbaselinestretch}}
      %\begin{spacing}{\singlespace}}
@@ -679,7 +693,7 @@
      %\raggedright
      %\@ThesisAuthor, \ThesisDegreeAbbreviation
      %\strut\vfill
-     $\;$
+     %$\;$
       \newpage}
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -688,10 +702,10 @@
  \newenvironment{thesisabstract}{
   \pagestyle{\@textpagestyle}
 
-  \vspace*{-1.5cm}
+  \vspace*{-0.5cm}
      \centerline{\textbf{ABSTRACT}}
      \addcontentsline{toc}{chapter}{ABSTRACT}
-     
+
      \vspace*{18pt}
      \renewcommand{\@defaultbaselinestretch}{2}
      \begin{spacing}{\@defaultbaselinestretch}}
@@ -701,12 +715,12 @@
      %\raggedright
      %\@ThesisAuthor, \ThesisDegreeAbbreviation
      %\strut\vfill
-     $\;$
+     %$\;$
       \newpage}
 %    \setlength{\topmargin}{0.0in}
 %    \pagestyle{empty}
 %     \addcontentsline{toc}{chapter}{Abstract}
-%     \begin{center}      
+%     \begin{center}
 %       \setlength{\unitlength}{1mm}
 %       \begin{spacing}{2}
 %       \vspace*{-1.5cm}
@@ -720,11 +734,10 @@
 %       \@UniversityName \\
 %       \@DefenseDate\\[6mm]
 %       \end{spacing}
-%       \lowercase{\@ThesisType} Adviser: \@FirstThesisAdviser \\
-%       \lowercase{\@ThesisType} Adviser: \@SecondThesisAdviser \\
+%       \lowercase{\@ThesisType} Adviser: \@ThesisAdviser \\
 %     \end{center}
 %     \vspace{3mm}
-%     \renewcommand{\@defaultbaselinestretch}{1}       
+%     \renewcommand{\@defaultbaselinestretch}{1}
 %     \begin{spacing}{\@defaultbaselinestretch} \noindent}
 %     {\end{spacing} \newpage}
 %%%
@@ -738,7 +751,7 @@
 %%%
  \renewcommand\tableofcontents{%
    \setlength{\baselineskip}{18pt}
-    \renewcommand{\contentsname}{TABLE OF CONTENTS} 
+    \renewcommand{\contentsname}{TABLE OF CONTENTS}
     \setlength{\topmargin}{0.0in}
     \pagestyle{\@textpagestyle}
     \if@twocolumn
@@ -746,7 +759,7 @@
     \else
       \@restonecolfalse
     \fi
-    \vspace*{-1.5cm}
+    \vspace*{0cm}
     \centerline{\textbf{\contentsname}}
     \vspace*{18pt}
     %\chapter*{
@@ -764,7 +777,7 @@
 %% Environment for List of Tables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%
- \renewcommand{\listtablename}{LIST OF TABLES} 
+ \renewcommand{\listtablename}{LIST OF TABLES}
  \renewcommand\listoftables{%
     \setlength{\topmargin}{0.0in}
     \pagestyle{\@textpagestyle}
@@ -792,7 +805,7 @@
 %% Environment for List of Figures
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%
- \renewcommand{\listfigurename}{LIST OF FIGURES} 
+ \renewcommand{\listfigurename}{LIST OF FIGURES}
  \renewcommand\listoffigures{%
     \setlength{\topmargin}{0.0in}
     \pagestyle{\@textpagestyle}
@@ -801,7 +814,7 @@
     \else
       \@restonecolfalse
     \fi
-    \vspace*{-1.5cm}
+    \vspace*{-1.5cm} % originally +1.5cm
     \centerline{\textbf{\listfigurename}}
     \vspace*{18pt}
     %\chapter*{
@@ -821,9 +834,12 @@
 %%% Redefining the chapter command
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \renewcommand{\thechapter}{\arabic{chapter}}
+  
  \newcommand{\@chapteralignment}{\centering}
- \renewcommand{\chapter}{ 
+ \renewcommand{\chapter}{
    \setlength{\topmargin}{0.0in}
+     \renewcommand{\@defaultbaselinestretch}{2}
+     \begin{spacing}{\@defaultbaselinestretch}
    \clearpage
    \ifnum\@appendix=1
       \renewcommand{\@chapapp}{\appendixname}%
@@ -831,11 +847,11 @@
       \renewcommand{\@chaptertype}{\appendixname}
    \else
       \renewcommand{\@chaptertype}{\chaptername}
-   \fi   
+   \fi
    \thispagestyle{empty}%
    \global\@topnum\z@
    \@afterindentfalse
-   \secdef\@chapter\@schapter  
+   \secdef\@chapter\@schapter
    }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \renewcommand\appendix{\par
@@ -898,11 +914,11 @@
 \renewcommand*\l@subsection{\@dottedtocline{2}{6.55em}{3.2em}}
 \renewcommand*\l@subsubsection{\@dottedtocline{3}{10.75em}{4.1em}}
 % \renewcommand{\numberline}[1]{\hb@xt@\@tempdima{#1\hfil}}
- \def\@chapter[#1]#2{ \ifnum \c@secnumdepth >\m@ne                      
+ \def\@chapter[#1]#2{ \ifnum \c@secnumdepth >\m@ne
                       \refstepcounter{chapter}%
-                      \typeout{\@chapapp\space\thechapter.}%                       
-                      %{\@chaptertype{} \protect\numberline{\thechapter}#1}%                      
-                      %{\protect\numberline{\thechapter} #1}%                      
+                      \typeout{\@chapapp\space\thechapter.}%
+                      %{\@chaptertype{} \protect\numberline{\thechapter}#1}%
+                      %{\protect\numberline{\thechapter} #1}%
                       \ifnum\@appendix=0
                         \addcontentsline{toc}{chapter}{\hspace*{30pt}\protect\numberline{\Roman{chapter}} #1}%
                       \else
@@ -926,7 +942,7 @@
                     \else
                       \@makechapterhead{#2}%
                       \@afterheading
-                    \fi                    
+                    \fi
                     }
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -968,13 +984,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newdimen\bibindent
  \setlength\bibindent{1.5em}
+ \pagestyle{\@textpagestyle}
  \renewenvironment{thebibliography}[1]
      { \chapter*{
-        \vspace*{-2.0cm}
+        \vspace*{0.0cm}
         %{\Large\bibname}
         {\MakeUppercase\bibname}
         \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}}%
       \setlength{\baselineskip}{30pt}
+      
       \addcontentsline{toc}{chapter}{\MakeUppercase\bibname}
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
@@ -1160,26 +1178,26 @@
                                      {1.5ex \@plus .2ex}%
                                      {\normalfont\bfseries}}
  \newcounter{tbl}
- \setcounter{tbl}{0}                                     
+ \setcounter{tbl}{0}
   \newcounter{fig}[chapter]
- \setcounter{fig}{0}   
+ \setcounter{fig}{0}
 \renewcommand{\thefigure}
-   {\thechapter.\@arabic\c@figure}  
+   {\thechapter.\@arabic\c@figure}
  \renewcommand{\thetable}
-   {\thechapter.\@arabic\c@table}  
+   {\thechapter.\@arabic\c@table}
 \renewenvironment{figure}
                {\refstepcounter{fig}\@float{figure}}
                {\end@float}
 \renewenvironment{figure*}
                {\refstepcounter{fig}\@dblfloat{figure}}
-               {\end@dblfloat}     
+               {\end@dblfloat}
  \renewenvironment{table}
                {\refstepcounter{tbl}\@float{table}}
                {\end@float}
 \renewenvironment{table*}
                {\refstepcounter{tbl}\@dblfloat{table}}
-               {\end@dblfloat}         
- \long\def\@makecaption#1#2{%    
+               {\end@dblfloat}
+ \long\def\@makecaption#1#2{%
   \vskip\abovecaptionskip
   \sbox\@tempboxa{#1. #2}%
   \ifdim \wd\@tempboxa >\hsize

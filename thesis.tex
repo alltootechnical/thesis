@@ -1,0 +1,28 @@
+\documentclass[oneside,12pt]{discsugthesis}
+
+\begin{document}
+\ThesisAuthor{John H. Smith}
+\ThesisTitle{THIS IS A THESIS TITLE}
+\ThesisDegree{Computer Science}
+\ThesisDefenseYear{2019}
+\DefenseDate{}
+\DepartmentHead{The Head}
+\SchoolHead{The Head 2}
+\FirstThesisAdviser{Ayun}
+\FirstPanelMember{}
+\SecondPanelMember{}
+\ThirdPanelMember{}
+
+\FrontMatter
+\ThesisTitlePage
+\input{parts/abstract.tex}
+\tableofcontents
+\listoffigures
+
+\MainMatter
+\input{parts/chapter1.tex}
+
+\bibliography{thesis_refs}
+\bibliographystyle{acm}
+\nocite{*}
+\end{document}
