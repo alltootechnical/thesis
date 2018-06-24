@@ -1,9 +1,38 @@
 \section{Scope and Limitations of the Study}
+Our study will be limited in terms of the cryptosystems to be tested, the image processing operations we will implement, and the statistical tests we will use to gauge the security of the cryptosystems. Below is a listing of the scope of the study.
 
-Our study will be limited in terms of the cryptosystems to be tested, the image processing operations we will implement, and the statistical tests we will use to
+\subsection{Scope of Testing}
+We will implement and test the following algorithms:
+\begin{enumerate}
+	\item A modified version of the Paillier cryptosystem \cite{} which supports floating-point operations, used in \textit{CryptoImg} \cite{ziad_cryptoimg:_2016}.
+	\item An elliptic curve and ElGamal based cryptosystem for homomorphic encryption presented by Li, et. al. \cite{li_elliptic_2012}.
+	\item A fully homomorphic encryption scheme proposed by Smart and Vercauteren \cite{hutchison_fully_2010}, which is an improvement on the original lattice-based cryptosystem presented by Gentry \cite{gentry_fully_2009}.
+\end{enumerate}
+We will implement and test the following categories of image manipulation operations:
+\begin{enumerate}
+	\item Image adjustment
+	\item Operations based on convolution
+	\item Morphological operations
+\end{enumerate}
+We will adopt the benchmark for evaluating the performance and security of image encryption schemes presented by Ahmed, et. al \cite{ahmed_benchmark_2016}. The presented benchmark reflects many tests used in other literature \cite{ahmad_efficiency_2012, wu_npcr_2011}.
+\begin{enumerate}
+	\item Tests for preservation of image quality after encryption and decryption.
+	\begin{enumerate}
+		\item Mean Squared Error (MSE)
+		\item Peak Signal to Noise Ratio (PSNR)
+		\item Structural Similarity Index (SSIM)
+		\item Noise tolerance
+	\end{enumerate}
+	\item Tests for cryptographic security
+	\begin{enumerate}
+		\item Information entropy analysis
+		\item Correlation coefficient analysis
+		\item Differential analysis (number of pixel change rate (NPCR), universeral average change intensity (UACI))
+	\end{enumerate}
+\end{enumerate}
+A detailed overview of the above will be provided in the review of related literature.
 
-\textbf{insert listing here}
+Images used for testing will be obtained from a database maintained by Gonzalez, et. al. \cite{gonzalez_image_nodate}. Both greyscale and color images will be used.
 
-Our library for OpenCV will be implmented in the C++ programming language.
-
-\textbf{insert other limitations here}
+\subsection{Scope of Implementation}
+Our library for OpenCV will be implemented in the C++ programming language.
