@@ -1,7 +1,6 @@
 \section{Scope and Limitations of the Study}
 Our study will be limited in terms of the cryptosystems to be tested, the image processing operations we will implement, and the statistical tests we will use to gauge the security of the cryptosystems. Below is a listing of the scope of the study.
 
-\subsection{Scope of Testing}
 We will implement and test the following algorithms:
 \begin{enumerate}
 	\item A modified version of the Paillier cryptosystem \cite{stern_public-key_1999} which supports floating-point operations, used in \textit{CryptoImg} \cite{ziad_cryptoimg:_2016}.
@@ -30,9 +29,9 @@ We will adopt the benchmark for evaluating the performance and security of image
 		\item Differential analysis (number of pixel change rate (NPCR), universeral average change intensity (UACI))
 	\end{enumerate}
 \end{enumerate}
-A detailed overview of the above will be provided in the review of related literature.
+A detailed overview of the above will be provided in the methodology.
+Both greyscale and color images will be used in the study.
 
-Images used for testing will be obtained from a database maintained by Gonzalez, et. al. \cite{gonzalez_image_nodate}. Both greyscale and color images will be used.
-
-\subsection{Scope of Implementation}
 Our library for OpenCV will be implemented in the C++ programming language.
+
+The study will only consider the operation of the stated algorithms in a single computer. Client-server models for secure data storage and operation will not be considered.
