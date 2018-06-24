@@ -13,7 +13,7 @@ Aside from implementing the homomorphic encryption and decryption algorithms, we
 	\item[Intensity transformations.] Transformations on the intensities of each of the pixels on an image. The following definitions hold for all $x,y$.
 	\begin{enumerate}
 		\item Image negation: $S(x,y) = L - 1 - R(x,y)$.
-		\item Log transformation: $S(x,y) = c\log{1 + R(x,y)}$, $c \geq 0$.
+		\item Log transformation: $S(x,y) = c\log{(1 + R(x,y))}$, $c \geq 0$.
 		\item Power-law transformation: $S(x,y) = c[R(x,y)]^\gamma$, $c > 0, \gamma > 0$.
 	\end{enumerate}
 	\item[Spatial filters.] Filters implemented by performing a convolution between an $M\times N$ source image and an $m\times n$ filter matrix. Let $W$ be a filter matrix. Then the corresponding spatial filter is given by
