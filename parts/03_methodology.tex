@@ -1,17 +1,129 @@
 \chapter{METHODOLOGY}
 
-After introducing your topic of choice, discussing and relating previous work with your own, and presenting the underlying concepts that your study will be working with, this section will enable you to go into fine detail into how you will go about your study. Essentially, whatever data you need to gather, as well as how you will intend to gather them, should be presented here.
-In order to check whether or not your methodology is sound, two main questions should be answered:
-\begin{enumerate}
-	\item Is your methodology replicable?
-	\item Is your methodology realistic and time-bound?
-\end{enumerate}
+The study consists of two parts: first, the implementation of the three homomorphic encryption schemes and image processing operations under each scheme as an OpenCV library. The second part of the study consists of assessing the robustness and security of image operations under each encryption scheme using benchmarks in \cite{ahmed_benchmark_2016}.
 
-\section{Methodology as Replicable}
-A replicable methodology basically means that anyone who reads your methodology and intends to recreate your study to the letter must be able to obtain a similar, if not, exactly the same set of results. It is important, therefore, that you be as specific as you can when describing your methods, such as properly delineating your study’s independent, dependent, and control variables. Much like in the literature review and framework, it is good practice to organize your methodology into subsections for easier readability. Of course, apart from generating data given these variables, included in making the methodology replicable is providing the users an effective and appropriate means to collect data for analysis later on. This assumes, of course, that the data you intend to collect is actually measurable, whether it be quantitative (numerical) or qualitative (descriptive).
+\section{Implementation of the OpenCV Library}
 
-\section{Methodology as Realistic and Time-Bound}
-On the other hand, a realistic and time-bound methodology takes into consideration the context of the researcher. Although a high-level of competency is expected from a graduating CS major, one must also ensure that the proposed study’s level of difficulty is aligned with what limited resources is available, especially time. In fact, given that the trend is that you will undergo actual implementation only after being able to defend your proposal during the first semester, the study should be accomplishable at the most within only a semester. It is therefore imperative in the methodology, especially in its initial presentation during the defense, that the timetable for the study is thoroughly laid out, with workable time frames and specific dates for deliverables.
+The current version of the OpenCV library (3.4.1) will be forked from the open-source GitHub repository at https://github.com/opencv \cite{opencv_library}.
 
-\section{Summary and Additional Guide Questions}
-The methodology, in summary, is your detailed explanation of how you intend to go about implementing your study.
+Three homomorphic encryption schemes will be implemented, those presented by Ziad, et al. \cite{ziad_cryptoimg:_2016}, Li, et al. \cite{li_elliptic_2012} and Smart and Vercauteren \cite{hutchison_fully_2010}. The encryption and decryption methods will be implemented in C++.
+
+Aside from implementing the homomorphic encryption and decryption algorithms, we will also implement library functions for the following image processing functions, as they are defined in \cite{gonzalez_digital_2008}. We will also take note of whether or not a candidate operation is impossible to perform under a given cryptosystem.  We let $R(x,y)$ denote the intensity at coordinate $(x,y)$ in the source image, and $S(x,y)$ denote the intensity at coordinate $(x,y)$ in the resulting image. We further suppose that the intensity values of pixels are in the range $[0, L-1]$.
+\begin{description}
+	\item[Intensity transformations.] Transformations on the intensities of each of the pixels on an image. The following definitions hold for all $x,y$.
+	\begin{enumerate}
+		\item Image negation: $S(x,y) = L - 1 - R(x,y)$.
+		\item Log transformation: $S(x,y) = c\log{(1 + R(x,y))}$, $c \geq 0$.
+		\item Power-law transformation: $S(x,y) = c[R(x,y)]^\gamma$, $c > 0, \gamma > 0$.
+	\end{enumerate}
+	\item[Spatial filters.] Filters implemented by performing a convolution between an $M\times N$ source image and an $m\times n$ filter matrix. Let $W$ be a filter matrix. Then the corresponding spatial filter is given by
+	\begin{align}
+		S(x,y) = \sum_{s=1}^m{\sum_{t=1}^n{W(s,t)R(x+s,y+t)}}.
+	\end{align}
+	Morphological operations such as erosion and dilation can be achieved using convolution as well.
+\end{description}
+
+\section{Assessment of Homomorphic Encryption Schemes}
+
+We will first obtain standard test images from \cite{gonzalez_image_nodate}. Both greyscale and color images will be used.
+
+For each plaintext image (PT), we will consider each image operation listed above and generate three images: a plaintext domain transformation (PDT), a ciphertext image (CT), and an encrypted domain transformation (EDT). The cipherThe PDT will be generated by running the image operation on the original image. The CT will be generated by encrypting the image, then applying the operation, and the EDT will be generated by decrypting the CT. The four images (PT, PDT, CT, CDT) will then be compared using various benchmarks to evaluate the quality and security of each homomorphic encryption scheme.
+
+Lab computers in Faura Hall, Ateneo de Manila University will be used to perform the computations, and processing time will be tracked using C++ timer functions.
+The processing time for all cases will be recorded.
+
+\subsection{Evaluating Image Quality}
+The benchmarks to be used in the study, adopted from \cite{ahmed_benchmark_2016, ahmad_efficiency_2012, wu_npcr_2011} are listed below. We let $X_i$ denote a value in an image $X$, where $1 \leq i \leq N$.
+We first perform three tests to ascertain the preservation of image quality after encryption and decryption: MSE, PSNR, and SSIM.
+\begin{description}
+	\item [Mean Squared Error (MSE).] The MSE is defined in \cite{ahmed_benchmark_2016} as
+	\begin{align}
+		MSE = \frac{1}{N}\sum_{i=1}^{N}{(CDT_i - PDT_i)^2}.
+	\end{align}
+	The MSE provides a measure of how much data is recovered if an image operation is applied on the encrypted image, which is then decrypted. Lower values of MSE indicate higher preservation of image quality \cite{ahmed_benchmark_2016, ahmad_efficiency_2012}.
+	\item [Peak Signal to Noise Ratio (PSNR).]
+	According to Ahmed, et al. \cite{ahmed_benchmark_2016}, PSNR is ``an estimator for human visual perception of reconstruction quality'' which is based on  It has been used to ascertain image quality in various studies and is a known meetric for image and video quality \cite{upmanyu_efficient_2009, jain_image_2016, akramullah_video_2014}. Although it may produce results which do not correlate with human visual perception \cite{huynh-thu_accuracy_2012, ahmed_benchmark_2016}, it is a valid indicator of image quality when media containing the same visual content is compared \cite{huynh-thu_accuracy_2012}.
+	PSNR is defined by
+	\begin{align}
+		PSNR = 10\log_{10}{\left( \frac{L^2}{MSE} \right)}
+	\end{align}
+	where $L$ is the maximum pixel intensity value of an image.
+	Despite the known limitations of PSNR, since we are going to compare the effect of each encryption scheme on recovered image quality, given a fixed library of images, it is a valid measure of image quality for the study. A higher PSNR indicates higher image quality preservation.
+	\item [Structural Similarity Index (SSIM).]
+	The SSIM for two random variables $X$ and $Y$ is defined in \cite{ahmed_benchmark_2016, akramullah_video_2014} as
+	\begin{align}
+		SSIM(X,Y) = \frac{(2\mu_X\mu_Y+c_1)(2\sigma_{XY}+c_2)}{(\mu_X^2+\mu_Y^2+c_1)(\mu_X^2+\mu_Y^2+c_2)}
+	\end{align}
+	where
+	\begin{itemize}
+		\item $\mu_X, \mu_Y$ are the averages of $X$ and $Y$, respectively;
+		\item $\sigma_X, \sigma_Y$ are the variances of $X$ and $Y$, respectively;
+		\item $\sigma_{XY}$ is the covariance of $X$ and $Y$;
+		\item $c_1 = (k_1L)^2, c_2 = (k_2L)^2$ are two variables used to stabilize the measure when $\mu_X^2+\mu_Y^2$ is close to zero \cite{akramullah_video_2014};
+		\item $L$ is the the maximum pixel intensity value of an image;
+		\item $k_1 = 0.01, k_2 = 0.03$ by default, given in \cite{ahmed_benchmark_2016}.
+	\end{itemize}
+	The SSIM is applied to the luminance value of two images to gauge structural similarity between neighboring pixels.
+	For the study, we will compute $SSIM(PDT, CDT)$ for every image operation, under each homomorphic cryptosystem. Higher values of SSIM indicate higher structural similarity, and an SSIM of 1 indicates that the two images are identical\cite{ahmed_benchmark_2016}.
+\end{description}
+
+\subsection{Evaluating Cryptographic Security}
+After performing tests to evaluate image quality, we then perform tests for cryptographic security, as enumerated in \cite{ahmed_benchmark_2016}: entropy analysis, correlation coefficient analysis (CC), NPCR and UACI.
+\begin{description}
+	\item [Information entropy analysis.] In information theory, the entropy function $H(X)$ is defined in \cite{bauer_information_2005} as
+	\begin{align}
+		H(X) = - \sum_{a:p_X(a)>0}{p_X(a)\log_2{p_X(a)}}
+	\end{align}
+	where $p_X(a)$ denotes the probability that the random variable $X$ takes on the value $a$.
+	In the analysis of image encryption, $H(X)$ is computed for the values of the ciphertext pixels. To ensure security against entropy attacks, $H(X)$ must be as close as possible to $\log_2{N}$, where $N$ is the number of possible pixel values \cite{ahmed_benchmark_2016}.
+
+	We will compute $H(CDT)$ for every image operation, under each homomorphic cryptosystem, and compare the effects of each image operation on the entropy of the encrypted image. Ideally, performing image operations on encrypted images should still maintain a high level of entropy.
+	\item [Correlation coefficient analysis (CC).]
+		Images generally have a high degree of similarity between adjacent pixels. This correlation must be hidden in the encrypted image, even after performing image operations.
+		The correlation coefficient of an image can be computed between adjacent pixels either vertically, horizontal, or diagonally, and is defined in \cite{ahmed_benchmark_2016} by:
+		\begin{align}
+			CC(X,Y) = \frac{\sigma_{X,Y}}{\sqrt{\sigma_X}\times\sqrt{\sigma_Y}}
+		\end{align}
+		where
+		\begin{itemize}
+			\item $\sigma_X, \sigma_Y$ are the variances of $X$ and $Y$, respectively;
+			\item $\sigma_{XY}$ is the covariance of $X$ and $Y$.
+		\end{itemize}
+
+		For every $CDT$ image, we will compute for the correlation coefficient (for vertical, horizontal and diagonal correlation) for every image operation, under each homomorphic cryptosystem.
+	\item [NPCR and UACI.]
+		The Number of Pixel Change Rate (NPCR) measures the number of pixels which are changed between the a plaintext and a ciphertext to quantify the amount of dispersion which occurs during encryption.
+
+		On the other hand, the Universal Average Change Intensity (UACI) measures the average difference in pixel intensity between two images.
+
+		The NPCR and UACI between two images $X$ and $Y$, each containing $N$ pixels indexed from $1$ to $N$ is defined in \cite{wu_npcr_2011} as
+		\begin{align}
+			NPCR(X,Y) &= \frac{1}{N}\sum_{i = 1}^{N}{D(X_i,Y_i)} \times 100\%\\
+			UACI(X,Y) &= \frac{1}{L_{max} \times N} \sum_{i = 1}^{N}{ |L(X_i) - L(Y_i)| } \times 100\%
+		\end{align}
+		where
+		\begin{itemize}
+			\item $X_i$ and $Y_i$ are the $i$th pixels of $X$ and $Y$, respectively;
+			\item $D$ is a difference function between pixels $A$ and $B$ defined by
+			\begin{align}
+				D(A,B) =
+				\begin{cases}
+					0 &  \text{if $A = B$},\\
+					1 &  \text{if $A \neq B$};
+				\end{cases}
+			\end{align}
+		\item $L_{max}$ is the maximum intensity of a pixel;
+		\item $L(X_i)$ and $L(Y_i)$ are the intensities of pixels $X_i$ and $Y_i$, respectively.
+		\end{itemize}
+		We will calculate $NPCR(PDT,CDT)$ and $UACI(PDT,CDT)$  for every image operation, under each homomorphic cryptosystem. A high NPCR and UACI are desired to ensure high dispersion and security against differential attacks \cite{ahmed_benchmark_2016}. Critical values for NPCR and UACI for given image sizes and bit depths are given in  \cite{wu_npcr_2011}.
+\end{description}
+
+\section{Summary}
+
+We now recap the research questions and the corresponding methodology.
+\begin{itemize}
+	\item \textbf{Applicablity of homomorphic encryption algorithms for the use of image processing operations on encrypted data?} This will be addressed by the implementation of OpenCV library, and the evaluation of image quality (MSE, PSNR, SSIM).
+	\item \textbf{Time efficiency in applying image manipulation operations.} This will be addressed by the implementation of OpenCV library, and the comparison of recorded processing time for image processing operations.
+	\item \textbf{Security under differential and entropy attacks.}
+	This will be addressed by the evaluation of security benchmarks for image encryption schemes (entropy analysis, correlation coefficient analysis, NPCR, UACI).
+\end{itemize}
