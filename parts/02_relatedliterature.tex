@@ -5,9 +5,13 @@
 
 In cryptography, a cryptosystem consists of an encryption function $\mathcal{E}$ and a decryption function $\mathcal{D}$, along with the plaintext space $\mathcal{P}$, ciphertext space $\mathcal{C}$ and the key space $\mathcal{K}$~\cite{tilborg_encyclopedia_2005}. A \textit{plaintext} is text that can be easily understood by everybody. On the other hand, a \textit{ciphertext} is a result from encrypting the plaintext using an encryption key. The plaintext space consists of all the possible plaintexts.
 
-There are two kinds of cryptosystems, namely: \textit{symmetric} and \textit{asymmetric}. In symmetric encryption, the key is used for both encryption and decryption. On the other hand, asymmetric encryption uses separate keys for encryption and decryption. The encryption key (also called \textit{public key}) is shared to everybody, while the decryption key (also called \textit{private key}) is kept secret. Because of this, there is no need to agree upon some secure key sharing protocols. Usually, the security of asymmetric cryptosystems relies on the intractability of certain computational problems, like the RSA depends on the difficulty of integer factorization, while ElGamal depends on the difficulty of the discrete logarithmic problem.
+There are two kinds of cryptosystems, namely: \textit{symmetric} and \textit{asymmetric}. In symmetric encryption, the key is used for both encryption and decryption. On the other hand, asymmetric cryptosystems use separate keys for encryption and decryption. The encryption key (also called the \textit{public key}) is shared to everybody, while the decryption key (also called the \textit{private key}) is kept secret. Because of this, there is no need to agree upon some secure key sharing protocols. Usually, the security of asymmetric cryptosystems relies on the intractability of certain computational problems, like the RSA depends on the difficulty of integer factorization, while ElGamal depends on the difficulty of the discrete logarithmic problem.
 
-A cryptosystem is said to be homomorphic if its encryption and decryption functions are homomorphic.
+A cryptosystem is said to be homomorphic if its encryption function is homomorphic, that is, if it satisfies the relation
+\begin{equation}
+    \mathcal{E}\left(p_1 \otimes p_2\right) = \mathcal{E}\left(p_1\right) \oplus \mathcal{E}\left(p_2\right)
+\end{equation}
+where $\otimes$ and $\oplus$ are operations in $\mathcal{P}$ and $\mathcal{C}$ respectively \cite{fontaine_survey_2007}.
 
 
 \section{Common Image Operations}
