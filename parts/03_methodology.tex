@@ -34,21 +34,21 @@ The benchmarks to be used in the study, adopted from \cite{ahmed_benchmark_2016,
 
 We first perform three tests to ascertain the preservation of image quality after encryption and decryption: MSE, PSNR, and SSIM.
 \begin{description}
-	\item [Mean Squared Error (MSE).] The MSE is defined \cite{ahmed_benchmark_2016} as
+	\item [Mean Squared Error (MSE).] The MSE is defined in \cite{ahmed_benchmark_2016} as
 	\begin{align}
 		MSE = \frac{1}{N}\sum_{i=1}^{N}{(CDT_i - PDT_i)^2}.
 	\end{align}
 	The MSE provides a measure of how much data is recovered if an image operation is applied on the encrypted image, which is then decrypted. Lower values of MSE indicate higher preservation of image quality \cite{ahmed_benchmark_2016, ahmad_efficiency_2012}.
 	\item [Peak Signal to Noise Ratio (PSNR).]
-	According to Ahmed, et al. \cite{ahmed_benchmark_2016}, PSNR is ``an estimator for human visual perception of reconstruction quality'' which is based on  It has been used to ascertain image quality in various studies and is a known meetric for image and video quality \cite{upmanyu_efficient_2009, ahmed_benchmark_2016, akramullah_video_2014}. Although it may produce results which do not correlate with human visual perception \cite{huynh-thu_accuracy_2012, ahmed_benchmark_2016}, it is a valid indicator of image quality when media containing the same visual content is compared \cite{huynh-thu_accuracy_2012}.
+	According to Ahmed, et al. \cite{ahmed_benchmark_2016}, PSNR is ``an estimator for human visual perception of reconstruction quality'' which is based on  It has been used to ascertain image quality in various studies and is a known meetric for image and video quality \cite{upmanyu_efficient_2009, jain_image_2016, akramullah_video_2014}. Although it may produce results which do not correlate with human visual perception \cite{huynh-thu_accuracy_2012, ahmed_benchmark_2016}, it is a valid indicator of image quality when media containing the same visual content is compared \cite{huynh-thu_accuracy_2012}.
 	PSNR is defined by
 	\begin{align}
 		PSNR = 10\log_{10}{\left( \frac{L^2}{MSE} \right)}
 	\end{align}
 	where $L$ is the maximum pixel intensity value of an image.
-	Despite the known limitations of PSNR, since we are going to compare the effect of each encryption scheme on recovered image quality, given a fixed library of images, it is a valid measure of image quality for the study.
+	Despite the known limitations of PSNR, since we are going to compare the effect of each encryption scheme on recovered image quality, given a fixed library of images, it is a valid measure of image quality for the study. A higher PSNR indicates higher image quality preservation.
 	\item [Structural Similarity Index (SSIM)]
-	The SSIM for two random variables $X$ and $Y$ is defined \cite{ahmed_benchmark_2016, akramullah_video_2014} as
+	The SSIM for two random variables $X$ and $Y$ is defined in \cite{ahmed_benchmark_2016, akramullah_video_2014} as
 	\begin{align}
 		SSIM(X,Y) = \frac{(2\mu_X\mu_Y+c_1)(2\sigma_{XY}+c_2)}{(\mu_X^2+\mu_Y^2+c_1)(\mu_X^2+\mu_Y^2+c_2)}
 	\end{align}
@@ -62,15 +62,38 @@ We first perform three tests to ascertain the preservation of image quality afte
 		\item $k_1 = 0.01, k_2 = 0.03$ by default, given in \cite{ahmed_benchmark_2016}.
 	\end{itemize}
 	The SSIM is applied to the luminance value of two images to gauge structural similarity between neighboring pixels.
-	For the study, we will compute $SSIM(PDT, CDT)$ for every image operation, under each homomorphic cryptosystem.
+	For the study, we will compute $SSIM(PDT, CDT)$ for every image operation, under each homomorphic cryptosystem. Higher values of SSIM indicate higher structural similarity, and an SSIM of 1 indicates that the two images are identical\cite{ahmed_benchmark_2016}.
 \end{description}
 
-After performing tests to evaluate image quality, we then perform tests for cryptographic security, as given in \cite{ahmed_benchmark_2016}: entropy analysis, correlation coefficient analysis, NPCR and UACI.
+After performing tests to evaluate image quality, we then perform tests for cryptographic security, as enumerated in \cite{ahmed_benchmark_2016}: entropy analysis, correlation coefficient analysis, NPCR and UACI.
 \begin{description}
 	\item [Information entropy analysis]
 	\item [Correlation coefficient analysis]
-	\item [Number of Pixel Change Rate (NPCR)]
-	\item [Universeral Average Change Intensity (UACI)]
+	\item [NPCR and UACI]
+		The Number of Pixel Change Rate (NPCR) measures the number of pixels which are changed between the a plaintext and a ciphertext to quantify the amount of dispersion which occurs during encryption.
+
+		On the other hand, the Universal Average Change Intensity (UACI) measures the average difference in pixel intensity between two images.
+
+		The NPCR and UACI between two images $X$ and $Y$, each containing $N$ pixels indexed from $1$ to $N$ is defined in \cite{wu_npcr_2011} as
+		\begin{align}
+			NPCR(X,Y) &= \frac{1}{N}\sum_{i = 1}^{N}{D(X_i,Y_i)} \times 100\%\\
+			UACI(X,Y) &= \frac{1}{L_{max} \times N} \sum_{i = 1}^{N}{ |L(X_i) - L(Y_i)| } \times 100\%
+		\end{align}
+		where
+		\begin{itemize}
+			\item $X_i$ and $Y_i$ are the $i$th pixels of $X$ and $Y$, respectively;
+			\item $D$ is a difference function between pixels $A$ and $B$ defined by
+			\begin{align}
+				D(A,B) =
+				\begin{cases}
+					0 &  \text{if $A = B$},\\
+					1 &  \text{if $A \neq B$};
+				\end{cases}
+			\end{align}
+		\item $L_{max}$ is the maximum intensity of a pixel;
+		\item $L(X_i)$ and $L(Y_i)$ are the intensities of pixels $X_i$ and $Y_i$, respectively.
+		\end{itemize}
+		We will calculate $NPCR(PDT,CDT)$ and $UACI(PDT,CDT)$  for every for every image operation, under each homomorphic cryptosystem. A high NPCR and UACI are desired to ensure high dispersion and security against differential attacks \cite{ahmed_benchmark_2016}. Critical values for NPCR and UACI for given image sizes and bit depths are given in  \cite{wu_npcr_2011}.
 \end{description}
 
 \section{Summary and Timetable}
