@@ -1,5 +1,5 @@
 LATEX=latexmk
-LFLAGS=-pdf -pdflatex="pdflatex -interaction=nonstopmode -file-line-error" -bibtex -f
+LFLAGS=-pdf -pdflatex="pdflatex -interaction=nonstopmode -file-line-error" -bibtex -f -g -use-make
 BIB=bibtex
 
 TEXFILE=thesis

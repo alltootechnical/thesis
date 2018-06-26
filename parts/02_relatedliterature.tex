@@ -1,65 +1,126 @@
 \chapter{REVIEW OF RELATED LITERATURE}
 
-Now that you have established what your study is, this section provides you the ability to look into your research area in order to find out what is the state-of-the-art regarding your topic of interest. By the end of this section, you should already have an idea of what has been done in relation to your work, what findings they had about their studies, and how your own study factors into what was observed (e.g. improvements based upon the studies’ recommendations, techniques that can be borrowed, delineating where previous work ends and where your study begins).
+\section{Homomorphic Cryptosystems}
+% [include mention of metrics by which they are compared]
 
-This is an equation:
-\[
-    x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
-\]
+In cryptography, a cryptosystem consists of an encryption function $\mathcal{E}$ and a decryption function $\mathcal{D}$, along with the plaintext space $\mathcal{P}$, ciphertext space $\mathcal{C}$ and the key space $\mathcal{K}$~\cite{bauer_cryptosystem_2005}. A \textit{plaintext} is text that can be easily understood by everybody. On the other hand, a \textit{ciphertext} is a result from encrypting the plaintext using an encryption key. The \textit{plaintext space} is the set of all possible plaintexts, the \textit{ciphertext space} is the set of all possible ciphertexts, while the \textit{keyspace} consists of all possible keys.
 
-Although it discusses a variety of literature, it is still important to maintain a general flow within your discussion. Make use of transitions and other literary means to connect the ideas of each discussed article. One way to do this is to first organize your articles into general topics of discussion. You may then introduce the flow of these topics in the first few paragraphs of this section, and use the topic outline you created as your guide in delivering, comparing and contrasting what ideas you may wish to present about the literature. You can also use the themes as your sub headings. Finally, summarize your literature review by briefly going through the key ideas of previous work, identify points for improvement, and state what your study can do to contribute in addressing those points.
+There are two kinds of cryptosystems, namely: \textit{symmetric} and \textit{asymmetric}. In symmetric-key cryptosystems, the same key is used for both encryption and decryption. As a consequence, the encryption and decryption functions are inverses of each other. Prominent examples of symmetric-key cryptosystems are the Data Encryption Standard (DES), and its replacement, the Advanced Encryption Standard (AES).
 
-Last but not the least, do not forget to put proper citations to the ideas you will present. More often than not, whatever idea you state here came from another source, so ensure that you acknowledge the article/book/other reference you may have lifted it from.
-In order to guide you in writing, as well as to summarize the points mentioned above, here are some questions that may help your structure your discussion:
+On the other hand, asymmetric-key (or public-key) cryptosystems use separate keys for encryption and decryption. The encryption key (also called the \textit{public key}) is shared to everybody, while the decryption key (also called the \textit{private key}) is kept secret. Because of this, there is no need to agree upon some secure key sharing protocols. Usually, the security of asymmetric-key cryptosystems relies on the intractability of certain computational problems, like how RSA depends on the difficulty of integer factorization \cite{rivest_method_1978}, while ElGamal depends on the difficulty of the discrete logarithm problem \cite{blakley_public_1985}.
 
-\begin{enumerate}
-\item What previous works are closely connected with your own study? Who initiated these studies?
-\item What objectives did these studies have? If they presented any research questions, what were these and how similar or different are they from your own set of questions?
-Describe the methods used in these studies.
-If there are test subjects, what is the general profile of their subjects?
-\item What instruments did they use to acquire and measure their data?
-\item What were the findings gathered from the studies? 
-\item What issues, if any (e.g. flaws or gaps in the methodology), were encountered during the implementation of the study? In what way did the researchers attempt to address these issues? Were they successful in resolving these issues? Why or why not?
-\item What conclusions did these studies have? What recommendations did they present, and which of these recommendations may be addressed through your study?
-\item What other improvements could be done that was not mentioned in the study? How will your study incorporate these improvements?
-\item In what way is your study different or novel given these previous studies? Where do their studies end, and where will yours begin?
-\end{enumerate}
+A cryptosystem is said to be homomorphic if its encryption function is homomorphic, that is, if it satisfies the relation
+\begin{equation}
+    \mathcal{E}_k \left(p_1 \boxplus p_2\right) = \mathcal{E}_k \left(p_1\right) \oplus \mathcal{E}_k \left(p_2\right)
+\end{equation}
+where $p_1, p_2 \in \mathcal{P}$ are the plaintexts, $k \in \mathcal{K}$ is the encryption key, and $\boxplus$ and $\oplus$ are operations in $\mathcal{P}$ and $\mathcal{C}$ respectively \cite{fontaine_survey_2007}. Furthermore, suppose in a public-key cryptosystem, let $\mathcal{E}_k \left(p \right)$ be the encryption function using the public key $k$, and $\mathcal{D}_l \left(c \right)$ be the decryption function using the private key $l$. Then this cryptosystem is homomorphic if it satisfies
+\begin{equation}
+    p_1 \boxplus p_2 = \mathcal{D}_l \left( \mathcal{E}_k \left(p_1\right) \oplus \mathcal{E}_k \left(p_2\right) \right)
+\end{equation}
+where $p_1, p_2 \in \mathcal{P}$ are the plaintexts \cite{li_elliptic_2012}.
+In other words, a homomorphic cryptosystem preserves the operations that can be typically done with the plaintext without the intermediary step of decrypting the ciphertext beforehand. 
 
-Below is a sample entry from a literature review. You may use this as basis for your own work.
+Some examples of homomorphic cryptosystems include the Goldwasser-Micali cryptosystem \cite{goldwasser_probabilistic_1984} and the Paillier cryptosystem \cite{stern_public-key_1999}. Even the classic public-key cryptosystems are homomorphic, both RSA and ElGamal are multiplicatively homomorphic, while elliptic curve cryptosystems are additively homomorphic \cite{li_elliptic_2012}.
 
-\section{Motivation and ECAs}
-In applying motivational concepts to ECAs, some previous work includes studies by Rebolledo-Mendez et al. [9] and Graesser et al [4, 5].
-Rebolledo-Mendez et al. [9] investigated the effect of a motivational version of Ecolab, an ITS for teaching primary school children the topic of Ecology, particularly about food chains and food webs. In implementing the motivational extension, they modeled three motivational traits identified as key in the learning context. These are effort, confidence, and independence from the tutor [9]. The motivational on-screen character, which they named as Paul, was designed to provide feedback before and after each activity. Each post-activity feedback was based on the motivational model of the learner, and using this, Paul encourages the learner: to exert more effort, to be more independent, or to become more confident [9].
+However, there exists a \textit{fully homomorphic} cryptosystem, where instead of being limited to operations like addition or multiplication, it allows any arbitrary operations on the ciphertext. It is only in recent years that a fully homomorphic cryptosystem has been described. Gentry's cryptosystem, which uses lattice-based cryptography, allows arbitrary functions that are constructed from various addition and multiplication operations \cite{gentry_fully_2009}. 
 
-%\begin{figure}[h] 
-%    \centering
-%    \includegraphics[width=0.6\textwidth,height=0.2\textheight]{figures/Figure_2-1.png}
-%    \caption{Expressions of Paul of M-Ecolab [10].}
-%    \label{fig:Figure_2-1.png}
-%\end{figure}
-
- The results of the study showed that through modeling motivation and adjusting motivational reaction, the de-motivated, low, and average students were able to significantly increase their post-test scores. It also, however, showed that highly motivated and high ability students had no increase in test scores. The researchers noted that this could be due to the “ceiling effect”. Nevertheless, it was highlighted that the effects on learning by these motivating techniques were different, depending on the students’ ability and motivation. An example would be adjusting spoken feedback considering the learners’ motivational state as an important influence at post-activity time [9].
-There were, however, some limitations to the study. One of these was that the results were derived from a very small sample. Another limitation they indicated was that adapting feedback and character’s reactions, in conjunction with a quiz, constitute only a first step in the study of motivating techniques in ITSs; thus, general guidelines could be used in order to improve student motivation [9].
-On the other hand, Graesser et al. [4] developed a computer tutor called AutoTutor, which simulated the discourse patterns and pedagogical strategies of a typical human tutor. It was designed for college students in introductory computer literacy courses, who learn the fundamentals of hardware, operating systems, and the Internet [4].
-
-\begin{figure}[!ht] 
-    \centering
-    \includegraphics[width=0.6\textwidth,height=0.3\textheight]{figures/Figure_2-2.png}
-    \caption{The AutoTutor Interface.}
-    \label{fig:Figure_2-2.png}
-\end{figure}
-
-AutoTutor works by initiating a conversation with the student. It appears as a talking head that acts as a dialogue partner with the learner, who contributes to the conversation via input from the keyboard. One thing notable about the tutor is that it encourages the learner to articulate answers that are lengthy and require deep reasoning – examples of which include answers to why, how, and what-if questions. There is a multi-turn dialogue involved between AutoTutor and the student, encouraging the student to construct the knowledge and discover what he or she has mastered, rather than bombarding the student with the information to master [4].
-Results of the study show that this strategy of AutoTutor was able to influence learning and mastery of students. Comparing students who used AutoTutor to those who only reread the topic and to the control group who did not reread, AutoTutor was able to help students answer more questions which were used in an actual computer literacy course, garnering a greater score than the two other groups [4]. 
-In terms of the conversational smoothness and pedagogical quality of dialogue, an experiment was done where students were asked to point out which dialogue moves were generated by human tutors and which ones were by AutoTutor. Results show that the students were unable to discriminate the dialogue moves that were computer-generated compared to those from human tutors. In reality, half of the dialogue was by human tutors and the other half by AutoTutor. This proved the ability of AutoTutor to accurately simulate a human tutor [4].
-In a related study, Graesser et al. [5] was able to determine that during interactions with the AutoTutor, confusion was a great predictor of post-test scores. The study showed that when the learner is confused the learner experiences cognitive disequilibrium and thinking. It is presumed that the other frequent emotions such as frustration, bored and flow play a more prominent role in other learning environments and population of learners. It is therefore suggested that further research be conducted on these frequent emotions to discover different strategies and dialogues that will promote both learning gains and more engagement for the students [5].
+A recent survey of homomorphic encryption by Sen shows that the open problems in the area deal with fully homomorphic encryption, of which the main concern is the speed of such implementations \cite{sen_homomorphic_2013}.
 
 
-\section {New Sample Subsection}
-This is added in between existing subsections.
+\section{Common Image Operations}
+% skim chapters 3-4 of the book Digital Image Processing
 
-\section{Sample Subsection}
-Blah blah blah blah!
+% we may refer to the classification in the CryptoImg paper
+Knowing that most of the common image operations rely on addition and multiplication operations, adopting a fully homomorphic cryptosystem enables image processing operations on encrypted images without the need of decryption.
 
-\section{Sample Sample Subsection New}
-This is added after the last existing subsection. Updated the TOC, it works.
+In image processing, the typical image operations being done are intensity transformations which maps intensity values to another, and the use of spatial filters to do operations such as edge detection and image blurring. 
+
+\subsection{Intensity Transformation}
+Intensity transformations are typically point operations, where a certain operation is applied to each single pixel of the image. Usually, there is a function $T$ that maps a pixel value $r$ into a new value $r^\prime$, thus this transformation satisfies the relation $r^\prime = T\left(r\right)$. Examples of intensity transformations are image negation, log transformation, and power-law transformation.
+
+Image negation is an example of an intensity transformation, where the resulting image would be similar to a photographic negative~\cite{gonzalez_digital_2008}. In this case, suppose the intensity levels of an image are within the range $\left[0, L-1\right]$, then image negation can be expressed by
+\begin{equation}
+    T\left(r\right) = L-1-r
+\end{equation}
+
+The log transformation is used to enhance dark pixels or increase the dark details of an image by mapping low intensity values to a wider range of values~\cite{gonzalez_digital_2008}. This has the general form
+\begin{equation}
+    T\left(r\right) = c \log\left(1 + r\right)
+\end{equation}
+where $c$ is a constant and $r \ge 0$.
+
+The power-law transformation is a family of transformations that have the form
+\begin{equation}
+    T\left(r\right) = c r^{\gamma}
+\end{equation}
+where $c>0$ and $\gamma > 0$. This is especially useful since many output devices such as printers and display devices follow the power law, and so correcting the power-law response on these devices in a process called \textit{gamma correction} ensures reproducibility and accuracy of images being displayed~\cite{gonzalez_digital_2008}.
+
+\subsection{Edge Detection and Spatial Filtering}
+Edge detection is used to find and determine the boundaries in an image, commonly used in applications such as image segmentation and feature extraction. This works by detecting so-called \textit{edges}, areas that have abrupt changes in intensity. 
+
+Edge detection is usually done by using gradient operators that detect such abrupt changes. These operators are commonly known as \textit{spatial filter}, which are usually of $3 \times 3$ size. A common example of spatial filters is the Sobel operator, with two matrices (also called as kernels) $g_x$ and $g_y$ representing the horizontal and vertical components respectively.
+\begin{equation}
+    g_x = 
+    \begin{bmatrix}
+        -1 & 0 & 1 \\
+        -2 & 0 & 2 \\
+        -1 & 0 & 1
+    \end{bmatrix}
+    \qquad\text{and}\qquad
+    g_y = 
+    \begin{bmatrix}
+        1 & 2 & 1 \\
+        0 & 0 & 0 \\
+        -1 & -2 & -1
+    \end{bmatrix}
+\end{equation}
+To get the resulting image $I^\prime$, a convolution is performed between the original image $I$ of size $M \times N$ and the kernel $k$ of size $m \times n$. Now suppose that the pixel value of an image at point $\left(i,j\right)$ is $r_{i,j}$. Then, a transformation using spatial filters can be described as follows:
+\begin{align}
+    T\left(r_{i,j}\right) &= \left[k * I\right]\left(\left\lfloor\frac{m}{2}\right\rfloor, \left\lfloor\frac{n}{2}\right\rfloor \right) \\
+                         &= \sum_{u=1}^{m} \sum_{v=1}^{n} \left[k_{i,j} r_{i+u, j+v} \right]
+\end{align}
+
+Spatial filters are not only used for edge detection, but there are also filters that do image smoothing (such as Gaussian blur and box blur, $b_g$ and $b$ respectively in Equation~\ref{eqn:smooth-filters}) and image sharpening, to name a few \cite{gonzalez_digital_2008}.
+\begin{equation}
+    \label{eqn:smooth-filters}
+    b_g = \frac{1}{16}
+    \begin{bmatrix}
+        1 & 2 & 1 \\
+        2 & 4 & 2 \\
+        1 & 2 & 1
+    \end{bmatrix}
+    \qquad
+    b = \frac{1}{9}
+    \begin{bmatrix}
+        1 & 1 & 1 \\
+        1 & 1 & 1 \\
+        1 & 1 & 1
+    \end{bmatrix}
+\end{equation}
+% Should I put a table of other kernels too?
+
+
+\section{Related Work and Previous Implementations}
+% CryptoImg
+
+% example of homomorphic encryption / image manipulation past work
+
+% minor limitation: improvement on previous work, but not a direct comparison
+
+% major limitation: does not discuss security: are modified images also secure?
+
+There has been work done regarding the application of homomorphic cryptosystems in image processing. In particular, Ziad, et al. introduced a library called \textit{CryptoImg} that uses the homomorphic properties of the Paillier cryptosystem to apply image operations securely \cite{ziad_cryptoimg:_2016}. This shows that it is indeed possible to do various image operations in a homomorphic cryptosystem.
+
+However, a major limitation of \textit{CryptoImg} is that it does not seem to tackle the problem of security. Even though the authors claim that the operations in \textit{CryptoImg} are privacy-preserving, it is not clear whether the modified images are secure as well.
+This study can be further improved by also considering the use of other homomorphic cryptosystems like the elliptic curve-based ElGamal cryptosystem by Li, et al. \cite{li_elliptic_2012} and a fully homomorphic cryptosystem introduced by Smart and Vercauteren \cite{hutchison_fully_2010}, which is a variant of Gentry's lattice-based cryptosystem.
+
+% HElib
+Another related work would be the implementation of a fully homomorphic encryption. Halevi and Shoup \cite{garay_algorithms_2014} introduced \textit{HElib}, a library that implements the Brakerski-Gentry-Vaikuntanathan (BGV) homomorphic cryptosystem. This library also makes use of various optimizations to speed up the homomorphic operations, due to homomorphic cryptosystems being slower than other cryptosystems \cite{sen_homomorphic_2013}.
+
+
+\section{Summary}
+We have seen how various image processing operations make use of a series of additions and multiplications. Because of this, it is possible to use a homomorphic cryptosystem in order to apply image operations directly on encrypted images, as demonstrated by the \textit{CryptoImg} library. 
+
+In particular, we aim to address the shortcoming of \textit{CryptoImg} by developing a library to test various homomorphic encryption schemes with the help of the \textit{HElib} library to be able to implement fully homomorphic encryption schemes. This helps us determine the practicality of using homomorphic cryptosystems in image processing, especially when dealing with more complex image operations.
+
+
