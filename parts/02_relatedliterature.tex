@@ -1,11 +1,13 @@
 \chapter{REVIEW OF RELATED LITERATURE}
 
+We first present an introduction to the concepts in cryptography, starting from the definition of a cryptosystem up to homomorphic encryption schemes, along with some examples from the literature. Then, we present some concepts in image processing, a suitable application of cryptography, specifically the common image operations used. Finally, we present related work that attempts to apply image processing operations with homomorphic cryptosystems, as well as their advantages and limitations.
+
 \section{Homomorphic Cryptosystems}
 % [include mention of metrics by which they are compared]
 
 In cryptography, a cryptosystem consists of an encryption function $\mathcal{E}$ and a decryption function $\mathcal{D}$, along with the plaintext space $\mathcal{P}$, ciphertext space $\mathcal{C}$ and the key space $\mathcal{K}$~\cite{bauer_cryptosystem_2005}. A \textit{plaintext} is text that can be easily understood by everybody. On the other hand, a \textit{ciphertext} is a result from encrypting the plaintext using an encryption key. The \textit{plaintext space} is the set of all possible plaintexts, the \textit{ciphertext space} is the set of all possible ciphertexts, while the \textit{keyspace} consists of all possible keys.
 
-There are two kinds of cryptosystems, namely: \textit{symmetric} and \textit{asymmetric}. In symmetric-key cryptosystems, the same key is used for both encryption and decryption. As a consequence, the encryption and decryption functions are inverses of each other. Prominent examples of symmetric-key cryptosystems are the Data Encryption Standard (DES), and its replacement, the Advanced Encryption Standard (AES).
+There are two kinds of cryptosystems, namely: \textit{symmetric} and \textit{asymmetric}. In symmetric-key cryptosystems, the same key is used for both encryption and decryption. As a consequence, the encryption and decryption functions are inverses of each other. Prominent examples of symmetric-key cryptosystems include the Data Encryption Standard (DES), and its replacement, the Advanced Encryption Standard (AES).
 
 On the other hand, asymmetric-key (or public-key) cryptosystems use separate keys for encryption and decryption. The encryption key (also called the \textit{public key}) is shared to everybody, while the decryption key (also called the \textit{private key}) is kept secret. Because of this, there is no need to agree upon some secure key sharing protocols. Usually, the security of asymmetric-key cryptosystems relies on the intractability of certain computational problems, like how RSA depends on the difficulty of integer factorization \cite{rivest_method_1978}, while ElGamal depends on the difficulty of the discrete logarithm problem \cite{blakley_public_1985}.
 
@@ -122,5 +124,7 @@ Another related work would be the implementation of a fully homomorphic encrypti
 We have seen how various image processing operations make use of a series of additions and multiplications. Because of this, it is possible to use a homomorphic cryptosystem in order to apply image operations directly on encrypted images, as demonstrated by the \textit{CryptoImg} library. 
 
 In particular, we aim to address the shortcoming of \textit{CryptoImg} by developing a library to test various homomorphic encryption schemes with the help of the \textit{HElib} library to be able to implement fully homomorphic encryption schemes. This helps us determine the practicality of using homomorphic cryptosystems in image processing, especially when dealing with more complex image operations.
+
+
 
 
