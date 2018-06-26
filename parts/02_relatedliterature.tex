@@ -9,20 +9,19 @@ There are two kinds of cryptosystems, namely: \textit{symmetric} and \textit{asy
 
 On the other hand, asymmetric-key (or public-key) cryptosystems use separate keys for encryption and decryption. The encryption key (also called the \textit{public key}) is shared to everybody, while the decryption key (also called the \textit{private key}) is kept secret. Because of this, there is no need to agree upon some secure key sharing protocols. Usually, the security of asymmetric-key cryptosystems relies on the intractability of certain computational problems, like how RSA depends on the difficulty of integer factorization \cite{rivest_method_1978}, while ElGamal depends on the difficulty of the discrete logarithm problem \cite{blakley_public_1985}.
 
-A cryptosystem is said to be homomorphic if its encryption function is homomorphic, that is, if it satisfies the relation
+Homomorphic cryptosystems are a special type of cryptosystem wherein operations can be securely performed on encrypted data. Suppose that for a public-key cryptosystem, $\mathcal{E}_k \left(p \right)$ is the encryption function using the public key $k \in \mathcal{K}$, and $\mathcal{D}_l \left(c \right)$ be the decryption function using the private key $l$. A cryptosystem is said to be homomorphic if its encryption function is homomorphic, that is, if it satisfies the relation
 \begin{equation}
     \mathcal{E}_k \left(p_1 \boxplus p_2\right) = \mathcal{E}_k \left(p_1\right) \oplus \mathcal{E}_k \left(p_2\right)
 \end{equation}
-where $p_1, p_2 \in \mathcal{P}$ are the plaintexts, $k \in \mathcal{K}$ is the encryption key, and $\boxplus$ and $\oplus$ are operations in $\mathcal{P}$ and $\mathcal{C}$ respectively \cite{fontaine_survey_2007}. Furthermore, suppose in a public-key cryptosystem, let $\mathcal{E}_k \left(p \right)$ be the encryption function using the public key $k$, and $\mathcal{D}_l \left(c \right)$ be the decryption function using the private key $l$. Then this cryptosystem is homomorphic if it satisfies
+where $p_1, p_2 \in \mathcal{P}$ are the plaintexts, and $\boxplus$ and $\oplus$ are operations in $\mathcal{P}$ and $\mathcal{C}$ respectively \cite{fontaine_survey_2007}. Furthermore, a homomorphic cryptosystem also satisfies \cite{li_elliptic_2012}
 \begin{equation}
-    p_1 \boxplus p_2 = \mathcal{D}_l \left( \mathcal{E}_k \left(p_1\right) \oplus \mathcal{E}_k \left(p_2\right) \right)
+    p_1 \boxplus p_2 = \mathcal{D}_l \left( \mathcal{E}_k \left(p_1\right) \oplus \mathcal{E}_k \left(p_2\right) \right).
 \end{equation}
-where $p_1, p_2 \in \mathcal{P}$ are the plaintexts \cite{li_elliptic_2012}.
-In other words, a homomorphic cryptosystem preserves the operations that can be typically done with the plaintext without the intermediary step of decrypting the ciphertext beforehand. 
+In other words, a homomorphic cryptosystem preserves the operations that can be typically done with the plaintext without the intermediary step of decrypting the ciphertext beforehand. An important note about the defintion of a homomorphic cryptosystem is that the operations $\boxplus$ and $\oplus$ need not be the same. A simple operation in the plaintext space may require a computationally intensive operation in the ciphertext space.
 
 Some examples of homomorphic cryptosystems include the Goldwasser-Micali cryptosystem \cite{goldwasser_probabilistic_1984} and the Paillier cryptosystem \cite{stern_public-key_1999}. Even the classic public-key cryptosystems are homomorphic, both RSA and ElGamal are multiplicatively homomorphic, while elliptic curve cryptosystems are additively homomorphic \cite{li_elliptic_2012}.
 
-However, there exists a \textit{fully homomorphic} cryptosystem, where instead of being limited to operations like addition or multiplication, it allows any arbitrary operations on the ciphertext. It is only in recent years that a fully homomorphic cryptosystem has been described. Gentry's cryptosystem, which uses lattice-based cryptography, allows arbitrary functions that are constructed from various addition and multiplication operations \cite{gentry_fully_2009}. 
+However, there exists a \textit{fully homomorphic} cryptosystem, where instead of being limited to operations like addition or multiplication, it allows any arbitrary operations on the ciphertext. It is only in recent years that a fully homomorphic cryptosystem has been described. Gentry's cryptosystem, which uses lattice-based cryptography, allows arbitrary functions that are constructed from various addition and multiplication operations \cite{gentry_fully_2009}.
 
 A recent survey of homomorphic encryption by Sen shows that the open problems in the area deal with fully homomorphic encryption, of which the main concern is the speed of such implementations \cite{sen_homomorphic_2013}.
 
@@ -33,7 +32,7 @@ A recent survey of homomorphic encryption by Sen shows that the open problems in
 % we may refer to the classification in the CryptoImg paper
 Knowing that most of the common image operations rely on addition and multiplication operations, adopting a fully homomorphic cryptosystem enables image processing operations on encrypted images without the need of decryption.
 
-In image processing, the typical image operations being done are intensity transformations which maps intensity values to another, and the use of spatial filters to do operations such as edge detection and image blurring. 
+In image processing, the typical image operations being done are intensity transformations which maps intensity values to another, and the use of spatial filters to do operations such as edge detection and image blurring.
 
 \subsection{Intensity Transformation}
 Intensity transformations are typically point operations, where a certain operation is applied to each single pixel of the image. Usually, there is a function $T$ that maps a pixel value $r$ into a new value $r^\prime$, thus this transformation satisfies the relation $r^\prime = T\left(r\right)$. Examples of intensity transformations are image negation, log transformation, and power-law transformation.
@@ -56,18 +55,18 @@ The power-law transformation is a family of transformations that have the form
 where $c>0$ and $\gamma > 0$. This is especially useful since many output devices such as printers and display devices follow the power law, and so correcting the power-law response on these devices in a process called \textit{gamma correction} ensures reproducibility and accuracy of images being displayed~\cite{gonzalez_digital_2008}.
 
 \subsection{Edge Detection and Spatial Filtering}
-Edge detection is used to find and determine the boundaries in an image, commonly used in applications such as image segmentation and feature extraction. This works by detecting so-called \textit{edges}, areas that have abrupt changes in intensity. 
+Edge detection is used to find and determine the boundaries in an image, commonly used in applications such as image segmentation and feature extraction. This works by detecting so-called \textit{edges}, areas that have abrupt changes in intensity.
 
 Edge detection is usually done by using gradient operators that detect such abrupt changes. These operators are commonly known as \textit{spatial filter}, which are usually of $3 \times 3$ size. A common example of spatial filters is the Sobel operator, with two matrices (also called as kernels) $g_x$ and $g_y$ representing the horizontal and vertical components respectively.
 \begin{equation}
-    g_x = 
+    g_x =
     \begin{bmatrix}
         -1 & 0 & 1 \\
         -2 & 0 & 2 \\
         -1 & 0 & 1
     \end{bmatrix}
     \qquad\text{and}\qquad
-    g_y = 
+    g_y =
     \begin{bmatrix}
         1 & 2 & 1 \\
         0 & 0 & 0 \\
@@ -119,8 +118,6 @@ Another related work would be the implementation of a fully homomorphic encrypti
 
 
 \section{Summary}
-We have seen how various image processing operations make use of a series of additions and multiplications. Because of this, it is possible to use a homomorphic cryptosystem in order to apply image operations directly on encrypted images, as demonstrated by the \textit{CryptoImg} library. 
+We have seen how various image processing operations make use of a series of additions and multiplications. Because of this, it is possible to use a homomorphic cryptosystem in order to apply image operations directly on encrypted images, as demonstrated by the \textit{CryptoImg} library.
 
 In particular, we aim to address the shortcoming of \textit{CryptoImg} by developing a library to test various homomorphic encryption schemes with the help of the \textit{HElib} library to be able to implement fully homomorphic encryption schemes. This helps us determine the practicality of using homomorphic cryptosystems in image processing, especially when dealing with more complex image operations.
-
-
