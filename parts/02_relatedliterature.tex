@@ -2,101 +2,8 @@
 
 We first present an introduction to the concepts in cryptography, starting from the definition of a cryptosystem up to homomorphic encryption schemes, along with some examples from the literature. Then, we present some concepts in image processing, a suitable application of cryptography, specifically the common image operations used. Finally, we present related work that attempts to apply image processing operations with homomorphic cryptosystems, as well as their advantages and limitations.
 
-\section{Homomorphic Cryptosystems}
-% [include mention of metrics by which they are compared]
-
-In cryptography, a cryptosystem consists of an encryption function $\mathcal{E}$ and a decryption function $\mathcal{D}$, along with the plaintext space $\mathcal{P}$, ciphertext space $\mathcal{C}$ and the key space $\mathcal{K}$~\cite{bauer_cryptosystem_2005}. A \textit{plaintext} is text that can be easily understood by everybody. On the other hand, a \textit{ciphertext} is a result from encrypting the plaintext using an encryption key. The \textit{plaintext space} is the set of all possible plaintexts, the \textit{ciphertext space} is the set of all possible ciphertexts, while the \textit{keyspace} consists of all possible keys.
-
-There are two kinds of cryptosystems, namely: \textit{symmetric} and \textit{asymmetric}. In symmetric-key cryptosystems, the same key is used for both encryption and decryption. As a consequence, the encryption and decryption functions are inverses of each other. Prominent examples of symmetric-key cryptosystems are the Data Encryption Standard (DES), and its replacement, the Advanced Encryption Standard (AES).
-
-On the other hand, asymmetric-key (or public-key) cryptosystems use separate keys for encryption and decryption. The encryption key (also called the \textit{public key}) is shared to everybody, while the decryption key (also called the \textit{private key}) is kept secret. Because of this, there is no need to agree upon some secure key sharing protocols. Usually, the security of asymmetric-key cryptosystems relies on the intractability of certain computational problems, like how RSA depends on the difficulty of integer factorization \cite{rivest_method_1978}, while ElGamal depends on the difficulty of the discrete logarithm problem \cite{blakley_public_1985}.
-
-Homomorphic cryptosystems are a special type of cryptosystem wherein operations can be securely performed on encrypted data. Suppose that for a public-key cryptosystem, $\mathcal{E}_k \left(p \right)$ is the encryption function using the public key $k \in \mathcal{K}$, and $\mathcal{D}_l \left(c \right)$ be the decryption function using the private key $l$. A cryptosystem is said to be homomorphic if its encryption function is homomorphic, that is, if it satisfies the relation
-\begin{equation}
-    \mathcal{E}_k \left(p_1 \boxplus p_2\right) = \mathcal{E}_k \left(p_1\right) \oplus \mathcal{E}_k \left(p_2\right)
-\end{equation}
-where $p_1, p_2 \in \mathcal{P}$ are the plaintexts, and $\boxplus$ and $\oplus$ are operations in $\mathcal{P}$ and $\mathcal{C}$ respectively \cite{fontaine_survey_2007}. Furthermore, a homomorphic cryptosystem also satisfies \cite{li_elliptic_2012}
-\begin{equation}
-    p_1 \boxplus p_2 = \mathcal{D}_l \left( \mathcal{E}_k \left(p_1\right) \oplus \mathcal{E}_k \left(p_2\right) \right).
-\end{equation}
-In other words, a homomorphic cryptosystem preserves the operations that can be typically done with the plaintext without the intermediary step of decrypting the ciphertext beforehand. An important note about the defintion of a homomorphic cryptosystem is that the operations $\boxplus$ and $\oplus$ need not be the same. A simple operation in the plaintext space may require a computationally intensive operation in the ciphertext space.
-
-Homomorphic cryptosystems are classified according to the plaintext and ciphertext operations, $\boxplus$ and $\oplus$. If the plaintext operation $\boxplus$ is addition, the cryptosystem is said to be \textit{additively homomorphic}, and the cryptosystem is said to be \textit{multiplicatively homomorphic} if the plaintext operation $\boxplus$ is multiplication. Some examples of homomorphic cryptosystems include the Goldwasser-Micali cryptosystem \cite{goldwasser_probabilistic_1984} and the Paillier cryptosystem \cite{stern_public-key_1999}. Even some classic public-key cryptosystems are homomorphic, both RSA and ElGamal are multiplicatively homomorphic, while elliptic curve cryptosystems are additively homomorphic \cite{li_elliptic_2012}. These cryptosystems, while relatively efficient, only support a limited set of operations on the encrypted data.
-
-However, there exists \textit{fully homomorphic} cryptosystems, where instead of being limited to operations like addition or multiplication, it allows any arbitrary operations on the ciphertext. It is only in recent years that a fully homomorphic cryptosystem has been described. Gentry's cryptosystem, which uses lattice-based cryptography, allows arbitrary functions that are constructed from various addition and multiplication operations \cite{gentry_fully_2009}. Gentry's cryptosystem allows for the computation of arbitrary Boolean circuits on binary data. While improvements have been developed for Gentry's original scheme \cite{hutchison_fully_2010, sen_homomorphic_2013}, since the homomorphic property of these systems is applied on each bit of the plaintext/ciphertext elementary addition and multiplication operations on the plaintext are compuationally intensive \cite{sen_homomorphic_2013, shortell_secure_2016}.
-
-\section{Common Image Operations}
-% skim chapters 3-4 of the book Digital Image Processing
-
-% we may refer to the classification in the CryptoImg paper
-Knowing that most of the common image operations rely on addition and multiplication operations, adopting a fully homomorphic cryptosystem enables image processing operations on encrypted images without the need of decryption.
-
-In image processing, the typical image operations being done are intensity transformations which maps intensity values to another, and the use of spatial filters to do operations such as edge detection and image blurring.
-
-\subsection{Intensity Transformation}
-Intensity transformations are typically point operations, where a certain operation is applied to each single pixel of the image. Usually, there is a function $T$ that maps a pixel value $r$ into a new value $r^\prime$, thus this transformation satisfies the relation $r^\prime = T\left(r\right)$. Examples of intensity transformations are image negation, log transformation, and power-law transformation.
-
-Image negation is an example of an intensity transformation, where the resulting image would be similar to a photographic negative~\cite{gonzalez_digital_2008}. In this case, suppose the intensity levels of an image are within the range $\left[0, L-1\right]$, then image negation can be expressed by
-\begin{equation}
-    T\left(r\right) = L-1-r
-\end{equation}
-
-The log transformation is used to enhance dark pixels or increase the dark details of an image by mapping low intensity values to a wider range of values~\cite{gonzalez_digital_2008}. This has the general form
-\begin{equation}
-    T\left(r\right) = c \log\left(1 + r\right)
-\end{equation}
-where $c$ is a constant and $r \ge 0$.
-
-The power-law transformation is a family of transformations that have the form
-\begin{equation}
-    T\left(r\right) = c r^{\gamma}
-\end{equation}
-where $c>0$ and $\gamma > 0$. This is especially useful since many output devices such as printers and display devices follow the power law, and so correcting the power-law response on these devices in a process called \textit{gamma correction} ensures reproducibility and accuracy of images being displayed~\cite{gonzalez_digital_2008}.
-
-\subsection{Edge Detection and Spatial Filtering}
-Edge detection is used to find and determine the boundaries in an image, commonly used in applications such as image segmentation and feature extraction. This works by detecting so-called \textit{edges}, areas that have abrupt changes in intensity.
-
-Edge detection is usually done by using gradient operators that detect such abrupt changes. These operators are commonly known as \textit{spatial filter}, which are usually of $3 \times 3$ size. A common example of spatial filters is the Sobel operator, with two matrices (also called as kernels) $g_x$ and $g_y$ representing the horizontal and vertical components respectively.
-\begin{equation}
-    g_x =
-    \begin{bmatrix}
-        -1 & 0 & 1 \\
-        -2 & 0 & 2 \\
-        -1 & 0 & 1
-    \end{bmatrix}
-    \qquad\text{and}\qquad
-    g_y =
-    \begin{bmatrix}
-        1 & 2 & 1 \\
-        0 & 0 & 0 \\
-        -1 & -2 & -1
-    \end{bmatrix}
-\end{equation}
-To get the resulting image $I^\prime$, a convolution is performed between the original image $I$ of size $M \times N$ and the kernel $k$ of size $m \times n$. Now suppose that the pixel value of an image at point $\left(i,j\right)$ is $r_{i,j}$. Then, a transformation using spatial filters can be described as follows:
-\begin{align}
-    T\left(r_{i,j}\right) &= \left[k * I\right]\left(\left\lfloor\frac{m}{2}\right\rfloor, \left\lfloor\frac{n}{2}\right\rfloor \right) \\
-                         &= \sum_{u=1}^{m} \sum_{v=1}^{n} \left[k_{i,j} r_{i+u, j+v} \right]
-\end{align}
-
-Spatial filters are not only used for edge detection, but there are also filters that do image smoothing (such as Gaussian blur and box blur, $b_g$ and $b$ respectively in Equation~\ref{eqn:smooth-filters}) and image sharpening, to name a few \cite{gonzalez_digital_2008}.
-\begin{equation}
-    \label{eqn:smooth-filters}
-    b_g = \frac{1}{16}
-    \begin{bmatrix}
-        1 & 2 & 1 \\
-        2 & 4 & 2 \\
-        1 & 2 & 1
-    \end{bmatrix}
-    \qquad
-    b = \frac{1}{9}
-    \begin{bmatrix}
-        1 & 1 & 1 \\
-        1 & 1 & 1 \\
-        1 & 1 & 1
-    \end{bmatrix}
-\end{equation}
-% Should I put a table of other kernels too?
-
+\input{parts/02_relatedliterature_01homomorphiccryptosystems}
+\input{parts/02_relatedliterature_02commonimageprocessingoperations}
 
 \section{Related Work and Previous Implementations}
 % CryptoImg
@@ -109,15 +16,16 @@ Spatial filters are not only used for edge detection, but there are also filters
 
 There has been work done regarding the application of homomorphic cryptosystems in image processing. In particular, Ziad, et al. introduced a library called \textit{CryptoImg} that uses the homomorphic properties of the Paillier cryptosystem to apply image operations securely \cite{ziad_cryptoimg:_2016}. This shows that it is indeed possible to do various image operations in a homomorphic cryptosystem. Ziad, et al. also showed experimental results establishing the slow performance of image operations uner a homomorphic cryptosystem. For instance, while sharpening and applying a Sobel filter each take less than a second when applied to a $512\times 512$ plaintext image, when applied to an encrypted image, sharpening required at least 238.257 seconds, and applying the Sobel filter required at least 147.567 seconds \cite{ziad_cryptoimg:_2016}.
 
-However, a major limitation of \textit{CryptoImg} is that it does not seem to tackle the problem of security. Even though the authors have established that the Paillier cryptosystem itself cannot be broken \cite{ziad_cryptoimg:_2016}, we believe that a cryptanalysis of the encrypted images after they have been operated is necessary, since image operations may be considered additional information in a known plaintext attack.
+However, a major limitation of \textit{CryptoImg} is that it does not consider image security. Even though the authors have established that the Paillier cryptosystem itself cannot be broken \cite{ziad_cryptoimg:_2016}, we believe that a cryptanalysis of the encrypted images after they have been operated is necessary, since image operations may be considered additional information in a known plaintext attack.
 
 Furthermore, Ziad, et al. only presented a visual comparison and evaluation to establish the quality of the recovered images. We believe that additional image quality benchmarks, such as those presented in \cite{ahmed_benchmark_2016, ahmad_efficiency_2012}, would allow for quantitative comparisons of image quality.
-This study can be further improved by also considering the use of other homomorphic cryptosystems like the elliptic curve-based ElGamal cryptosystem by Li, et al. \cite{li_elliptic_2012} and a fully homomorphic cryptosystem introduced by Smart and Vercauteren \cite{hutchison_fully_2010}, which is a variant of Gentry's lattice-based cryptosystem which can be expressed using elementary number theory, without the use of lattices.
+
+This study can be further improved by also considering the use of fully homomorphic cryptosystems such as the one presented by Dasgupta and Pal \cite{dasgupta_design_2016}, and the fully homomorphic cryptosystem introduced by Smart and Vercauteren \cite{hutchison_fully_2010} and improved by Gentry and Halevi  \cite{hutchison_implementing_2011}. These fully homomorphic cryptosytems have yet to be implemented for image processing operations.
 
 % HElib
-Another related work would be the implementation of a fully homomorphic encryption. Halevi and Shoup \cite{garay_algorithms_2014} introduced \textit{HElib}, a library that implements the Brakerski-Gentry-Vaikuntanathan (BGV) homomorphic cryptosystem. This library also makes use of various optimizations to speed up the homomorphic operations, due to homomorphic cryptosystems being slower than other cryptosystems \cite{sen_homomorphic_2013}.
+Another related work would be the implementation of a fully homomorphic encryption. Halevi and Shoup \cite{garay_algorithms_2014} introduced \textit{HElib}, a library that implements the Brakerski--Gentry--Vaikuntanathan (BGV) homomorphic cryptosystem. This library also makes use of various optimizations to speed up the homomorphic operations, due to homomorphic cryptosystems being slower than other cryptosystems \cite{sen_homomorphic_2013}.
 
 \section{Summary}
 We have seen how various image processing operations make use of a series of additions and multiplications. Because of this, it is possible to use a homomorphic cryptosystem in order to apply image operations directly on encrypted images, as demonstrated by the \textit{CryptoImg} library.
 
-In particular, we aim to address the shortcoming of \textit{CryptoImg} by developing a library to test various homomorphic encryption schemes with the help of the \textit{HElib} library to be able to implement fully homomorphic encryption schemes. This helps us determine the practicality of using homomorphic cryptosystems in image processing, especially when dealing with more complex image operations.
+In particular, we aim to address the shortcomings of \textit{CryptoImg} by developing a library to test various homomorphic encryption schemes with the help of the \textit{HElib} library to be able to implement fully homomorphic encryption schemes efficiently. This helps us determine the practicality of using homomorphic cryptosystems in image processing, especially when dealing with more complex image operations.
