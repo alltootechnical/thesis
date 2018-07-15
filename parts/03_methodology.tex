@@ -1,12 +1,12 @@
 \chapter{METHODOLOGY}
 
-The study consists of two parts: first, the implementation of the three homomorphic encryption schemes and image processing operations under each scheme as an OpenCV library. The second part of the study consists of assessing the robustness and security of image operations under each encryption scheme using benchmarks in \cite{ahmed_benchmark_2016}.
+The study consists of two parts: first, the implementation of the three homomorphic encryption schemes \cite{ziad_cryptoimg:_2016, dasgupta_design_2016, hutchison_fully_2010} and image processing operations under each scheme as an OpenCV library. While the scheme in \cite{ziad_cryptoimg:_2016} has been implemented for use in image processing, the fully homomorphic systems \cite{dasgupta_design_2016, hutchison_fully_2010} will have to be adapted for image processing. in The second part of the study consists of assessing the robustness and security of image operations under each encryption scheme using benchmarks in \cite{ahmed_benchmark_2016}.
 
 \section{Implementation of the OpenCV Library}
 
 The current version of the OpenCV library (3.4.1) will be forked from the open-source GitHub repository at \url{https://github.com/opencv/opencv} \cite{bradski_opencv_2000}.
 
-Three homomorphic encryption schemes will be implemented, those presented by Ziad, et al. \cite{ziad_cryptoimg:_2016}, Li, et al. \cite{li_elliptic_2012} and Smart and Vercauteren \cite{hutchison_fully_2010}. The encryption and decryption methods will be implemented in C++.
+Three homomorphic encryption schemes will be implemented, those presented by Ziad, et al. \cite{ziad_cryptoimg:_2016}, Dasgupta and Pal \cite{dasgupta_design_2016} and Smart and Vercauteren \cite{hutchison_fully_2010}. The encryption and decryption methods will be implemented in C++.
 
 Aside from implementing the homomorphic encryption and decryption algorithms, we will also implement library functions for the following image processing functions, as they are defined in \cite{gonzalez_digital_2008}. We will also take note of whether or not a candidate operation is impossible to perform under a given cryptosystem.  We let $R(x,y)$ denote the intensity at coordinate $(x,y)$ in the source image, and $S(x,y)$ denote the intensity at coordinate $(x,y)$ in the resulting image. We further suppose that the intensity values of pixels are in the range $[0, L-1]$.
 \begin{description}
@@ -42,7 +42,7 @@ We first perform three tests to ascertain the preservation of image quality afte
 	\end{align}
 	The MSE provides a measure of how much data is recovered if an image operation is applied on the encrypted image, which is then decrypted. Lower values of MSE indicate higher preservation of image quality \cite{ahmed_benchmark_2016, ahmad_efficiency_2012}.
 	\item [Peak Signal to Noise Ratio (PSNR).]
-	According to Ahmed, et al. \cite{ahmed_benchmark_2016}, PSNR is ``an estimator for human visual perception of reconstruction quality'' which is based on  It has been used to ascertain image quality in various studies and is a known meetric for image and video quality \cite{upmanyu_efficient_2009, jain_image_2016, akramullah_video_2014}. Although it may produce results which do not correlate with human visual perception \cite{huynh-thu_accuracy_2012, ahmed_benchmark_2016}, it is a valid indicator of image quality when media containing the same visual content is compared \cite{huynh-thu_accuracy_2012}.
+	According to Ahmed, et al. \cite{ahmed_benchmark_2016}, PSNR is ``an estimator for human visual perception of reconstruction quality''. It has been used to ascertain image quality in various studies and is a known metric for image and video quality \cite{upmanyu_efficient_2009, jain_image_2016, akramullah_video_2014}. Although it may produce results which do not correlate with human visual perception \cite{huynh-thu_accuracy_2012, ahmed_benchmark_2016}, it is a valid indicator of image quality when media containing the same visual content is compared \cite{huynh-thu_accuracy_2012}.
 	PSNR is defined by
 	\begin{align}
         \mathrm{PSNR} = 10\log_{10}{\left( \frac{L^2}{\mathrm{MSE}} \right)}
@@ -122,7 +122,7 @@ After performing tests to evaluate image quality, we then perform tests for cryp
 
 In summary, the study will consist of
 \begin{itemize}
-	\item An implementation of an OpenCV library which implements homomorphic cryptosystems by Ziad, et al. \cite{ziad_cryptoimg:_2016}, Li, et al. \cite{li_elliptic_2012} and Smart and Vercauteren \cite{hutchison_fully_2010}.
+	\item An implementation of an OpenCV library which implements homomorphic cryptosystems by Ziad, et al. \cite{ziad_cryptoimg:_2016}, Dasgupta and Pal \cite{dasgupta_design_2016} and Smart and Vercauteren \cite{hutchison_fully_2010}.
 	\item An implementation of image processing operations (intensity transformations, spatial filters) under the above cryptosystems.
 	\item Conducting tests for image quality, processing time, and cryptographic security, using standard test images from \cite{gonzalez_image_nodate}.
 \end{itemize}
