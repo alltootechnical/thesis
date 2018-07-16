@@ -34,10 +34,10 @@ where $A(x,y)$ represents the entry at the $x$th row and $y$th column of a matri
 \begin{figure*}[!ht]
     \centering
     \includegraphics[width=\textwidth,\keepaspectratio]{Figures/SpatialFilter.png}
-    \caption{(a) A sample image $R$. (b) A sample kernel $k$.}
+    \caption{A sample image $R$ and sample kernel $k$.}
     \label{fig:spatialfilter}
 \end{figure*}
-For example, using the image and kernel given in Figure \ref{fig:spatialfilter}, we can calculate the value in the third row and fourth column of the resulting image $R^\prime$ as follows:
+For example, using the image and $3 \times 3$ kernel given in Figure \ref{fig:spatialfilter}, we can calculate the value in the third row and fourth column of the resulting image $R^\prime$ by adding the products of entries in $k$ with the corresponding entries in $R$, found in an $3 \times 3$ region around $R(3,4)$.
 \begin{align*}
 	R^\prime(3,4) &= \sum_{s=1}^m{\sum_{t=1}^n{k(s,t)R(3+s,4+t)}}\\
 	&= (0.0625\times 200) + (0.1250\times 249) + (0.0625\times 255) \\
@@ -49,7 +49,7 @@ Since spatial filters take values from a contiguous region of pixels, this prese
 
 \subsection{Common Spatial Filtering Kernels}
 Edge detection is used to find and determine the boundaries in an image, commonly used in applications such as image segmentation and feature extraction. This works by detecting so-called \textit{edges}, areas that have abrupt changes in intensity.
-One common method of performing edge detection is the Sobel operator, which uses two spatial filters to approximate the gradient in an image. Given an image $R$, and the kernels
+One common method of performing edge detection is the Sobel operator, which uses two spatial filters to approximate the gradient of an image. Given an image $R$, and the kernels
 \begin{equation}
     g_x =
     \begin{bmatrix}
