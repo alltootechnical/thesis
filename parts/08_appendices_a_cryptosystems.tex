@@ -1,0 +1,30 @@
+%\section{Introduction to the Appendices}
+
+%The Appendices is where you are enabled to present any additional or supplementary information relevant to your study, yet do not require highlighting within the actual paper, either because of its trivial nature or volume. These may in the form of figures, tables, or additional text detailing specific aspects about or related to the study.
+
+%\section{Sample Questions for Different Studies}
+%The following table presents three sample studies, as well as the guide questions that may help direct the discussion in each section of the paper. You may use this as another reference in writing your paper.
+
+\section{Description of basic cryptosystems used}
+\subsection{Pallier cryptosystem}
+\subsection{Key generation}
+We choose two large primes $p$ and $q$, and set $n = pq, \lambda = \mathrm\lcm(p-1,q-1)$.
+
+Define the public key as $(g,n)$ and the private key
+\begin{align*}
+  E(m) = g^m \cdot r^n \mod{n^2}
+\end{align*}
+\subsection{Homomorphic properties}
+For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
+\begin{description}
+  \item[Additive homomorphism]
+  \begin{align*}
+    D(E(m_1)g^{m_2}\bmod n^2)=(m_1+m_2)\bmod n & \text{ (used to add a constant)}\\
+    D(E(m_1)E(m_2)\bmod n^2)=(m_1+m_2)\bmod n & \text{ (used for binary addition)}
+  \end{align*}
+  \item[Multiplicative homomorphism]
+  \begin{align*}
+    D(E(m_1)^k\bmod n^2)= km_1\bmod n & \text{ (used to multiply a constant)}\\
+    D(E(m_1)^{m_2}\bmod n^2)= m_1m_2\bmod n & \text{ (used for binary multiplication)}
+  \end{align*}
+\end{description}

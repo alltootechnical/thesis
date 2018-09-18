@@ -1,0 +1,42 @@
+%\section{Thesis Formatting Guidelines}
+
+%This thesis template in Word document format was created to ensure that you will spend more time generating content for your paper and less time stressing about formatting issues. To ensure, however, that your document is truly formatted according to specifications, here are some formatting guidelines which you may use to evaluate your own paper’s formatting.
+
+%\begin{enumerate}
+%\item There should be NO PAGE NUMBERS on the first page of every chapter/section..
+%\item Tables must have NO VERTICAL LINES, as well as NO INNER HORIZONTAL LINES after the table headers.
+%\item Figures and tables are numbered ACCORDING TO CHAPTER NUMBER (e.g. Table 3.1 must be located in Chapter 3, and Figure B.2 is in Appendix B).
+%\item The sequence of front matter must be as follows:
+%    \begin{enumerate}
+%    \item Title Page, in the correct formatting (e.g. Titles must be written in an inverted triangle, in ALL CAPS and boldface)
+%    \item Abstract
+%	\item Table of Contents
+%	\item List of Figures
+%	\item List of Tables
+%	\end{enumerate}
+%\item Upon binding, the front cover must contain the EXACT CONTENT AND FORMAT as that of your thesis’ title page.
+%\end{enumerate}
+\section{Numerical approximations}
+In order to calculate a function under a additively and multiplicatively homomorphic cryptosystem, it is necessary to express the function in terms of addition and multiplication operations.
+In this section, we discuss approximation for the logarithm ($\log(1+x)$) and power ($x^\gamma$) functions using only addition, subtraction, multiplication, and division operations.
+\subsection{Approximation for $\log(1+x)$}
+
+We approximate the function $f(x)=\log(1+x)$ using a similar method to that described in
+\cite{khattri_new_2009}.
+We consider the integral
+\begin{align*}
+  \int_{n}^{n+1}{\frac{1}{x}\diff x}=\log{(1+\frac{1}{n})}.
+\end{align*}
+This integral can be approximated using Legendre-Gauss quadrature.
+
+\subsection{Approximation for $x^r$}
+To approximate $x^r$ for any $r \in \mathbb{R}$, we rewrite $x^r$ as follows:
+\begin{align*}
+  x^\gamma = e^{\log{x^r}} = e^{r\log{x}}.
+\end{align*}
+This expression can then be approximated using the Taylor series expansion for $e^x$, which converges for all $x$.
+\begin{align*}
+  e^x &= \sum_{n=0}^{\infty}{\frac{x^n}{n!}}\\
+  \Rightarrow e^{r\log{x}} &= \sum_{n=0}^{\infty}{\frac{(r\log{x})^n}{n!}}
+\end{align*}
+As we already have an approximation for the natural logarithm, we can evaluate partial sums of the above infinite series to arrive at approximations for $x^r$.
