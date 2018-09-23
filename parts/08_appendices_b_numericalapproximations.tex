@@ -16,25 +16,53 @@
 %	\end{enumerate}
 %\item Upon binding, the front cover must contain the EXACT CONTENT AND FORMAT as that of your thesis’ title page.
 %\end{enumerate}
-\section{Numerical approximations}
+\chapter{NUMERICAL APPROXIMATIONS}
 In order to calculate a function under a additively and multiplicatively homomorphic cryptosystem, it is necessary to express the function in terms of addition and multiplication operations.
 In this section, we discuss approximation for the logarithm ($\log(1+x)$) and power ($x^\gamma$) functions using only addition, subtraction, multiplication, and division operations.
-\subsection{Approximation for $\log(1+x)$}
-
+%TODO: Explain why standard methods for transcedental function approximation cannot be applied here.
+%TODO: Include citations for this chapter
+\section{Approximation for $\log(1+x)$}
 We approximate the function $f(x)=\log(1+x)$ using a similar method to that described in
 \cite{khattri_new_2009}.
-We consider the integral
+We let $x = 1/n$ and consider the integral
 \begin{align*}
-  \int_{n}^{n+1}{\frac{1}{x}\diff x}=\log{(1+\frac{1}{n})}.
+  \int_{n}^{n+1}{\frac{1}{x}\diff x}=\log{\left(1+\frac{1}{n}\right)}.
 \end{align*}
-This integral can be approximated using Legendre-Gauss quadrature.
+This integral can be approximated using the five-point Gauss-Legendre quadrature rule, yielding the following approximation:
+\begin{equation}\label{eq:standardquadrature}
+  \log(1+x) =
+  \frac{137x^5 + 2310x^4 + 9870x^3 + 15120x^2 + 7560x}
+  {30x^5 + 900x^4 + 6300x^3 + 16800x^2 + 18900x + 7560}.
+\end{equation}
+While this closed form approximation is accurate for values of $x$ near zero, it diverges from $\log{(1+x)}$ significantly for large values of $x$.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=.6\linewidth,\keepaspectratio]{figures/StandardQuadrature.png}
+    \caption{Graph of $\log{(1+x)}$ and the approximation in equation \ref{eq:standardquadrature}}
+    \label{fig:standardquadrature}
+\end{figure}
+As we only need accuracy for $x \in [0, 255]$, we can scale up the approximation by a constant factor $\alpha$ as follows:
+\begin{align*}
+  \log{(1+x)} &= \log{\left(\frac{\alpha + \alpha x}{\alpha}\right)}\\
+  &= \log{(\alpha + \alpha x)} - \log{\alpha}\\
+  &= \log{\left(\alpha+\frac{\alpha}{n}\right)} - \log{\alpha}\\
+  &= \int_{\alpha n}^{\alpha+1}{\frac{1}{x}\diff x} - \log{\alpha}
+\end{align*}
 
-\subsection{Approximation for $x^r$}
+Using the five-point Gauss-Legendre quadrature rule with $\alpha = 1/20$, we arrive at the approximation:
+\begin{align}\label{eq:scaledquadrature}
+  \begin{split}
+    &\log(1+x) \\
+    &=\frac{137x^5 + 33185x^4 + 931370x^3 - 13403630x^2 - 289469315x - 713567363}
+    {30(x^5 + 505x^4 + 42010x^3 + 923010x^2 + 5722005x + 8040501)} + \log{20}
+  \end{split}
+\end{align}
+\section{Approximation for $x^r$}
 To approximate $x^r$ for any $r \in \mathbb{R}$, we rewrite $x^r$ as follows:
 \begin{align*}
   x^\gamma = e^{\log{x^r}} = e^{r\log{x}}.
 \end{align*}
-This expression can then be approximated using the Taylor series expansion for $e^x$, which converges for all $x$.
+This expression can then be approximated using the Maclaurin series expansion for $e^x$, which converges for all $x$.
 \begin{align*}
   e^x &= \sum_{n=0}^{\infty}{\frac{x^n}{n!}}\\
   \Rightarrow e^{r\log{x}} &= \sum_{n=0}^{\infty}{\frac{(r\log{x})^n}{n!}}

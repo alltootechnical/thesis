@@ -4,11 +4,10 @@
 
 %\section{Sample Questions for Different Studies}
 %The following table presents three sample studies, as well as the guide questions that may help direct the discussion in each section of the paper. You may use this as another reference in writing your paper.
-
-\section{Description of basic cryptosystems used}
-\subsection{Pallier cryptosystem}
+\chapter{DESCRIPTION OF CRYPTOSYSTEMS}
+\section{Pallier cryptosystem}
 \subsection{Key generation}
-We choose two large primes $p$ and $q$, and set $n = pq, \lambda = \mathrm\lcm(p-1,q-1)$.
+We choose two large primes $p$ and $q$, and set $n = pq, \lambda = \mathrm{lcm}(p-1,q-1)$.
 
 Define the public key as $(g,n)$ and the private key
 \begin{align*}
@@ -28,3 +27,4 @@ For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorp
     D(E(m_1)^{m_2}\bmod n^2)= m_1m_2\bmod n & \text{ (used for binary multiplication)}
   \end{align*}
 \end{description}
+\section{Performing real number operations using integer-based cryptosystems}
