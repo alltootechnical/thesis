@@ -17,8 +17,13 @@
 %\item Upon binding, the front cover must contain the EXACT CONTENT AND FORMAT as that of your thesis’ title page.
 %\end{enumerate}
 \chapter{NUMERICAL APPROXIMATIONS}
-In order to calculate a function under a additively and multiplicatively homomorphic cryptosystem, it is necessary to express the function in terms of addition and multiplication operations.
-In this section, we discuss approximation for the logarithm ($\log(1+x)$) and power ($x^\gamma$) functions using only addition, subtraction, multiplication, and division operations.
+Transcendental functions such as the exponential and logarithmic functions are usually implemented in computer hardware and software libraries using minimax polynomials, which are determined numerically using the Remez algorithm \cite{harrison_computation_1999}.
+However, the Remez algorithm relies on iteratively refining the polynomial coefficients, which requires knowledge of the argument passed to the exponential or logarithmic function.
+
+We cannot directly apply this approach in privacy-preserving image processing as we do not have knowledge of the exact value of the function arguments. In order to calculate a function under a  homomorphic cryptosystem, it is necessary to express the function in terms of the homomorphic operations.
+In this section, we discuss approximations for the logarithm ($\log(1+x)$) and power ($x^r$) functions using only addition, subtraction, multiplication, and division operations.
+.
+
 %TODO: Explain why standard methods for transcedental function approximation cannot be applied here.
 %TODO: Include citations for this chapter
 \section{Approximation for $\log(1+x)$}
@@ -58,6 +63,7 @@ Using the five-point Gauss-Legendre quadrature rule with $\alpha = 1/20$, we arr
     {30(x^5 + 505x^4 + 42010x^3 + 923010x^2 + 5722005x + 8040501)} + \log{20}
   \end{split}
 \end{align}
+
 \section{Approximation for $x^r$}
 To approximate $x^r$ for any $r \in \mathbb{R}$, we rewrite $x^r$ as follows:
 \begin{align*}

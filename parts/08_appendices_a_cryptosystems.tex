@@ -6,14 +6,25 @@
 %The following table presents three sample studies, as well as the guide questions that may help direct the discussion in each section of the paper. You may use this as another reference in writing your paper.
 \chapter{DESCRIPTION OF CRYPTOSYSTEMS}
 \section{Pallier cryptosystem}
-\subsection{Key generation}
+The Pallier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Pallier, is a probabilistic encryption scheme which is based on the composite residuosity class problem. The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic. In this section, we state the encryption and decryption algorithms of the Pallier cryptosystem and state its homomorphic properties.
+\subsection{Description}
+We first define a function $L(x)$ as the largest integer $v$ greater than zero such that $x-1 \geq vn$.
 We choose two large primes $p$ and $q$, and set $n = pq, \lambda = \mathrm{lcm}(p-1,q-1)$.
-
-Define the public key as $(g,n)$ and the private key
+Then we select an integer $g$, $0\leq g \leq n^2$ such that $\mathrm{gcd}(L(g^\lambda \bmod n^2), n) = 1$.
+Define the public key as $(g,n)$ and the private key $(p,q)$.
+The encryption function to encrypt a plaintext $m \in \mathbb{Z}_n$ is defined as
 \begin{align*}
-  E(m) = g^m \cdot r^n \mod{n^2}
+  E(m) = g^m \cdot r^n \mod{n^2},
 \end{align*}
+where $r$ is a random non-negative integer less than $n^2$.
+
+The decryption function to decrypt a ciphertext $c \in \mathbb{Z}_{n^2}$ is defined as:
+\begin{align*}
+  D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n
+\end{align*}
+
 \subsection{Homomorphic properties}
+The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These operations are defined as follows.
 For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
 \begin{description}
   \item[Additive homomorphism]
@@ -23,8 +34,18 @@ For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorp
   \end{align*}
   \item[Multiplicative homomorphism]
   \begin{align*}
-    D(E(m_1)^k\bmod n^2)= km_1\bmod n & \text{ (used to multiply a constant)}\\
-    D(E(m_1)^{m_2}\bmod n^2)= m_1m_2\bmod n & \text{ (used for binary multiplication)}
+    D(E(m_1)^k\bmod n^2)= km_1\bmod n & \text{ (used to multiply a plaintext constant)}
   \end{align*}
 \end{description}
-\section{Performing real number operations using integer-based cryptosystems}
+In order to implement some image operations covered in this study, we require the exponentiation of ciphertexts to integer powers, i.e. we require a function $f$ so that
+\begin{align*}
+	D(f(E(m))) = m^k\bmod n
+\end{align*}
+for any plaintext $m \in \mathbb{Z}_n$, and positive integer $k$.
+
+This is trivially feasible if $m^2 \bmod n$ and $E(m^2 \bmod n)$ are known, since one can use the following equation to raise $m$ to any positive integer power.
+\begin{align*}
+	D(E(m^k)^(m^2 \bmod n)\bmod n^2)= m^{k+2}\bmod n
+\end{align*}
+
+We now show that including $m^2 \bmod n$ and $E(m^2 \bmod n)$ in a transmitted message does not compromise the security of the Paillier cryptosystem. Clearly, $E(m^2 \bmod n)$ can be shared without compromising security, as it is an encrypted quantity. The quantity $m^2 \bmod n$ does not expose the value of $m$ as finding the value of $m \bmod n$ given $m^2 \bmod n$ is a problem equivalent in hardness to the factorization of large integers \cite{crandall_prime_2005}.
