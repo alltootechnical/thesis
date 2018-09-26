@@ -29,7 +29,7 @@ For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorp
 \begin{description}
   \item[Additive homomorphism]
   \begin{align*}
-    D(E(m_1)g^{m_2}\bmod n^2)=(m_1+m_2)\bmod n & \text{ (used to add a constant)}\\
+    D(E(m_1)g^k\bmod n^2)=(m_1+k)\bmod n & \text{ (used to add a constant)}\\
     D(E(m_1)E(m_2)\bmod n^2)=(m_1+m_2)\bmod n & \text{ (used for binary addition)}
   \end{align*}
   \item[Multiplicative homomorphism]
@@ -45,13 +45,14 @@ for any plaintext $m \in \mathbb{Z}_n$, and positive integer $k$.
 
 This is trivially feasible if $m^2 \bmod n$ and $E(m^2 \bmod n)$ are known, since one can use the following equation to raise $m$ to any positive integer power.
 \begin{align*}
-	D(E(m^k)^(m^2 \bmod n)\bmod n^2)= m^{k+2}\bmod n
+	D(E(m^k)^{m^2 \bmod n}\bmod n^2) &= m^2m^k\bmod n \\
+	&= m^{k+2}\bmod n
 \end{align*}
 
 We now show that including $m^2 \bmod n$ and $E(m^2 \bmod n)$ in a transmitted message does not compromise the security of the Paillier cryptosystem. Clearly, $E(m^2 \bmod n)$ can be shared without compromising security, as it is an encrypted quantity. The quantity $m^2 \bmod n$ does not expose the value of $m$ as finding the value of $m \bmod n$ given $m^2 \bmod n$ is a problem equivalent in hardness to the factorization of large integers \cite{crandall_prime_2005}.
 
 \section{The Benaloh cryptosystem}
-The Benaloh cryptosystem, initially proposed by Josh Benaloh in \cite{benaloh_dense_1994}, allows for the encryption of integers in $\mathbb{Z}_r$ for some odd integer $r$. We present here a corrected version by Fousse, et al. \cite{fousse_benalohs_2010} which corrects an error in the key generation algorithm which prevents accurate decryption in some cases.
+The Benaloh cryptosystem, initially proposed by Josh Benaloh in \cite{benaloh_dense_1994}, allows for the encryption of integers in $\mathbb{Z}_r$ for some odd integer $r$. It relies on the hardness of the \textit{discrete logarithm problem}. We present here a corrected version by Fousse, et al. \cite{fousse_benalohs_2010} which corrects an error in the key generation algorithm which prevents accurate decryption in some cases.
 
 \subsection{Key generation, encryption and decryption algorithms}
 We choose an integer $r$ and two large primes $p$ and $q$ such that the following conditions hold:
@@ -111,3 +112,50 @@ As the multiplicative homomorphism was not presented in the original paper, we p
   This implies $\mathrm{gcd}(u^k,n)=1$, so $u^k \bmod n$ is a random integer in $\mathbb{Z}_n^*$.
   Therefore, $y^{km} \cdot (u^k \bmod{n})^r \bmod{n} = E(m)^k\bmod n$ is a valid encryption of the message $km$.
 \end{proof}
+
+\section{Dasgupta-Pal cryptosystem}
+The Dasgupta-Pal cryptosystem is a fully homomorphic cryptosystem proposed in 2016 by Smaranika Dasgupta and S. K. Pal \cite{dasgupta_design_2016}, which encrypts integer plaintexts in $\mathbb{Z}_n$ to polynomial ciphertexts. We begin our presentation of the Dasgupta-Pal cryptosystem with the following definition.
+
+Given a message $m \in \mathbb{n}$, we denote
+\begin{align*}
+		m_p(x) = a_0 + a_1x + a_2x^2 + \cdots + a_kx^k
+\end{align*}
+where $a_ka_{k-1}\cdots a_2a_1_0$ is the binary representation of $m$.
+\subsection{Key generation, encryption and decryption algorithms}
+Let $\ell$ denote the security parameter of the cryptosystem.
+Let $S_k$ be a prime number with $\ell$ bits.
+Choose a random even integer $z$ of length $\log_2{\ell}$.
+
+Let the secret key be $S_k$, and let the refresh key be $R_k = z \cdot S_k$. The secret key is kept private to the encrypting/decrypting parties, while the refresh key is made publicly available.
+
+The scheme defines the encryption algorithm for a message $m \in \mathbb{Z}_n$ as follows:
+\begin{align*}
+	E(m) = y(x) + S_k\times d(x)
+\end{align*}
+where
+$y(x)$ is a polynomial of degree $n$ such that $m_p(x) \equiv y(x) \bmod S_k$ and $d(x)$ is a randomly chosen polynomial of degree $n$.
+
+Furthermore, the decryption algorithm to recover $m_p(x)$ from a ciphertext polynomial $c(x)$ as
+\begin{align*}
+	m_p(x) = c(x) \bmod S_k \bmod 2
+\end{align*}
+Thus $D(c(x))$ is defined as the integer recovered from the coefficients of the polynomial $c(x) \bmod S_k \bmod 2$
+
+As a fully homomorphic cryptosystem, homomorphic operations on ciphertext introduce noise which may interfere with decryption.
+To eliminate noise from a polynomial ciphertext, the following refresh function is used.
+\begin{align*}
+	R(c(x)) = c(x) \bmod R_k
+\end{align*}
+
+\subsection{Homomorphic properties}
+It has been shown \cite{dasgupta_design_2016} that the following properties hold for all integer messages $m_1, m_2 \in \mathbb{Z}_n$ in the Dasgupta-Pal cryptosystem.
+\begin{description}
+  \item[Additive homomorphism]
+  \begin{align*}
+    D(E(m_1) + E(m_2))= m_1+m_2 & \text{ (used for binary addition)}
+  \end{align*}
+  \item[Multiplicative homomorphism]
+  \begin{align*}
+    D(E(m_1) \times E(m_2))= m_1 \times m_2 & \text{ (used for binary multiplication)}
+  \end{align*}
+\end{description}
