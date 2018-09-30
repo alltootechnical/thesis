@@ -1,7 +1,9 @@
 \section{Common Image Operations}
-In this study, we wish to see how the primitive operations of addition and multiplication supported by homomorphic cryptosystems can be applied to image processing operations. These operations are performed on digital images. We can represent a digital image $R$ as an $M \times N$ matrix of pixel intensity values, each value in the range $\left[0, L-1\right]$, for some positive integer $L$. There are two types of basic operations in image processing, intensity transformations, which map an intensity value to another, spatial filters which assist in operations such as edge detection and image blurring.
+In this study, we wish to see how the primitive operations of addition and multiplication supported by homomorphic cryptosystems can be applied to image processing operations. We now present a list of basic operations performed on digital images.
 
-\subsection{Intensity Transformation}
+We represent a digital image $R$ as an $M \times N$ matrix of pixel intensity values, each value in the range $\left[0, L-1\right]$, for some positive integer $L$. There are two types of basic operations in image processing, intensity transformations, which map an intensity value to another, spatial filters which assist in operations such as edge detection and image blurring.
+
+\subsection{Intensity Transformations}
 To define an intensity transformation on an image $R$, we define a function $T$ which maps a pixel value $r$ to a new value $r^\prime$, which we can write as $r^\prime = T\left(r\right)$. This function is then applied to every pixel in $R$. Examples of intensity transformations are image negation, log transformation, and power-law transformation.
 
 Image negation is an example of an intensity transformation, where the resulting image would be similar to a photographic negative~\cite{gonzalez_digital_2008}. An image negation operation is defined as:

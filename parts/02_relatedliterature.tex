@@ -1,29 +1,15 @@
 \chapter{REVIEW OF RELATED LITERATURE}
 
-We first present an introduction to the concepts in cryptography, starting from the definition of a cryptosystem up to homomorphic encryption schemes, along with some examples from the literature. Then, we present some concepts in image processing, a suitable application of cryptography, specifically the common image operations used. Finally, we present related work that attempts to apply image processing operations with homomorphic cryptosystems, as well as their advantages and limitations.
+We begin with an overview of image processing, in which we define the image processing operations we are interested in
+We first introduce concepts in cryptography and define homomorphic cryptosytems. along with some examples from the literature. Then, we present some concepts in , a suitable application of cryptography, specifically the common image operations used. Finally, we present related work that attempts to apply image processing operations with homomorphic cryptosystems, as well as their advantages and limitations.
 
-\input{parts/02_relatedliterature_01homomorphiccryptosystems}
-\input{parts/02_relatedliterature_02commonimageprocessingoperations}
-
-\section{Related Work and Previous Implementations}
-% CryptoImg
-
-% example of homomorphic encryption / image manipulation past work
-
-% minor limitation: improvement on previous work, but not a direct comparison
-
-% major limitation: does not discuss security: are modified images also secure?
-
-There has been work done regarding the application of homomorphic cryptosystems in image processing. In particular, Ziad, et al. introduced a library called \textit{CryptoImg} that uses the homomorphic properties of the Paillier cryptosystem to apply image operations securely \cite{ziad_cryptoimg:_2016}. This shows that it is indeed possible to do various image operations in a homomorphic cryptosystem. Ziad, et al. also showed experimental results establishing the slow performance of image operations uner a homomorphic cryptosystem. For instance, while sharpening and applying a Sobel filter each take less than a second when applied to a $512\times 512$ plaintext image, when applied to an encrypted image, sharpening required at least 238.257 seconds, and applying the Sobel filter required at least 147.567 seconds \cite{ziad_cryptoimg:_2016}.
-
-However, a major limitation of \textit{CryptoImg} is that it does not consider image security. Even though the authors have established that the Paillier cryptosystem itself cannot be broken \cite{ziad_cryptoimg:_2016}, we believe that a cryptanalysis of the encrypted images after they have been operated is necessary, since image operations may be considered additional information in a known plaintext attack.
-
-Furthermore, Ziad, et al. only presented a visual comparison and evaluation to establish the quality of the recovered images. We believe that additional image quality benchmarks, such as those presented in \cite{ahmed_benchmark_2016, ahmad_efficiency_2012}, would allow for quantitative comparisons of image quality.
-
-This study can be further improved by also considering the use of fully homomorphic cryptosystems such as the one presented by Dasgupta and Pal \cite{dasgupta_design_2016}, and the fully homomorphic cryptosystem introduced by Smart and Vercauteren \cite{hutchison_fully_2010} and improved by Gentry and Halevi  \cite{hutchison_implementing_2011}. These fully homomorphic cryptosytems have yet to be implemented for image processing operations.
-
-% HElib
-Another related work would be the implementation of a fully homomorphic encryption. Halevi and Shoup \cite{garay_algorithms_2014} introduced \textit{HElib}, a library that implements the Brakerski--Gentry--Vaikuntanathan (BGV) homomorphic cryptosystem. This library also makes use of various optimizations to speed up the homomorphic operations, due to homomorphic cryptosystems being slower than other cryptosystems \cite{sen_homomorphic_2013}.
+\input{parts/02_relatedliterature_01commonimageprocessingoperations}
+%facial recognition - theory
+\input{parts/02_relatedliterature_02homomorphiccryptosystems}
+\input{parts/02_relatedliterature_03partiallyhomomorphic}
+\input{parts/02_relatedliterature_04fullyhomomorphic}
+%facial recognition - implementation
+\input{parts/02_relatedliterature_05previousimplementations}
 
 \section{Summary}
 We have seen how various image processing operations make use of a series of additions and multiplications. Because of this, it is possible to use a homomorphic cryptosystem in order to apply image operations directly on encrypted images, as demonstrated by the \textit{CryptoImg} library.

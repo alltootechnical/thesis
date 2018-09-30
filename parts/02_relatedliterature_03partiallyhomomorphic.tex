@@ -1,0 +1,118 @@
+\section{Partially homomorphic cryptosystems}
+
+In this section, we will present two classical partially homomorphic cryptosystems which we will be testing in the study: the Pallier cryptosystem and the Benaloh cryptosystem. Both of these cryptosystems encrypt integer plaintexts and are additively homomorphic.
+
+We will then show that the cryptosystems can be modified to support limited polynomial evaluation: given an encrypted message $m$, evaluate
+
+These operations
+\subsection{The Pallier cryptosystem}
+The Pallier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Pallier, is a probabilistic encryption scheme which is based on the composite residuosity class problem. The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic. We now state the encryption and decryption algorithms of the Pallier cryptosystem and its homomorphic properties.
+
+\subsubsection{Pallier cryptosystem description}
+We first define a function $L(x)$ as the largest integer $v$ greater than zero such that $x-1 \geq vn$.
+We choose two large primes $p$ and $q$, and set $n = pq, \lambda = \mathrm{lcm}(p-1,q-1)$.
+Then we select an integer $g$, $0\leq g \leq n^2$ such that $\mathrm{gcd}(L(g^\lambda \bmod n^2), n) = 1$.
+We denote the public key as $(g,n)$ and the private key $(p,q)$.
+
+The encryption function to encrypt a plaintext $m \in \mathbb{Z}_n$ given a public key $(g,n)$ is defined as
+\begin{align*}
+  E(m) = g^m \cdot r^n \mod{n^2},
+\end{align*}
+where $r$ is a random non-negative integer less than $n^2$.
+
+The decryption function to decrypt a ciphertext $c \in \mathbb{Z}_{n^2}$ given a private key $(p,q)$ is defined as:
+\begin{align*}
+  D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n
+\end{align*}
+
+\subsubsection{Homomorphic Properties}
+The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These operations are defined as follows.
+For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
+\begin{description}
+  \item[Additive homomorphism]
+  \begin{align*}
+    D(E(m_1)g^k\bmod n^2)=(m_1+k)\bmod n & \text{ (used to add a constant)}\\
+    D(E(m_1)E(m_2)\bmod n^2)=(m_1+m_2)\bmod n & \text{ (used for binary addition)}
+  \end{align*}
+  \item[Multiplicative homomorphism]
+  \begin{align*}
+    D(E(m_1)^k\bmod n^2)= km_1\bmod n & \text{ (used to multiply a plaintext constant)}
+  \end{align*}
+\end{description}
+In order to implement some image operations covered in this study, we require the exponentiation of ciphertexts to integer powers, i.e. we require a function $f$ so that
+\begin{align*}
+	D(f(E(m))) = m^k\bmod n
+\end{align*}
+for any plaintext $m \in \mathbb{Z}_n$, and positive integer $k$.
+
+This is trivially feasible if $m^2 \bmod n$ and $E(m^2 \bmod n)$ are known, since one can use the following equation to raise $m$ to any positive integer power.
+\begin{align*}
+	D(E(m^k)^{m^2 \bmod n}\bmod n^2) &= m^2m^k\bmod n \\
+	&= m^{k+2}\bmod n
+\end{align*}
+
+We now show that including $m^2 \bmod n$ and $E(m^2 \bmod n)$ in a transmitted message does not compromise the security of the Paillier cryptosystem. Clearly, $E(m^2 \bmod n)$ can be shared without compromising security, as it is an encrypted quantity. The quantity $m^2 \bmod n$ does not expose the value of $m$ as finding the value of $m \bmod n$ given $m^2 \bmod n$ is a problem equivalent in hardness to the factorization of large integers \cite{crandall_prime_2005}.
+
+\subsection{The Benaloh cryptosystem}
+The Benaloh cryptosystem, initially proposed by Josh Benaloh in \cite{benaloh_dense_1994}, allows for the encryption of integers in $\mathbb{Z}_r$ for some odd integer $r$. It relies on the hardness of the \textit{discrete logarithm problem}, and is a generalization of the classic Goldwasser--Micali cryptosystem~\cite{goldwasser_probabilistic_1984}. We present here a corrected version by Fousse, et al. \cite{fousse_benalohs_2010} which corrects an error in the key generation algorithm which prevents accurate decryption in some cases.
+
+\subsubsection{Benaloh cryptosystem description}
+We choose an integer $r$ and two large primes $p$ and $q$ such that the following conditions hold:
+\begin{itemize}
+  \item $r$ divides $(p-1)$;
+  \item $\mathrm{gcd}(r,(p-1)/r)=1$;
+  \item $\mathrm{gcd}(r,q-1)=1$.
+\end{itemize}
+Next, let $n=pq$ and $\phi = (p-1)(q-1)$, and choose $y\in \mathbb{Z}_n^* = \{ x \in \mathbb{Z}_n | \mathrm{gcd}(x,n)=1 \}$ such that the following conditions hold:
+\begin{itemize}
+  \item $y^{\phi/r}\neq 1 \bmod n$;
+  \item For all prime factors $s$ of $r$, $y^{\phi/s}\neq 1 \bmod n$.
+\end{itemize}
+We denote the public key to be $(y,r,n)$ and the private key to be $(p,q)$.
+
+The encryption function to encrypt a plaintext $m \in \mathbb{Z}_r$ is defined as
+\begin{align*}
+  E(m) = y^m \cdot u^r \mod{n},
+\end{align*}
+where $u$ is a random integer in $\mathbb{Z}_n^*$.
+
+The decryption function to decrypt a ciphertext $c \in \mathbb{Z}_{n}$ is defined as:
+\begin{align*}
+  D(c) = \log_x{c^{\phi/r}} \mod n
+\end{align*}
+where $x = y^{\phi/r}$ and $\log_x{y} = k$ such that $x^k = y \bmod n$.
+
+Decryption requires the computation of the discrete logarithm, which can be done using a linear search when $r$ is small. For large values of $r$, the baby-step giant-step algorithm can be used to perform decryption in $O(\sqrt{r})$ time \cite{benaloh_dense_1994}.
+
+\subsubsection{Homomorphic Properties}
+Similar to the Paillier cryptosystem, the Benaloh cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message.
+For all $m_1,m_2 \in \mathbb{Z}_r$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
+\begin{description}
+  \item[Additive homomorphism]
+  \begin{align*}
+    D(E(m_1)y^{m_2}\bmod n^2)=(m_1+m_2)\bmod n & \text{ (used to add a constant)}\\
+    D(E(m_1)E(m_2)\bmod n^2)=(m_1+m_2)\bmod n & \text{ (used for binary addition)}
+  \end{align*}
+  \item[Multiplicative homomorphism]
+  \begin{align*}
+    D(E(m_1)^k\bmod n)= km_1\bmod n & \text{ (used to multiply a plaintext constant)}
+  \end{align*}
+\end{description}
+
+As the multiplicative homomorphism was not presented in the original paper, we provide a short proof here.
+\begin{proof}
+  Let $m \in \mathbb{Z}_r$ and $k\in \mathbb{N}$.
+  We consider $E(m)^k\bmod n = (y^m \cdot u^r \bmod{n})^k\bmod n$.
+  \begin{align*}
+    (y^m \cdot u^r \bmod{n})^k\bmod n
+    &= (y^m \cdot u^r)^k \bmod{n}\\
+    &= (y^m)^k \cdot (u^r)^k \bmod{n}\\
+    &= y^{km} \cdot (u^k)^r \bmod{n}\\
+    &= y^{km} \cdot (u^k \bmod{n})^r \bmod{n}
+  \end{align*}
+  Since $u$ is a random integer in $\mathbb{Z}_n^*$, $\mathrm{gcd}(u,n)=1$.
+  This implies $\mathrm{gcd}(u^k,n)=1$, so $u^k \bmod n$ is a random integer in $\mathbb{Z}_n^*$.
+  Therefore, $y^{km} \cdot (u^k \bmod{n})^r \bmod{n} = E(m)^k\bmod n$ is a valid encryption of the message $km$.
+\end{proof}
+
+Similar to the Paillier cryptosystem, we can include $m^2$ and $E(m^2)$ in the transmitted message
