@@ -1,0 +1,32 @@
+\section{Non-Linear Intensity Transformations}
+We now describe how we are to implement the logarithm and power-law transformations.
+\subsection{Logarithm Transformation}
+The logarithm transformation of a pixel intensity value $x$ is defined as
+\begin{align}
+	T\left(x\right) = c \log\left(1 + x\right)
+\end{align}
+where $c$ is a constant.
+
+In order to perform this transformation under a homomorphic cryptosystem, we must provide an approximation for $\log\left(1 + x\right)$ in terms of addition and multiplication operations (or their inverses). We have derived a closed form approximation in Appendix \ref{sec:logapproximation}.
+\begin{align}
+	\label{eq:scaledquadraturech3}
+  \begin{split}
+    &\log(1+x) \\
+    &=\frac{137x^5 + 33185x^4 + 931370x^3 - 13403630x^2 - 289469315x - 713567363}
+    {30(x^5 + 505x^4 + 42010x^3 + 923010x^2 + 5722005x + 8040501)} + \log{20}
+  \end{split}
+\end{align}
+
+\subsection{Power-Law Transformation}
+The power-law transformation of a pixel intensity value $x$ is defined as
+\begin{equation}
+    T\left(x\right) = cx^{\gamma}
+\end{equation}
+where $c>0$ and $\gamma > 0$.
+
+Similar to the logarithm transformation, we must provide an approximation for $x^\gamma$.
+We have derived an infinite series in Appendix \ref{sec:logapproximation}.
+\begin{align*}
+	x^\gamma &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}\\
+\end{align*}
+Partial sums of the above infinite series can be calculated based on the closed form approximation for the logarithm in Equation \ref{eq:scaledquadraturech3}. 
