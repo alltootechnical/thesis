@@ -1,5 +1,5 @@
-\section{Fully homomorphic cryptosystems}
-\subsection{Dasgupta-Pal cryptosystem}
+\section{Fully Homomorphic Cryptosystems}
+\subsection{Dasgupta-Pal Cryptosystem}
 The Dasgupta-Pal cryptosystem is a fully homomorphic cryptosystem proposed in 2016 by Smaranika Dasgupta and S. K. Pal \cite{dasgupta_design_2016}, which encrypts integer plaintexts in $\mathbb{Z}_n$ to polynomial ciphertexts. We begin our presentation of the Dasgupta-Pal cryptosystem with the following definition.
 
 Given a message $m \in \mathbb{n}$, we denote
@@ -7,19 +7,22 @@ Given a message $m \in \mathbb{n}$, we denote
 		m_p(x) = a_0 + a_1x + a_2x^2 + \cdots + a_kx^k
 \end{align*}
 where $a_ka_{k-1}\cdots a_2a_1_0$ is the binary representation of $m$.
-\subsubsection{Dasgupta-Pal cryptosystem description}
+
+In the original scheme presented in \cite{dasgupta_design_2016}, the secret key $S_k$ is set to be a large prime. In Appendix \autoref{ch:correction}, we present a case where the Dasgupta-Pal cryptosystem fails and prove that setting the secret key $S_k = 2p$, where $p$ is a large prime, corrects errors in the Dasgupta-Pal cryptosystem.
+We now decribe the correct cryptosystem.
+\subsubsection{Corrected Dasgupta-Pal Cryptosystem Description}
 Let $\ell$ denote the security parameter of the cryptosystem.
-Let $S_k$ be a prime number with $\ell$ bits.
+Let $S_k = 2p$, where $p$ is a prime number with $\ell - 1$ bits.
 Choose a random even integer $z$ of length $\log_2{\ell}$.
 
 Let the secret key be $S_k$, and let the refresh key be $R_k = z \cdot S_k$. The secret key is kept private to the encrypting/decrypting parties, while the refresh key is made publicly available.
 
-The scheme defines the encryption algorithm for a message $m \in \mathbb{Z}_n$ as follows:
+The scheme defines the encryption algorithm for a message $m$ as follows:
 \begin{align*}
 	E(m) = y(x) + S_k\times d(x)
 \end{align*}
 where
-$y(x)$ is a polynomial of degree $n$ such that $m_p(x) \equiv y(x) \bmod S_k$ and $d(x)$ is a randomly chosen polynomial of degree $n$.
+$y(x)$ is a polynomial of degree $n$ such that $m_p(x) \equiv y(x) \bmod S_k$ and $d(x)$ is a randomly chosen polynomial of degree $n$. This encrypts each coefficient of of $m_p(x)$ by adding some multiple of $S_k$ to it. Through this process, each bit of the message is encrypted separately.
 
 Furthermore, the decryption algorithm to recover $m_p(x)$ from a ciphertext polynomial $c(x)$ as
 \begin{align*}
@@ -27,23 +30,27 @@ Furthermore, the decryption algorithm to recover $m_p(x)$ from a ciphertext poly
 \end{align*}
 Thus $D(c(x))$ is defined as the integer recovered from the coefficients of the polynomial $c(x) \bmod S_k \bmod 2$
 
-As a fully homomorphic cryptosystem, homomorphic operations on ciphertext introduce noise which may interfere with decryption.
+Dasgupta and Pal note that homomorphic operations on ciphertext introduce noise which may interfere with decryption, due to the potential increase in ciphertext values.
 To eliminate noise from a polynomial ciphertext, the following refresh function is used.
 \begin{align*}
 	R(c(x)) = c(x) \bmod R_k
 \end{align*}
 
-\subsubsection{Homomorphic properties}
-It has been shown \cite{dasgupta_design_2016} that the following properties hold for all integer messages $m_1, m_2 \in \mathbb{Z}_n$ in the Dasgupta-Pal cryptosystem.
+\subsubsection{Homomorphic Properties of the Dasgupta-Pal Cryptosystem}
+It has been shown \cite{dasgupta_design_2016} that the following properties hold for all integer messages $m_1, m_2 \in \mathbb{Z}_n$ in the Dasgupta-Pal cryptosystem. These properties arise since each coefficient in a ciphertext polynomial is essentially an independently encrypted bit of the original message.
 \begin{description}
-  \item[Additive homomorphism]
-  \begin{align*}
-    D(E(m_1) + E(m_2))= m_1+m_2 & \text{ (used for binary addition)}
-  \end{align*}
-  \item[Multiplicative homomorphism]
-  \begin{align*}
-    D(E(m_1) \times E(m_2))= m_1 \times m_2 & \text{ (used for binary multiplication)}
-  \end{align*}
+	\item[XOR on ciphertexts]
+	An exclusive or (XOR) operation on integer messages can be achieved by adding the coefficients pairwise between two ciphertexts.
+	\begin{align*}
+		D(E(m_1)+E(m_2)) = m_1 \text{ XOR } m_2
+	\end{align*}
+	\item[AND on ciphertexts]
+	Similarly, pair-wise multiplication of
+	\begin{align*}
+		D(E(a) \otimes E(b)) = a \text{ AND } b = ab \bmod 2
+	\end{align*}
+	where $\otimes$ denotes pairwise multiplication,
+	\begin{align*}
+		\sum_{i=1}^n{a_ix^i} \otimes \sum_{i=1}^n{b_ix^i} = \sum_{i=1}^n{a_ib_ix^i}.
+	\end{align*}
 \end{description}
-
-\section{}
