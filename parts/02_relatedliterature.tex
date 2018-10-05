@@ -1,15 +1,17 @@
 \chapter{REVIEW OF RELATED LITERATURE}
 
-We begin with an overview of image processing, in which we define the image processing operations we are interested in
-We first introduce concepts in cryptography and define homomorphic cryptosytems. along with some examples from the literature. Then, we present some concepts in , a suitable application of cryptography, specifically the common image operations used. Finally, we present related work that attempts to apply image processing operations with homomorphic cryptosystems, as well as their advantages and limitations.
+We will now provide an overview of the \textit{CryptoImg} project, which our study is primarily based on. Then, we define the image processing operations we are interested in implementing in this study and
+After establishing our desired image processing operations, introduce concepts in cryptography and define the four homomorphic cryptosystems we will be testing in the study.
 
-\input{parts/02_relatedliterature_01commonimageprocessingoperations}
+\input{parts/02_relatedliterature_01cryptoimg}
+\input{parts/02_relatedliterature_02commonimageprocessingoperations}
 %facial recognition - theory
-\input{parts/02_relatedliterature_02homomorphiccryptosystems}
-\input{parts/02_relatedliterature_03partiallyhomomorphic}
-\input{parts/02_relatedliterature_04fullyhomomorphic}
+\input{parts/02_relatedliterature_03facialrecognition}
+\input{parts/02_relatedliterature_04homomorphiccryptosystems}
+\input{parts/02_relatedliterature_05partiallyhomomorphic}
+\input{parts/02_relatedliterature_06fullyhomomorphic}
 %facial recognition - implementation
-\input{parts/02_relatedliterature_05previousimplementations}
+\input{parts/02_relatedliterature_07previousimplementations}
 
 \section{Summary}
 We have seen how various image processing operations make use of a series of additions and multiplications. Because of this, it is possible to use a homomorphic cryptosystem in order to apply image operations directly on encrypted images, as demonstrated by the \textit{CryptoImg} library.
