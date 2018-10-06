@@ -30,7 +30,7 @@ The Paillier cryptosystem supports additive homomorphism as well as the multipli
 For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
 \begin{align*}
   D(E(m_1)g^k\bmod n^2)=(m_1+k)\bmod n & \text{ (used to add a constant)}\\
-  D(E(m_1)E(m_2)\bmod n^2)=(m_1+m_2)\bmod n & \text{ (used for binary addition)}
+  D(E(m_1)E(m_2)\bmod n^2)=(m_1+m_2)\bmod n & \text{ (used for binary addition)}\\
   D(E(m_1)^k\bmod n^2)= km_1\bmod n & \text{ (used to multiply a plaintext constant)}
 \end{align*}
 
@@ -82,7 +82,7 @@ The DGK cryptosystem supports additive homomorphism as well as the multiplicatio
 For all $m_1,m_2 \in \mathbb{Z}_u$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
 \begin{align*}
     D(E(m_1)g^k)=(m_1+k)\bmod u & \text{ (used to add a constant)}\\
-    D(E(m_1)E(m_2))=(m_1+m_2)\bmod u & \text{ (used for binary addition)}
+    D(E(m_1)E(m_2))=(m_1+m_2)\bmod u & \text{ (used for binary addition)}\\
     D(E(m_1)^k)= km_1\bmod u & \text{ (used to multiply a plaintext constant)}
 \end{align*}
 

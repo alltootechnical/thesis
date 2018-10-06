@@ -4,7 +4,7 @@
 
 %\section{Sample Questions for Different Studies}
 %The following table presents three sample studies, as well as the guide questions that may help direct the discussion in each section of the paper. You may use this as another reference in writing your paper.
-\chapter{CORRECTION TO THE DASGUPTA-PAL CRYPTOSYSTEM}
+\chapter{CORRECTION FOR DASGUPTA-PAL}
 \label{ch:correction}
 \section{Bitwise Description of the Dasgupta-Pal Cryptosystem}
 The Dasgupta-Pal cryptosystem \cite{dasgupta_design_2016} encrypts each bit in a bit string independently.
@@ -67,7 +67,7 @@ However, evaluating Equation \ref{eq:cornercase_ciphertext} yields:
 \end{align*}
 Since $\underbrace{1 \text{ XOR } 1 \text{ XOR } \cdots \text{ XOR } 1}_{S_k \text{ times}} = 1\neq 0 = D(\underbrace{E(1)+E(1)+\cdots+E(1)}_{S_k \text{ times}})$, we have shown an instance where incorrect decryption occurs given a sequence of operations on ciphertexts.
 
-\subsection{Proposed Correction and Proof of Correctness}
+\section{Proposed Correction and Proof of Correctness}
 We now show that setting the secret key $S_k$ to $2p$, where $p$ is a prime, fixes the issue in the original cryptosystem.
 \begin{theorem}
 	Suppose $S_k = 2p$, where $p$ is a prime. Then when addition or multiplication is performed between any two ciphertexts, correct decryption is assured.
