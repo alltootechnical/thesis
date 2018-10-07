@@ -1,0 +1,60 @@
+%We will also take note of whether or not a candidate operation is impossible to perform under a given cryptosystem.  We let $R(x,y)$ denote the intensity at coordinate $(x,y)$ in the source image, and $S(x,y)$ denote the intensity at coordinate $(x,y)$ in the resulting image. We further suppose that the intensity values of pixels are in the range $[0, L-1]$.
+%\begin{description}
+%	\item[Intensity transformations.] Transformations on the intensities of each of the pixels on an image. The following definitions hold for all $x,y$.
+%	\begin{enumerate}
+%		\item Image negation: $S(x,y) = L - 1 - R(x,y)$.
+%		\item Log transformation: $S(x,y) = c\log{(1 + R(x,y))}$, $c \geq 0$.
+%		\item Power-law transformation: $S(x,y) = c[R(x,y)]^\gamma$, $c > 0, \gamma > 0$.
+%	\end{enumerate}
+%	\item[Spatial filters.] Filters implemented by performing a convolution between an $M\times N$ source image and an $m\times n$ kernel. Let $k$ be a kernel. Then the corresponding spatial filter is given by
+%	\begin{align}
+%		S(x,y) = \sum_{s=1}^m{\sum_{t=1}^n{k(s,t)R(x+s,y+t)}}.
+%	\end{align}
+%	Morphological operations such as erosion and dilation can be achieved using convolution as well.
+%\end{description}
+
+\section{Non-Linear Intensity Transformations}
+Aside from implementing the homomorphic encryption and decryption algorithms, we will also implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}.
+We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Pailler, DGK), the following considerations will be made regarding required homomorphic operations not supported by the cryptosystems:
+\begin{enumerate}
+	\item If exponentiation is required, the secure exponentiation protocol in section \ref{ssec:exponentiationprotocol} will be used.
+	\item If multiplication of ciphertexts $E(m_1), E(m_2)$ is required, the following protocol will be used:
+	\begin{itemize}
+		\item Bob calculates $E(m_1+m_2)$ and using the exponentiation protocol, acquires $E(m_1^2),E(m_2^2),E((m_1+m_2)^2)$.
+		\item Bob can recover the product of the ciphertexts by computing
+		\begin{align*}
+			E((m_1+m_2)^2) - E(m_1^2) - E(m_2^2) = E(2m_1m_2),
+		\end{align*}
+		then carrying out the required constant multiplication to obtain $E(2m_1m_2)$.
+	\end{itemize}
+\end{enumerate}
+\subsection{Logarithm Transformation}
+The logarithm transformation of a pixel intensity value $x$ is defined as
+\begin{align}
+	T\left(x\right) = c \log\left(1 + x\right)
+\end{align}
+where $c$ is a constant.
+
+In order to perform this transformation under a homomorphic cryptosystem, we must provide an approximation for $\log\left(1 + x\right)$ in terms of addition and multiplication operations (or their inverses). We have derived a closed form approximation in Appendix \ref{sec:logapproximation}.
+\begin{align}
+	\label{eq:scaledquadraturech3}
+  \begin{split}
+    &\log(1+x) \\
+    &=\frac{137x^5 + 33185x^4 + 931370x^3 - 13403630x^2 - 289469315x - 713567363}
+    {30(x^5 + 505x^4 + 42010x^3 + 923010x^2 + 5722005x + 8040501)} + \log{20}
+  \end{split}
+\end{align}
+
+\subsection{Power-Law Transformation}
+The power-law transformation of a pixel intensity value $x$ is defined as
+\begin{equation}
+    T\left(x\right) = cx^{\gamma}
+\end{equation}
+where $c>0$ and $\gamma > 0$.
+
+Similar to the logarithm transformation, we must provide an approximation for $x^\gamma$.
+We have derived an infinite series in Appendix \ref{sec:logapproximation}.
+\begin{align*}
+	x^\gamma &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
+\end{align*}
+Partial sums of the above infinite series can be calculated based on the closed form approximation for the logarithm in Equation \ref{eq:scaledquadraturech3}.
