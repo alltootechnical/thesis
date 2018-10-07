@@ -8,13 +8,13 @@ We will present two such cryptosystems, the Dasgupta-Pal cryptosystem, which we 
 \subsection{The Dasgupta-Pal Cryptosystem}
 The Dasgupta-Pal cryptosystem is a fully homomorphic cryptosystem proposed in 2016 by Smaranika Dasgupta and S. K. Pal \cite{dasgupta_design_2016}, which encrypts integer plaintexts in $\mathbb{Z}_n$ to polynomial ciphertexts. We begin our presentation of the Dasgupta-Pal cryptosystem with the following definition.
 
-Given a message $m \in \mathbb{n}$, we denote
+Given a message $m \in \mathbb{Z}$, we denote
 \begin{align*}
 		m_p(x) = a_0 + a_1x + a_2x^2 + \cdots + a_kx^k
 \end{align*}
 where $a_ka_{k-1}\cdots a_2a_1_0$ is the binary representation of $m$.
 
-In the original scheme presented in \cite{dasgupta_design_2016}, the secret key $S_k$ is set to be a large prime. In Appendix \autoref{ch:correction}, we present a case where the Dasgupta-Pal cryptosystem fails and prove that setting the secret key $S_k = 2p$, where $p$ is a large prime, corrects errors in the Dasgupta-Pal cryptosystem.
+In the original scheme presented in \cite{dasgupta_design_2016}, the secret key $S_k$ is set to be a large prime. In Appendix \ref{chap:correction}, we present a case where the Dasgupta-Pal cryptosystem fails and prove that setting the secret key $S_k = 2p$, where $p$ is a large prime, corrects errors in the Dasgupta-Pal cryptosystem.
 We now decribe the correct cryptosystem.
 \subsubsection{Corrected Dasgupta-Pal Cryptosystem Description}
 Let $\ell$ denote the security parameter of the cryptosystem.
@@ -32,14 +32,14 @@ $y(x)$ is a polynomial of degree $n$ such that $m_p(x) \equiv y(x) \bmod S_k$ an
 
 Furthermore, the decryption algorithm to recover $m_p(x)$ from a ciphertext polynomial $c(x)$ as
 \begin{align*}
-	m_p(x) = c(x) \bmod S_k \bmod 2
+	m_p(x) = c(x) \bmod S_k \bmod 2.
 \end{align*}
-Thus $D(c(x))$ is defined as the integer recovered from the coefficients of the polynomial $c(x) \bmod S_k \bmod 2$
+Thus $D(c(x))$ is defined as the integer recovered from the coefficients of the polynomial $c(x) \bmod S_k \bmod 2$.
 
 Dasgupta and Pal note that homomorphic operations on ciphertext introduce noise which may interfere with decryption, due to the potential increase in ciphertext values.
-To eliminate noise from a polynomial ciphertext, the following refresh function is used.
+To eliminate noise from a polynomial ciphertext, the following refresh function is used:
 \begin{align*}
-	R(c(x)) = c(x) \bmod R_k
+	R(c(x)) = c(x) \bmod R_k.
 \end{align*}
 
 \subsubsection{Homomorphic Properties of the Dasgupta-Pal Cryptosystem}
@@ -60,12 +60,13 @@ It has been shown \cite{dasgupta_design_2016} that the following properties hold
 		\sum_{i=1}^n{a_ix^i} \otimes \sum_{i=1}^n{b_ix^i} = \sum_{i=1}^n{a_ib_ix^i}.
 	\end{align*}
 \end{description}
-Arbitrary computation on data can thus be achived using these bitwise operations.
+
+Arbitrary computation on data can thus be achived using these bitwise operations. While the Dasgupta-Pal cryptosystem requires significant amounts of memory, as each bit of plaintext is encrypted into an integer, this approach provides a flexible method to perform relatively fast arbitrary computation on encrypted data. Encryption and decryption in the Dasgupta-Pal cryptosystem are accomplished using few arithmetic operations.
 
 \subsection{HElib and the BGV Cryptosystem}
 The BGV (Brakerski-Gentry-Vaikuntanathan) cryptosystem \cite{cryptoeprint:2011:277} is a fully homomorphic cryptosystem created based on the ring-learning with error problem. The BGV cryptosystem was constructed to surpass the limitations of prior fully homomorphic cryptosystems, which were based on the first fully homomorphic cryptosystem by Gentry \cite{gentry_fully_2009}.
 
-The details regarding the construction of the BGV cryptosystem are beyond the scope of this paper. For this study, we will be using \textit{HElib} \cite{garay_algorithms_2014}, an open-source library which implements the BGV cryptosystem with optimizations to improve efficiency \cite{hutchison_fully_2010,cryptoeprint:2011:566}.
+The details regarding the construction of the BGV cryptosystem are beyond the scope of this paper. For this study, we will be using \textit{HElib} \cite{garay_algorithms_2014}, an open-source library which implements the BGV cryptosystem with optimizations to improve efficiency. Evaluation of operations on 120 inputs in HELib was performed in around 4 minutes, with an average of 2 seconds to process a single input \cite{hutchison_fully_2010,cryptoeprint:2011:566}.
 
 The \textit{HElib} library has been adapted to Python using the Pyfhel library \cite{pyfhel_2018} maintained by Ibarrondo, Laurent (SAP) and Onen (EURECOM), and licensed under the GNU GPL v3 license. The Pyfel library is a Python API for the HElib library, which supports the following operations on vectors/scalars of integers or binary ciphertexts:
 \begin{itemize}

@@ -14,7 +14,11 @@ After establishing our desired image processing operations, introduce concepts i
 \input{parts/02_relatedliterature_07previousimplementations}
 
 \section{Summary}
-%% TODO: UPDATE THIS SUMMARY
-We have seen how various image processing operations make use of a series of additions and multiplications. Because of this, it is possible to use a homomorphic cryptosystem in order to apply image operations directly on encrypted images, as demonstrated by the \textit{CryptoImg} library.
+We have seen how privacy-preserving image operations have been implemented in the literature using partially homomorphic cryptosystems. \textit{CryptoImg} provided a suite of linear image processing operations using the Paillier cryptosystem, while Erkin, et al. have implemented a privacy-preserving version of the eigenfaces approach to facial recognition developed by Turk and Pentland.
 
-In particular, we aim to address the shortcomings of \textit{CryptoImg} by developing a library to test various homomorphic encryption schemes with the help of the \textit{HElib} library to be able to implement fully homomorphic encryption schemes efficiently. This helps us determine the practicality of using homomorphic cryptosystems in image processing, especially when dealing with more complex image operations.
+We have presented as well several areas in which our study will expand on the research so far.
+\begin{enumerate}
+  \item We have shown two fully homomorphic cryptosystems, the Dasgupta-Pal cryptosystem and the BGV cryptosystem. While these cryptosystems are generally less efficient than partially homomorphic cryptosystems, they do not require additional protocols for exponentiation.
+  \item Due to the general limitations of partially homomorphic systems, attempts at applying homomorphic cryptography to applications such as image processing and facial recognition have mainly been restricted to linear operations on ciphertext. We have shown that there are basic image processing operations which are non-linear, which we can implement.
+  \item While privacy-preserving facial recognition has been accomplished by Erkin, et al., privacy-preserving facial detection is an area of research which has yet to explored.
+\end{enumerate}
