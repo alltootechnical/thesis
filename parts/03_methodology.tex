@@ -29,7 +29,7 @@ Four homomorphic encryption schemes will be investigated. For cryptosystems with
 Lab computers in Faura Hall, Ateneo de Manila University will be used to perform the computations, and processing time will be tracked using built-in timing functions.
 The processing time for all cases will be recorded.
 
-\subsection{Evaluating Image Quality for Intensity Transformations}
+\subsection{Image Quality of Intensity Transformations}
 In this section, we discuss the image quality metrics we will use for assessing the performance of non-linear intensity transformations.
 
 We will first obtain standard test images from~\cite{gonzalez_image_nodate}. Grayscale images will be used in the study.
@@ -72,7 +72,12 @@ We first perform three tests to ascertain the preservation of image quality afte
 
 \subsection{Facial Recognition Tests}
 %% TODO: Brian, can you fill this part up?
+The method for secure facial recognition using eigenfaces by Erkin, et al. \cite{hutchison_privacy-preserving_2009-2} will be implemented for this study.
+Training data will be secured from The Database of Faces (\url{https://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html}) maintained by AT&T Laboratories Cambridge.
 
+Haar cascades will be implemented using homomorphic operations for facial detection.
+
+Each cryptosystem will be tested on accuracy (compared to unencrypted facial detection and recognition) and processing speed.
 \section{Summary}
 In summary, the study will consist of
 \begin{itemize}
