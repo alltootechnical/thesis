@@ -15,7 +15,7 @@
 
 \section{Non-Linear Intensity Transformations}
 Aside from implementing the homomorphic encryption and decryption algorithms, we will also implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}.
-We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Pailler, DGK), the following considerations will be made regarding required homomorphic operations not supported by the cryptosystems:
+We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Paillier, DGK), the following considerations will be made regarding required homomorphic operations not supported by the cryptosystems:
 \begin{enumerate}
 	\item If exponentiation is required, the secure exponentiation protocol in section \ref{ssec:exponentiationprotocol} will be used.
 	\item If multiplication of ciphertexts $E(m_1), E(m_2)$ is required, the following protocol will be used:

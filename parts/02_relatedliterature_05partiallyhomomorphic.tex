@@ -1,11 +1,11 @@
 \section{Partially Homomorphic Cryptosystems}
 
-In this section, we will present two classical partially homomorphic cryptosystems which we will be testing in the study: the Pallier cryptosystem and the DGK cryptosystem. Both of these cryptosystems encrypt integer plaintexts and are additively homomorphic.
+In this section, we will present two classical partially homomorphic cryptosystems which we will be testing in the study: the Paillier cryptosystem and the DGK cryptosystem. Both of these cryptosystems encrypt integer plaintexts and are additively homomorphic.
 
 We will then show that the cryptosystems can be modified to support privacy-perserving polynomial evaluation in a client-server protocol: given an encrypted message $m$, evaluate $f(m)$ where $f$ is a polynomial function.
 
-\subsection{The Pallier Cryptosystem}
-The Pallier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Pallier, is a probabilistic encryption scheme which is based on the composite residuosity class problem. The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic. We now state the encryption and decryption algorithms of the Pallier cryptosystem and its homomorphic properties.
+\subsection{The Paillier Cryptosystem}
+The Paillier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Paillier, is a probabilistic encryption scheme which is based on the composite residuosity class problem. The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic. We now state the encryption and decryption algorithms of the Paillier cryptosystem and its homomorphic properties.
 
 \subsubsection{Key Generation}
 We first define a function $L(x)$ as the largest integer $v$ greater than zero such that $x-1 \geq vn$.
@@ -25,7 +25,7 @@ The decryption function to decrypt a ciphertext $c \in \mathbb{Z}_{n^2}$ given a
   D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n
 \end{align*}
 
-\subsubsection{Homomorphic Properties of the Pailler Cryptosystem}
+\subsubsection{Homomorphic Properties of the Paillier Cryptosystem}
 The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These operations are defined as follows.
 For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
 \begin{align*}
@@ -165,11 +165,11 @@ As the multiplicative homomorphism was not presented in the original paper, we p
 %  Therefore, $y^{km} \cdot (u^k \bmod{n})^r \bmod{n} = E(m)^k\bmod n$ is a valid encryption of the message $km$.
 %\end{proof}
 
-\subsection{General Exponentiation Protocol for Pailler and DGK}
+\subsection{General Exponentiation Protocol for Paillier and DGK}
 \label{ssec:exponentiationprotocol}
 In order to perform polynomial evaluation, we first present a protocol for privacy-preserving exponentiation to a positive integer power, adapted from the protocol to calculate Euclidean distances used in \cite{hutchison_privacy-preserving_2009}.
 
-The following protocols apply to both the Pailler and DGK cryptosystems, as they share similar homomorphisms.
+The following protocols apply to both the Paillier and DGK cryptosystems, as they share similar homomorphisms.
 
 Suppose Alice encrypts an integer $x$ and sends it so Bob has $E(x)$, and wants to obtain $E(x^2)$ without exposing the value of $x$.
 \begin{itemize}

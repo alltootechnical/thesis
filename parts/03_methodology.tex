@@ -1,7 +1,7 @@
 \chapter{METHODOLOGY}
 
 In this study we apply four homomorphic encryption schemes~\cite{ziad_cryptoimg:_2016, pieprzyk_efficient_2007, dasgupta_design_2016, garay_algorithms_2014} for use in image processing and facial recognition applications.
-While the Pailler and DGK cryptosystems have been implemented for use in image processing in~\cite{ziad_cryptoimg:_2016, hutchison_privacy-preserving_2009}, the other cryptosystems have to be adapted for this study.
+While the Paillier and DGK cryptosystems have been implemented for use in image processing in~\cite{ziad_cryptoimg:_2016, hutchison_privacy-preserving_2009}, the other cryptosystems have to be adapted for this study.
 
 Two experiments will be conducted in this study:
 \begin{enumerate}
@@ -16,7 +16,7 @@ The current version of the OpenCV library (3.4.2) will be forked from the open-s
 
 Four homomorphic encryption schemes will be investigated. For cryptosystems with readily available open-source implementations, such implmentations will be used. For the remaining cryptosystems, the encryption and decryption methods will be implemented in Python.
 \begin{itemize}
-	\item The Pailler cryptosystem will be incorporated using the implementation at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
+	\item The Paillier cryptosystem will be incorporated using the implementation at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
 	\item The BGV cryptosystem will be implemented using the Pyfhel library (\url{https://github.com/ibarrond/Pyfhel}) using a HElib backend from (\url{https://github.com/shaih/HElib}).
 	\item The DGK and Dasgupta-Pal cryptosystem will be implemented from scratch.
 \end{itemize}
@@ -76,7 +76,7 @@ We first perform three tests to ascertain the preservation of image quality afte
 \section{Summary}
 In summary, the study will consist of
 \begin{itemize}
-	\item An implementation of an OpenCV library which implements the Pailler, DGK, Dasgupta-Pal, and BGV homomorphic cryptosystems.
+	\item An implementation of an OpenCV library which implements the Paillier, DGK, Dasgupta-Pal, and BGV homomorphic cryptosystems.
 	\item An implementation of image processing operations (intensity transformations, facial recognition) under the above cryptosystems.
 	\item Conducting tests for image quality, processing time, using standard test images from~\cite{gonzalez_image_nodate}.
 \end{itemize}
