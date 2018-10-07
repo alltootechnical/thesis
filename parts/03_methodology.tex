@@ -18,7 +18,7 @@ Four homomorphic encryption schemes will be investigated. For cryptosystems with
 \begin{itemize}
 	\item The Paillier cryptosystem will be incorporated using the implementation at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
 	\item The BGV cryptosystem will be implemented using the Pyfhel library (\url{https://github.com/ibarrond/Pyfhel}) using a HElib backend from (\url{https://github.com/shaih/HElib}).
-	\item The DGK and Dasgupta-Pal cryptosystem will be implemented from scratch.
+	\item The DGK and Dasgupta--Pal cryptosystem will be implemented from scratch.
 \end{itemize}
 
 \input{parts/03_methodology_01integertorealnumbers}
@@ -73,15 +73,17 @@ We first perform three tests to ascertain the preservation of image quality afte
 \subsection{Facial Recognition Tests}
 %% TODO: Brian, can you fill this part up?
 The method for secure facial recognition using eigenfaces by Erkin, et al. \cite{hutchison_privacy-preserving_2009-2} will be implemented for this study.
-Training data will be secured from The Database of Faces (\url{https://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html}) maintained by AT&T Laboratories Cambridge.
+%Training data will be secured from The Database of Faces (\url{https://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html}) maintained by AT&T Laboratories Cambridge.
+Training data will be secured from the \texttt{faces94} database (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex. 
 
 Haar cascades will be implemented using homomorphic operations for facial detection.
 
 Each cryptosystem will be tested on accuracy (compared to unencrypted facial detection and recognition) and processing speed.
+
 \section{Summary}
 In summary, the study will consist of
 \begin{itemize}
-	\item An implementation of an OpenCV library which implements the Paillier, DGK, Dasgupta-Pal, and BGV homomorphic cryptosystems.
+	\item An implementation of an OpenCV library which implements the Paillier, DGK, Dasgupta--Pal, and BGV homomorphic cryptosystems.
 	\item An implementation of image processing operations (intensity transformations, facial recognition) under the above cryptosystems.
 	\item Conducting tests for image quality, processing time, using standard test images from~\cite{gonzalez_image_nodate}.
 \end{itemize}
