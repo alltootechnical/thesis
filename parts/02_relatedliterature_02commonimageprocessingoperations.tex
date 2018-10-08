@@ -1,7 +1,7 @@
 %We discuss two basic types of image processing operations, \textit{intensity transformations}, which map an intensity value to another, and \textit{spatial filters} which consider intensity values from regions of pixels to perform operations such as edge detection, image blurring and sharpening.
 
 \section{Image Intensity Transformations}
-We represent a digital image $R$ as an $M \times N$ matrix of pixel intensity values, each value in the range $\left[0, L-1\right]$, for some positive integer $L$. We use $R(x,y)$ represents the entry at the $x$th row and $y$th column of a matrix $R$.
+We represent a digital image $R$ as an $M \times N$ matrix of pixel intensity values, each value in the range $\left[0, L-1\right]$, for some positive integer $L$. We use $R(x,y)$ to represent the entry at the $x$th row and $y$th column of a matrix $R$.
 An intensity transformation on an image $R$ can be defined as a function $T$ which maps a pixel value $r$ to a new value $r^\prime$, which we can write as $r^\prime = T\left(r\right)$. This function is then applied to every pixel in $R$.
 The \textit{CryptoImg} library implemented two types of linear intensity transformations: image negation and brightness control.
 
