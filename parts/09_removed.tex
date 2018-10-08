@@ -1,0 +1,50 @@
+\subsection{Evaluating Cryptographic Security}
+After performing tests to evaluate image quality, we then perform tests for cryptographic security, as enumerated in~\cite{ahmed_benchmark_2016}: entropy analysis, correlation coefficient analysis (CC), NPCR and UACI.
+\begin{description}
+	\item [Information entropy analysis.] In information theory, the entropy function $H(X)$ is defined in~\cite{bauer_information_2005} as
+	\begin{align}
+		H(X) = - \sum_{a:p_X(a)>0}{p_X(a)\log_2{p_X(a)}}
+	\end{align}
+	where $p_X(a)$ denotes the probability that the random variable $X$ takes on the value $a$.
+	In the analysis of image encryption, $H(X)$ is computed for the values of the ciphertext pixels. To ensure security against entropy attacks, $H(X)$ must be as close as possible to $\log_2{N}$, where $N$ is the number of possible pixel values~\cite{ahmed_benchmark_2016}.
+
+    We will compute $H(\mathrm{CDT})$ for every image operation, under each homomorphic cryptosystem, and compare the effects of each image operation on the entropy of the encrypted image. Ideally, performing image operations on encrypted images should still maintain a high level of entropy.
+	\item [Correlation coefficient analysis (CC).]
+		Images generally have a high degree of similarity between adjacent pixels. This correlation must be hidden in the encrypted image, even after performing image operations.
+		The correlation coefficient of an image can be computed between adjacent pixels either vertically, horizontal, or diagonally, and is defined in~\cite{ahmed_benchmark_2016} by:
+		\begin{align}
+            \mathrm{CC}(X,Y) = \frac{\sigma_{X,Y}}{\sqrt{\sigma_X}\times\sqrt{\sigma_Y}}
+		\end{align}
+		where
+		\begin{itemize}
+			\item $\sigma_X, \sigma_Y$ are the variances of $X$ and $Y$, respectively;
+			\item $\sigma_{XY}$ is the covariance of $X$ and $Y$.
+		\end{itemize}
+
+        For every $\mathrm{CDT}$ image, we will compute for the correlation coefficient (for vertical, horizontal and diagonal correlation) for every image operation, under each homomorphic cryptosystem.
+	\item [NPCR and UACI.]
+		The Number of Pixel Change Rate (NPCR) measures the number of pixels which are changed between the a plaintext and a ciphertext to quantify the amount of dispersion which occurs during encryption.
+
+		On the other hand, the Universal Average Change Intensity (UACI) measures the average difference in pixel intensity between two images.
+
+		The NPCR and UACI between two images $X$ and $Y$, each containing $N$ pixels indexed from $1$ to $N$ is defined in~\cite{wu_npcr_2011} as
+		\begin{align}
+            \mathrm{NPCR}(X,Y) &= \frac{1}{N}\sum_{i = 1}^{N}{D(X_i,Y_i)} \times 100\%\\
+            \mathrm{UACI}(X,Y) &= \frac{1}{L_{\max} \times N} \sum_{i = 1}^{N}{ |L(X_i) - L(Y_i)| } \times 100\%
+		\end{align}
+		where
+		\begin{itemize}
+			\item $X_i$ and $Y_i$ are the $i$th pixels of $X$ and $Y$, respectively;
+			\item $D$ is a difference function between pixels $A$ and $B$ defined by
+			\begin{align}
+				D(A,B) =
+				\begin{cases}
+					0 &  \text{if $A = B$},\\
+					1 &  \text{if $A \neq B$};
+				\end{cases}
+			\end{align}
+		\item $L_{\max}$ is the maximum intensity of a pixel;
+		\item $L(X_i)$ and $L(Y_i)$ are the intensities of pixels $X_i$ and $Y_i$, respectively.
+		\end{itemize}
+        We will calculate $\mathrm{NPCR}(\mathrm{PDT},\mathrm{CDT})$ and $\mathrm{UACI}(\mathrm{PDT},\mathrm{CDT})$  for every image operation, under each homomorphic cryptosystem. A high NPCR and UACI are desired to ensure high dispersion and security against differential attacks~\cite{ahmed_benchmark_2016}. Critical values for NPCR and UACI for given image sizes and bit depths are given in~\cite{wu_npcr_2011}.
+\end{description}

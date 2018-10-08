@@ -1,16 +1,22 @@
 \documentclass[oneside,12pt]{discsthesis}
 \usepackage{graphicx}
+\usepackage{amsthm}
 %\usepackage{multirow}
 %\usepackage{fancyvrb}
 \usepackage{tabularx}
-%\usepackage[titletoc]{appendix}
+\usepackage[titletoc]{appendix}
 \usepackage{subcaption}
 %%\usepackage{rotating}
 %%\usepackage{pdfpages}
 %\usepackage{lscape}
 %\usepackage{adjustbox}
 %\usepackage{longtable}
-%\usepackage{url}
+\usepackage{url}
+\usepackage{verbatim}
+
+% commands
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newtheorem{theorem}{Theorem}[chapter]
 
 \title{FinalManuscript_DISCS_UG}
 \author{acalab.imagegroup }
@@ -62,13 +68,11 @@
 \bibliographystyle{acm}
 \bibliography{thesis_refs}
 
-%\addappheadtotoc
-%\begin{appendices}
-%\chapter{INTRODUCTION AND SAMPLE GUIDE QUESTIONS}
-%\input{parts/08_appendices_a_introductionandsampleguidequestions}
-%\chapter{THESIS FORMATTING GUIDELINES}
-%\input{parts/08_appendices_b_thesisformattingguidelines}
-%\end{appendices}
+\addappheadtotoc
+\begin{appendices}
+\input{parts/08_appendices_a_cryptosystems}
+\input{parts/08_appendices_b_numericalapproximations}
+\end{appendices}
 
 
 \end{document}

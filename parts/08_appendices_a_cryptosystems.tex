@@ -1,0 +1,129 @@
+%\section{Introduction to the Appendices}
+
+%The Appendices is where you are enabled to present any additional or supplementary information relevant to your study, yet do not require highlighting within the actual paper, either because of its trivial nature or volume. These may in the form of figures, tables, or additional text detailing specific aspects about or related to the study.
+
+%\section{Sample Questions for Different Studies}
+%The following table presents three sample studies, as well as the guide questions that may help direct the discussion in each section of the paper. You may use this as another reference in writing your paper.
+\chapter{CORRECTION FOR DASGUPTA--PAL}
+\label{chap:correction}
+\section{Bitwise Description of the Dasgupta--Pal Cryptosystem}
+The Dasgupta--Pal cryptosystem \cite{dasgupta_design_2016} encrypts each bit in a bit string independently.
+In terms of the encryption of a single bit, the Dasgupta--Pal cryptosystem can be described as follows:
+\begin{description}
+	\item[Key generation]
+	Let the secret key, $S_k$ be a large prime.
+	Let the public refresh key, $R_k$, be $S_k \times z$, where $z$ is a large even integer.
+	\item[Encryption]
+	Given a message $m$, the encryption function is defined as
+	\begin{align*}
+		E(m) = m + S_kr
+	\end{align*}
+	where $r$ is a random integer.
+	\item[Decryption]
+	Given a ciphertext $c$, the decryption function is defined as
+	\begin{align*}
+		D(c) = c \bmod S_k \bmod 2
+	\end{align*}
+\end{description}
+The homomorphic operations are then defined as
+\begin{description}
+	\item[XOR on ciphertexts]
+	\begin{align*}
+		D(E(a)+E(b)) = a \text{ XOR } b = (a + b) \bmod 2
+	\end{align*}
+	\item[AND on ciphertexts]
+	\begin{align*}
+		D(E(a)\times E(b)) = a \text{ AND } b = ab \bmod 2
+	\end{align*}
+\end{description}
+After repeated operations on ciphertexts, the resulting ciphertext can grow in magnitude.
+To prevent storage issues and keep the ciphertext size small, a refresh function is used.
+\begin{description}
+	\item[Refresh function]
+	Given a ciphertext $c$, the refresh function is defined as
+	\begin{align*}
+		R(c) = c \bmod R_k
+	\end{align*}
+\end{description}
+\section{Cases Where Decryption Fails}
+We consider the following quantity:
+\begin{align}
+	\label{eq:cornercase_ciphertext}
+	D(\underbrace{E(1)+E(1)+\cdots+E(1)}_{S_k \text{ times}}).
+\end{align}
+Since $S_k$ is odd, the corresponding operation in the plaintext space is
+\begin{align*}
+	\label{eq:cornercase_plaintext}
+	\underbrace{1 \text{ XOR } 1 \text{ XOR } \cdots \text{ XOR } 1}_{S_k \text{ times}} = 1.
+\end{align*}
+However, evaluating Equation \ref{eq:cornercase_ciphertext} yields:
+\begin{align*}
+	D(\underbrace{E(1)+E(1)+\cdots+E(1)}_{S_k \text{ times}})
+	&= D\left(\sum_{i=1}^{S_k}{(1+S_kr_i)}\right)\\
+	&= D\left(S_k + S_k\sum_{i=1}^{S_k}{r_i}\right)\\
+	&= \left(S_k + S_k\sum_{i=1}^{S_k}{r_i}\right) \bmod S_k \bmod 2\\
+	&= 0 \bmod 2\\
+	&= 0.
+\end{align*}
+Since $\underbrace{1 \text{ XOR } 1 \text{ XOR } \cdots \text{ XOR } 1}_{S_k \text{ times}} = 1\neq 0 = D(\underbrace{E(1)+E(1)+\cdots+E(1)}_{S_k \text{ times}})$, we have shown an instance where incorrect decryption occurs given a sequence of operations on ciphertexts.
+
+\section{Proposed Correction and Proof of Correctness}
+We now show that setting the secret key $S_k$ to $2p$, where $p$ is a prime, fixes the issue in the original cryptosystem.
+\begin{theorem}
+	Suppose $S_k = 2p$, where $p$ is a prime. Then when addition or multiplication is performed between any two ciphertexts, correct decryption is assured.
+\end{theorem}
+\begin{proof}
+	Suppose $c_1, c_2$ are two ciphertexts such that
+	\begin{align*}
+		c_1 = a + S_kr_1\\
+		c_2 = b + S_kr_2
+	\end{align*}
+	We first consider addition. We want to show that $(c_1+c_2)\bmod S_k$ has the same parity as $a+b$.
+	By the division algorithm, we have $a+b = S_kq + r$, for some $q,r$, $q \geq 0, r > 0$. We can rewrite $c_1+c_2$ as
+	\begin{align*}
+		c_1+c_2 &= (a + S_kr_1) + (b + S_kr_2)\\
+		&= (a+b)+ S_k(r_1 + r_2)\\
+		&= (S_kq + r) + S_k(r_1 + r_2)\\
+		&= r + S_k(q + r_1 + r_2).
+	\end{align*}
+	Therefore $(c_1+c_2)\bmod S_k = r$.
+	It is enough to show that the parity of $a+b$ is the same as the parity of $r$. We consider cases based on the parity of $a+b$.
+	\begin{description}
+		\item[Case 1: $a+b$ is odd.]
+			Since $a+b = S_kq + r$, $S_kq + r$ must also be odd.
+			$S_k$ is even, so $S_kq$ is also even.
+			For $S_kq + r$ to be odd, $r$ must be odd, since $S_k$ is even.
+
+			Therefore, the parity of $a+b$ is the same as the parity of $r$.
+		\item[Case 2: $a+b$ is even.]
+			Since $a+b = S_kq + r$, $S_kq + r$ must also be even.
+			$S_k$ is even, so $S_kq$ is also even. For $S_kq + r$ to be even, $r$ must be even , since $S_k$ is even.
+
+			Therefore, the parity of $a+b$ is the same as the parity of $r$.
+	\end{description}
+	Therefore correct decryption is assured for the sum of ciphertexts.
+
+	We now consider multiplication. We want to show that $c_1c_2 \bmod S_k$ has the same parity as $ab$. Similar to the addition case, by the division algorithm, we can write $ab = S_kq + r$, $q > 0, r > 0$ for some $q,r$. We can rewrite $c_1c_2$ as
+	\begin{align*}
+		c_1c_2 &= (a + S_kr_1) \times (b + S_kr_2)\\
+		&= ab + S_k(br_1 + ar_2 + S_kr_1r_2)\\
+		&= (S_kq + r) + S_k(br_1 + ar_2 + S_kr_1r_2)\\
+		&= r + S_k(q + br_1 + ar_2 + S_kr_1r_2).
+	\end{align*}
+	Therefore $c_1c_2 \bmod S_k = r$.
+	It is enough to show that the parity of $ab$ is the same as the parity of $r$. We consider cases based on the parity of $ab$.
+	\begin{description}
+		\item[Case 1: $ab$ is odd.]
+			Since $ab = S_kq + r$, $S_kq + r$ must also be odd.
+			$S_k$ is even, so $S_kq$ is also even.
+			For $S_kq + r$ to be odd, $r$ must be odd, since $S_k$ is even.
+
+			Therefore, the parity of $a+b$ is the same as the parity of $r$.
+		\item[Case 2: $ab$ is even.]
+			Since $ab = S_kq + r$, $S_kq + r$ must also be even.
+			$S_k$ is even, so $S_kq$ is also even. For $S_kq + r$ to be even, $r$ must be even , since $S_k$ is even.
+
+			Therefore, the parity of $ab$ is the same as the parity of $r$.
+	\end{description}
+	Therefore, correct decryption is assured for both addition and multiplication of ciphertexts.
+\end{proof}
