@@ -22,7 +22,6 @@ However, the Remez algorithm relies on iteratively refining the polynomial coeff
 
 We cannot directly apply this approach in privacy-preserving image processing as we do not have knowledge of the exact value of the function arguments. In order to calculate a function under a  homomorphic cryptosystem, it is necessary to express the function in terms of the homomorphic operations.
 In this section, we discuss approximations for the logarithm ($\log(1+x)$) and power ($x^r$) functions using only addition, subtraction, multiplication, and division operations.
-.
 
 %TODO: Explain why standard methods for transcedental function approximation cannot be applied here.
 %TODO: Include citations for this chapter
@@ -68,7 +67,7 @@ This yields the following approximation:
 While this closed form approximation is accurate for values of $x$ near zero, it diverges from $\log{(1+x)}$ significantly for large values of $x$.
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.6\linewidth,\keepaspectratio]{figures/StandardQuadrature.png}
+    \includegraphics[width=.7\linewidth,\keepaspectratio]{figures/StandardQuadrature.png}
     \caption{Graph of $\log{(1+x)}$ and the approximation in equation \ref{eq:standardquadrature}}
     \label{fig:standardquadrature}
 \end{figure}
