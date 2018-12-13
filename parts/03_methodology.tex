@@ -82,10 +82,10 @@ Training and test data were secured from the \texttt{faces94} dataset (\url{http
 
 The facial recognition tests were done using ten-fold cross-validation for each cryptosystem, where the number of principal components used by the algorithm is fixed at $K=5$. 
 
-Prior to splitting the dataset, the images within each set are shuffled. Since there are twenty (20) images per set, two images are taken at a time for each round of cross-validation. The first round would take the first two images from each set as part of the test set, and the rest of the images will be part of the training set. Then, the succeeding round would take the next two images from each set as part of the test set. and so on until ten rounds have been done. After every cross-validation round, the accuracy score, confusion matrix, and total processing time were obtained. 
+Prior to splitting the dataset, the images within each set are shuffled. Since there are twenty (20) images per set, two images are taken at a time for each round of cross-validation. The first round would take the first two images from each set as part of the test set, and the rest of the images will be part of the training set. Then, the succeeding round would take the next two images from each set as part of the test set, and so on until ten rounds have been done. After every round of cross-validation, the accuracy score, confusion matrix, and total processing time were obtained. 
 
 \section{Summary}
-In summary, the study consisted of:
+In summary, the study consists of:
 \begin{itemize}
 	\item Creating a wrapper library that acts as a unified interface which implements the Paillier, DGK, Dasgupta--Pal, and BGV homomorphic cryptosystems.
 	\item An implementation of image processing operations (intensity transformations, facial recognition) under the above cryptosystems.
