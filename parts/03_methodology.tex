@@ -67,8 +67,10 @@ We first perform three tests to ascertain the preservation of image quality afte
 		\item $k_1 = 0.01, k_2 = 0.03$ by default, given in~\cite{ahmed_benchmark_2016}.
 	\end{itemize}
 	The SSIM is applied to the luminance value of two images to gauge structural similarity between neighboring pixels.
-    For the study, we computed $\mathrm{SSIM}(\mathrm{PDT}, \mathrm{CDT})$ for every image operation, under each homomorphic cryptosystem. Higher values of SSIM indicate higher structural similarity, and an SSIM of $1$ indicates that the two images are identical~\cite{ahmed_benchmark_2016}.
+	For the study, we computed $\mathrm{SSIM}(\mathrm{PDT}, \mathrm{CDT})$ for every image operation, under each homomorphic cryptosystem. Higher values of SSIM indicate higher structural similarity, and an SSIM of $1$ indicates that the two images are identical~\cite{ahmed_benchmark_2016}.
 \end{description}
+
+Computing for MSE, PSNR, and SSIM was done using the corresponding built-in functions from the scikit-image Python library \cite{scikit-image}.
 
 \subsection{Facial Recognition Tests}
 %% TODO: Brian, can you fill this part up? Yes
