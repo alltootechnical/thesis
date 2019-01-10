@@ -21,11 +21,11 @@ In terms of the encryption of a single bit, the Dasgupta--Pal cryptosystem can b
 \end{description}
 The homomorphic operations are then defined as
 \begin{description}
-	\item[XOR on ciphertexts]
+	\item[\textsc{xor} on ciphertexts]
 	\begin{align*}
 		D(E(a)+E(b)) = a \textsc{ xor } b = (a + b) \bmod 2
 	\end{align*}
-	\item[AND on ciphertexts]
+	\item[\textsc{and} on ciphertexts]
 	\begin{align*}
 		D(E(a)\times E(b)) = a \textsc{ and } b = ab \bmod 2
 	\end{align*}
@@ -115,7 +115,7 @@ We now show that setting the secret key $S_k$ to $2p$, where $p$ is a prime, fix
 			Therefore, the parity of $a+b$ is the same as the parity of $r$.
 		\item[Case 2: $ab$ is even.]
 			Since $ab = S_kq + r$, $S_kq + r$ must also be even.
-			$S_k$ is even, so $S_kq$ is also even. For $S_kq + r$ to be even, $r$ must be even , since $S_k$ is even.
+			$S_k$ is even, so $S_kq$ is also even. For $S_kq + r$ to be even, $r$ must be even, since $S_k$ is even.
 
 			Therefore, the parity of $ab$ is the same as the parity of $r$.
 	\end{description}
@@ -128,27 +128,29 @@ We now show that setting the secret key $S_k$ to $2p$, where $p$ is a prime, fix
 \newcommand*\diff{\mathop{}\!\mathrm{d}}
 
 Transcendental functions such as the exponential and logarithmic functions are usually implemented in computer hardware and software libraries using minimax polynomials, which are determined numerically using the Remez algorithm \cite{harrison_computation_1999}.
-However, the Remez algorithm relies on iteratively refining the polynomial coefficients, which requires knowledge of the argument passed to the exponential or logarithmic function.
+However, the Remez algorithm relies on iteratively refining the polynomial coefficients, which requires knowledge of the argument passed to the transcendental function.
 
 We cannot directly apply this approach in privacy-preserving image processing as we do not have knowledge of the exact value of the function arguments. In order to calculate a function under a  homomorphic cryptosystem, it is necessary to express the function in terms of the homomorphic operations.
 In this section, we discuss approximations for the logarithm ($\log(1+x)$) and power ($x^r$) functions using only addition, subtraction, multiplication, and division operations.
 
-%TODO: Explain why standard methods for transcedental function approximation cannot be applied here.
-%TODO: Include citations for this chapter
 \subsection{Approximation for $\log(1+x)$}
 \label{sec:logapproximation}
 We approximate the function $f(x)=\log(1+x)$ using a similar method to that described in
 \cite{khattri_new_2009}.
 We let $x = 1/n$ and consider the integral
-\begin{align*}
-  \int_{n}^{n+1}{\frac{1}{x}\diff x}=\log{\left(1+\frac{1}{n}\right)}.
-\end{align*}
+\begin{equation}
+	\label{eq:log_integral}
+  	\int_{n}^{n+1}{\frac{1}{x}\diff x}=\log{\left(1+\frac{1}{n}\right)}.
+\end{equation}
 
-This integral can be approximated using the five-point Gauss-Legendre quadrature rule \cite{kythe_quadrature_2002}, which is as follows:
+This integral can be approximated using the five-point Gauss-Legendre quadrature rule \cite{kythe_quadrature_2002}. We first convert the integral to an integral over the interval $[-1,1]$ using the following transformation:
 \begin{align*}
 	\int_a^b{f(x)\diff x}
-	&= \frac{b-a}{2}\int_{-1}^{1}{f\left(\frac{b-a}{2}x+\frac{a+b}{2}\right)\diff x}\\
-	\int_{-1}^{1}{f(x)\diff x} &= \sum_{i=1}^{5}{w_if(x_i)}
+	&= \frac{b-a}{2}\int_{-1}^{1}{f\left(\frac{b-a}{2}x+\frac{a+b}{2}\right)\diff x}.
+\end{align*}
+Then, we approximate the integral using the following summation:
+\begin{align*}
+  \int_{-1}^{1}{f(x)\diff x} &= \sum_{i=1}^{5}{w_if(x_i)},
 \end{align*}
 where
 \begin{multicols}{2}
@@ -158,7 +160,7 @@ where
 		w_2 &= \frac{1}{21}\sqrt{245-14\sqrt{70}}\\
 		w_3 &= -\frac{1}{21}\sqrt{245-14\sqrt{70}}\\
 		w_4 &= \frac{1}{21}\sqrt{245+14\sqrt{70}}\\
-		w_5 &= -\frac{1}{21}\sqrt{245+14\sqrt{70}}\\
+		w_5 &= -\frac{1}{21}\sqrt{245+14\sqrt{70}}
 	\end{align*}
 	\columnbreak
 	\begin{align*}
@@ -166,23 +168,25 @@ where
 		x_2 &= \frac{1}{900}\left( 322 + 13\sqrt{70}\right)\\
 		x_3 &= \frac{1}{900}\left( 322 + 13\sqrt{70}\right)\\
 		x_4 &= \frac{1}{900}\left( 322 - 13\sqrt{70}\right)\\
-		x_5 &= \frac{1}{900}\left( 322 - 13\sqrt{70}\right)\\
+		x_5 &= \frac{1}{900}\left( 322 - 13\sqrt{70}\right)
 	\end{align*}
 \end{multicols}
-This yields the following approximation:
+Applying this procedure to the integral in equation \ref{eq:log_integral} using SageMath 8.3 yields the following approximation:
 \begin{equation}\label{eq:standardquadrature}
   \log(1+x) \approx
   \frac{137x^5 + 2310x^4 + 9870x^3 + 15120x^2 + 7560x}
   {30x^5 + 900x^4 + 6300x^3 + 16800x^2 + 18900x + 7560}.
 \end{equation}
-While this closed form approximation is accurate for values of $x$ near zero, it diverges from $\log{(1+x)}$ significantly for large values of $x$.
+
+While the closed form approximation in equation \ref{eq:standardquadrature} is accurate for values of $x$ near zero, it diverges from $\log{(1+x)}$ significantly for large values of $x$, as shown in figure \ref{fig:standardquadrature}.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=.8\linewidth]{figures/StandardQuadrature.png}
     \caption{Graph of $\log{(1+x)}$ and the approximation in equation \ref{eq:standardquadrature}}
     \label{fig:standardquadrature}
 \end{figure}
-As we only need accuracy for $x \in [0, 255]$, we can scale the approximation by a constant factor $\alpha$ as follows:
+
+As we only need accuracy for arguments $x \in [0, 255]$, we can scale the approximation by a constant factor $\alpha$ as follows:
 \begin{align*}
   \log{(1+x)} &= \log{\left(\frac{\alpha + \alpha x}{\alpha}\right)}\\
   &= \log{(\alpha + \alpha x)} - \log{\alpha}\\
@@ -191,7 +195,7 @@ As we only need accuracy for $x \in [0, 255]$, we can scale the approximation by
   &= \int_{n}^{\alpha n + \alpha}{\frac{1}{x}\diff x} - \log{\alpha}
 \end{align*}
 
-Using the five-point Gauss-Legendre quadrature rule with $\alpha = 1/20$, we arrive at the approximation:
+Applying the five-point Gauss-Legendre quadrature rule with $\alpha = 1/20$ using SageMath 8.3, we arrive at the approximation:
 \begin{align}\label{eq:scaledquadrature}
   \begin{split}
     &\log(1+x) \\
@@ -200,7 +204,9 @@ Using the five-point Gauss-Legendre quadrature rule with $\alpha = 1/20$, we arr
     &+ \log{20}
   \end{split}
 \end{align}
-Below is a graph of the absolute error of the scaled approximation and the exact value of $\log{(1+x)}$.
+
+Figure \ref{fig:scaledquadrature} is a graph of the absolute error of the scaled approximation and the exact value of $\log{(1+x)}$. Using SageMath 8.3, it was numerically determined that the maximum absolute error of this approximation in the range $x\in[0,255]$ is approximately $0.0103315865985758$, occurring at $x=255$. This is an improvement from the approximation in equation \ref{eq:standardquadrature}, which has a maximum absolute error of $1.19717868468392$, similarly occurring at $x=255$.
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=.9\linewidth]{figures/ModifiedQuadratureAbsoluteError.png}
@@ -213,9 +219,11 @@ To approximate $x^\gamma$ for any $\gamma \in \mathbb{R}$, we rewrite $x^\gamma$
 \begin{align*}
   x^\gamma = e^{\log{x^\gamma}} = e^{\gamma\log{x}}.
 \end{align*}
+
 This expression can then be approximated using the Maclaurin series expansion for $e^x$, which converges for all $x$.
 \begin{align*}
   e^x &= \sum_{n=0}^{\infty}{\frac{x^n}{n!}}\\
   \Rightarrow e^{\gamma\log{x}} &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
 \end{align*}
+
 As we already have an approximation for the natural logarithm, we can evaluate partial sums of the above infinite series to arrive at approximations for $x^\gamma$.

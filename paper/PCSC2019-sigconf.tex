@@ -1,8 +1,11 @@
 \documentclass[sigconf]{acmart}
 \usepackage[utf8]{inputenc}
 \usepackage{multicol}
+\usepackage{multirow}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{xinttools}
+\usepackage{array}
 \usepackage{booktabs} % For formal tables
 
 \setcopyright{rightsretained}
@@ -51,13 +54,11 @@
 
 
 % The default list of authors is too long for headers.
-\renewcommand{\shorttitle}{Implementation and Analysis}
+\renewcommand{\shorttitle}{Impl. and Analysis of Homomorphic Facial Image Encryption and Manipulation}
 % \renewcommand{\shortauthors}{B. Trovato et al.}
 
 \begin{abstract}
-This paper provides a sample of a \LaTeX\ document which conforms,
-somewhat loosely, to the formatting guidelines for
-ACM SIG Proceedings.\footnote{This is an abstract footnote}
+Homomorphic cryptography allows for encrypted data to be modified and operated on without requiring decryption, although current homomorphic cryptosystems are either limited in their permitted operations or are significantly more time-intensive than standard non-homomorphic cryptosystems. Regardless, homomorphic cryptography has been targeted for use in secure image processing and facial recognition, due to their ability to maintain data privacy, In this paper, we compared the viability of the Paillier, Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK), Dasgupta--Pal, and Brakerski--Gentry--Vaikuntanathan (BGV) cryptosystems for facial image processing applications, by implementing a software library equipped with these cryptosystems, and comparing their time efficiency and accuracy. Furthermore, as an extension to previous research, we attempt to support non-linear image processing operations. Preliminary results have shown that the Pailler and Dasgupta--Pal cryptosystems are comparable in accuracy and may be used to approximate a logarithm transformation, but the Dasgupta--Pal cryptosystem is significantly slower.
 \end{abstract}
 
 %
@@ -95,7 +96,7 @@ ACM SIG Proceedings.\footnote{This is an abstract footnote}
 \ccsdesc[500]{Computing methodologies~Image processing}
 \ccsdesc[100]{Mathematics of computing~Quadrature}
   
-\keywords{ACM proceedings, \LaTeX, text tagging}
+\keywords{homomorphic encryption, image operations, facial recognition, numerical approximations}
 
 \maketitle
 
@@ -106,7 +107,7 @@ ACM SIG Proceedings.\footnote{This is an abstract footnote}
 
 \begin{acks}
   The authors would like to thank Dr. Yuhua Li for providing the
-  MATLAB code of the \textit{BEPS} method.
+  MATLAB code of the \textit{BEPS} method. Testing testing.
 
   The authors would also like to thank the anonymous referees for
   their valuable comments and helpful suggestions. The work is
