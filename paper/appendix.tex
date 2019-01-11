@@ -19,6 +19,7 @@ In terms of the encryption of a single bit, the Dasgupta--Pal cryptosystem can b
 		D(c) = c \bmod S_k \bmod 2
 	\end{align*}
 \end{description}
+
 The homomorphic operations are then defined as
 \begin{description}
 	\item[\textsc{xor} on ciphertexts]
@@ -30,6 +31,7 @@ The homomorphic operations are then defined as
 		D(E(a)\times E(b)) = a \textsc{ and } b = ab \bmod 2
 	\end{align*}
 \end{description}
+
 After repeated operations on ciphertexts, the resulting ciphertext can grow in magnitude.
 To prevent storage issues and keep the ciphertext size small, a refresh function is used.
 \begin{description}
@@ -45,11 +47,13 @@ We consider the following quantity:
 	\label{eq:cornercase_ciphertext}
 	D(\underbrace{E(1)+E(1)+\cdots+E(1)}_{S_k \text{ times}}).
 \end{align}
+
 Since $S_k$ is odd, the corresponding operation in the plaintext space is
 \begin{align*}
 	\label{eq:cornercase_plaintext}
 	\underbrace{1 \textsc{ xor } 1 \textsc{ xor } \cdots \textsc{ xor } 1}_{S_k \text{ times}} = 1.
 \end{align*}
+
 However, evaluating Equation \ref{eq:cornercase_ciphertext} yields:
 \begin{align*}
 	D(\underbrace{E(1)+E(1)+\cdots+E(1)}_{S_k \text{ times}})
@@ -143,7 +147,7 @@ We let $x = 1/n$ and consider the integral
   	\int_{n}^{n+1}{\frac{1}{x}\diff x}=\log{\left(1+\frac{1}{n}\right)}.
 \end{equation}
 
-This integral can be approximated using the five-point Gauss-Legendre quadrature rule \cite{kythe_quadrature_2002}. We first convert the integral to an integral over the interval $[-1,1]$ using the following transformation:
+This integral can be approximated using the five-point Gauss--Legendre quadrature rule \cite{kythe_quadrature_2002}. We first convert the integral to an integral over the interval $[-1,1]$ using the following transformation:
 \begin{align*}
 	\int_a^b{f(x)\diff x}
 	&= \frac{b-a}{2}\int_{-1}^{1}{f\left(\frac{b-a}{2}x+\frac{a+b}{2}\right)\diff x}.
@@ -195,7 +199,7 @@ As we only need accuracy for arguments $x \in [0, 255]$, we can scale the approx
   &= \int_{n}^{\alpha n + \alpha}{\frac{1}{x}\diff x} - \log{\alpha}
 \end{align*}
 
-Applying the five-point Gauss-Legendre quadrature rule with $\alpha = 1/20$ using SageMath 8.3, we arrive at the approximation:
+Applying the five-point Gauss--Legendre quadrature rule with $\alpha = 1/20$ using SageMath 8.3, we arrive at the approximation:
 \begin{align}\label{eq:scaledquadrature}
   \begin{split}
     &\log(1+x) \\

@@ -590,7 +590,7 @@ The results shown in this section are gathered from the tests for intensity tran
 							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\ 
 		\midrule
 		\xintFor #1 in {anpage, bplyce, drbost, ksunth, martin, pmives, rnpwil, sbains, swewin, yfhsie} \do {%
-		\texttt{#1} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} &  \\ }%
+		\texttt{#1} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_pwrtransform_#1_decrypted.png} \\ }%
 		\bottomrule         
 	\end{tabular}
 \end{table*}
@@ -688,7 +688,7 @@ The logarithm transformation under Dasgupta--Pal turned out to be more accurate 
 \end{table}
 
 \subsubsection{Power-Law Transformation}
-Unlike in the previous intensity transformations, applying the power-law transformation under both cryptosystems produced less than accurate images. The accuracy varies greatly across all the images as in the case of Paillier, with mean squared errors as high as 8270.696 and as low as 616.419, and SSIM scores ranging from 0.43185 to 0.92334. As expected, the total processing time now takes about 20 seconds per image since the power-law transformation is more computationally intensive due to its approximation of an infinite series consisting of terms using the logarithm function, which is also approximated using a combination of addition and multiplication operations.
+Applying the power-law transformation under both cryptosystems produced less than accurate images. The accuracy varies greatly across all the images as in the case of Paillier, with mean squared errors as high as 8270.696 and as low as 616.419, and SSIM scores ranging from 0.43185 to 0.92334, as seen in Table~\ref{tbl:pwr-pal}. As expected, the total processing time now takes about 15 to 20 seconds per image since the power-law transformation is more computationally intensive due to its approximation of an infinite series consisting of terms using the logarithm function, which is also approximated using a combination of addition and multiplication operations.
 
 \begin{table}[h]
 	\caption{Power-law transformation under Paillier}
@@ -709,44 +709,55 @@ Unlike in the previous intensity transformations, applying the power-law transfo
 		\bottomrule
         \end{tabular}
 \end{table}
+
+When Dasgupta--Pal was used in the power-law transformation, it completely failed to produce a discernible image and only resulted in a blank image. The mean squared errors for this case is an order of magnitude higher than the results from using Paillier. Furthermore, doing a power-law transformation under Dasgupta--Pal is not only impractical in terms of accuracy, but also it is impractical in terms of time efficiency because it took about 2 hours and 40 minutes on average to process each image.
+
 \begin{table}[h]
 	\caption{Power-law transformation under Dasgupta--Pal}
 	\label{tbl:pwr-dp}
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-		% \texttt{anpage} & 25115.891 & 4.131 & 0.00000 & 0.016 & 741.872 & 0.031 \\ 10x10
 		\texttt{anpage} & 25008.723 & 4.150 & 0.00000 & 0.376 & 9700.926 & 1.269 \\
-		% \texttt{bplyce} & 22777.187 & 4.556 & 0.00000 & 0.017 & 730.873 & 0.003 \\ 10x10
 		\texttt{bplyce} & 22700.522 & 4.570 & 0.00000 & 0.230 & 9196.609 & 0.043 \\
+		% \texttt{anpage} & 25115.891 & 4.131 & 0.00000 & 0.016 & 741.872 & 0.031 \\ 10x10
+		% \texttt{bplyce} & 22777.187 & 4.556 & 0.00000 & 0.017 & 730.873 & 0.003 \\ 10x10
 		% \texttt{drbost} & 18899.906 & 5.366 & 0.00000 & 0.014 & 733.409 & 0.003 \\
-		\texttt{drbost} & 18902.214 & 5.366 & 0.00000 & 0.064 & 2261.407 & 0.110 \\ % 20x18
-		\texttt{ksunth} & 12585.729 & 7.132 & 0.00000 & 0.044 & 2259.010 & 0.011 \\ % 20x18
-		\texttt{martin} & 17012.423 & 5.823 & 0.00000 & 0.066 & 2440.351 & 0.011 \\
-		\texttt{pmives} & 31124.615 & 3.200 & 0.00000 & 0.072 & 2492.149 & 0.012 \\
-		\texttt{rnpwil} & 22982.917 & 4.517 & 0.00000 & 0.076 & 2321.928 & 0.008 \\
-		\texttt{sbains} & 13469.155 & 6.837 & 0.00000 & 0.044 & 2233.818 & 0.008 \\
-		\texttt{swewin} & 37453.834 & 2.396 & 0.00000 & 0.049 & 2203.045 & 0.008 \\
-		\texttt{yfhsie} & 23037.762 & 4.506 & 0.00000 & 0.045 & 2210.393 & 0.008 \\
+		\texttt{drbost} & 18902.214 & 5.366 & 0.00000 & 0.277 & 9261.407 & 0.150 \\
+		\texttt{ksunth} & 12585.729 & 7.132 & 0.00000 & 0.257 & 9259.010 & 0.051 \\
+		\texttt{martin} & 17012.423 & 5.823 & 0.00000 & 0.279 & 9440.351 & 0.051 \\
+		\texttt{pmives} & 31124.615 & 3.200 & 0.00000 & 0.285 & 9492.149 & 0.052 \\
+		\texttt{rnpwil} & 22982.917 & 4.517 & 0.00000 & 0.289 & 9321.928 & 0.048 \\
+		\texttt{sbains} & 13469.155 & 6.837 & 0.00000 & 0.257 & 9233.818 & 0.048 \\
+		\texttt{swewin} & 37453.834 & 2.396 & 0.00000 & 0.262 & 9203.045 & 0.048 \\
+		\texttt{yfhsie} & 23037.762 & 4.506 & 0.00000 & 0.258 & 9210.393 & 0.048 \\
+		% \texttt{drbost} & 18902.214 & 5.366 & 0.00000 & 0.064 & 2261.407 & 0.110 \\ % 20x18
+		% \texttt{ksunth} & 12585.729 & 7.132 & 0.00000 & 0.044 & 2259.010 & 0.011 \\ % 20x18
+		% \texttt{martin} & 17012.423 & 5.823 & 0.00000 & 0.066 & 2440.351 & 0.011 \\
+		% \texttt{pmives} & 31124.615 & 3.200 & 0.00000 & 0.072 & 2492.149 & 0.012 \\
+		% \texttt{rnpwil} & 22982.917 & 4.517 & 0.00000 & 0.076 & 2321.928 & 0.008 \\
+		% \texttt{sbains} & 13469.155 & 6.837 & 0.00000 & 0.044 & 2233.818 & 0.008 \\
+		% \texttt{swewin} & 37453.834 & 2.396 & 0.00000 & 0.049 & 2203.045 & 0.008 \\
+		% \texttt{yfhsie} & 23037.762 & 4.506 & 0.00000 & 0.045 & 2210.393 & 0.008 \\
 		\bottomrule
         \end{tabular}
 \end{table}
 
 
 \section{Conclusion}
-In this paper, we have assessed the feasibility and practicality of various homomorphic cryptosystems with regard to secure processing and manipulation of facial image data through creation of a software library that facilitates image processing operations within the encrypted domain, as well as our own implementation of some homomorphic cryptosystems like Dasgupta--Pal for which existing third-party library dedicated for this purpose is not yet available.
+In this paper, we have assessed the feasibility and practicality of various homomorphic cryptosystems with regard to secure processing and manipulation of facial image data through creation of a software library that facilitates image processing operations within the encrypted domain, as well as our own implementation of some homomorphic cryptosystems like Dasgupta--Pal for which existing third-party libraries dedicated for this purpose are not yet available.
 
-This paper also proposes a correction to the Dasgupta--Pal cryptosystem which is further explained in Appendix~\ref{chap:correction}. 
+% This paper also proposes a correction to the Dasgupta--Pal cryptosystem which is further explained in Appendix~\ref{chap:correction}. 
 
 Even though an operation in a partially homomorphic cryptosystem is not theoretically possible, like multiplication of two ciphertexts under Paillier, it has been shown that such operations are indeed possible in a two-party system. Protocols for secure multiplication and exponentiation have been proposed and also applied to more complex image operations such as facial recognition. Thus, a partially homomorphic cryptosystem can be modified to admit more image processing operations by assuming a two-party system.
 
-Preliminary results have shown that both Paillier and Dasgupta--Pal apply image negation accurately and efficiently, as evidenced by the perfect zero MSE and infinite PSNR. For the logarithm transformation, Paillier was faster and accurate enough (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$), but Dasgupta--Pal was slower but more accurate (with $\text{MSE} \le 0.01$ and $\text{SSIM} \approx 0.99999$) which was rather unexpected. However both Paillier and Dasgupta--Pal fail to produce accurate results in applying the power-law transformation. Based from these results, the Paillier cryptosystem is consistent enough to produce reasonable to accurate results.
+Preliminary results have shown that both Paillier and Dasgupta--Pal apply image negation accurately and efficiently, as evidenced by the perfect zero MSE and infinite PSNR. For the logarithm transformation, Paillier was faster and accurate enough (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$), but Dasgupta--Pal was slower but more accurate (with $\text{MSE} \le 0.01$ and $\text{SSIM} \approx 0.99999$) which was rather unexpected. However both Paillier and Dasgupta--Pal fail to produce accurate results in applying the power-law transformation, with the latter completely failing to produce discernible results. Based from these results, the Paillier cryptosystem is consistent enough to produce reasonable to accurate results.
 
 A wrapper library has been made which implements the various functions and methods of the cryptosystems into a single interface. This allowed us to express various image operations with a unified syntax, thus facilitating easier testing.
 
 \subsection{Ongoing and Future Work}
 Testing intensity transformations under the BGV cryptosystem will be started once the Pyfhel library is deemed stable enough to use, or another Python library that implements BGV becomes available. 
-One of the authors has already informed the developers of the Pyfhel library about a bug involving exponentiation of two real numbers. 
+One of the authors of this paper has already informed the developers of the Pyfhel library about a bug involving exponentiation of two real numbers. 
 
 Efforts are ongoing with regard to the facial recognition tests. Our own implementation of the privacy-preserving  eigenfaces by Erkin, et al. does not yet use the DGK cryptosystem for secure integer comparison in the match finding step, thus we are working on implementing DGK from scratch. 
 
