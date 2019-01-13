@@ -226,7 +226,7 @@ The scheme defines the encryption algorithm for a message $m$ as follows:
 	E(m) = y(x) + S_k\times d(x)
 \end{align*}
 where
-$y(x)$ is a polynomial of degree $n$ such that $m_p(x) \equiv y(x) \bmod S_k$ and $d(x)$ is a randomly chosen polynomial of degree $n$. This encrypts each coefficient of of $m_p(x)$ by adding some multiple of $S_k$ to it. Through this process, each bit of the message is encrypted separately.
+$y(x)$ is a polynomial of degree $n$ such that $m_p(x) \equiv y(x) \bmod S_k$ and $d(x)$ is a randomly chosen polynomial of degree $n$. This encrypts each coefficient of $m_p(x)$ by adding some multiple of $S_k$ to it. Through this process, each bit of the message is encrypted separately.
 
 Furthermore, the decryption algorithm to recover $m_p(x)$ from a ciphertext polynomial $c(x)$ as
 \begin{align*}
@@ -484,7 +484,7 @@ The power-law transformation of a pixel intensity value $x$ is defined as
 where $c>0$ and $\gamma > 0$.
 
 Similar to the logarithm transformation, we must provide an approximation for $x^\gamma$.
-We have derived an infinite series in Appendix \ref{sec:logapproximation}.
+We have derived an infinite series in Appendix~\ref{sec:approx-pwr}.
 \begin{align}
 	x^\gamma &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
 \end{align}
@@ -568,6 +568,7 @@ The results shown in this section are gathered from the tests for intensity tran
 \subsection{Intensity Transformations}
 
 \begin{table*}
+	\centering
 	\caption{Comparison of intensity transformations under Paillier}
 	\label{tbl:it-pal}
 	\begin{tabular}{m{1cm}*{7}{>{\centering\arraybackslash}m{1.75cm}}}
@@ -582,6 +583,7 @@ The results shown in this section are gathered from the tests for intensity tran
 \end{table*}
 
 \begin{table*}
+	\centering
 	\caption{Comparison of intensity transformations under Dasgupta--Pal}
 	\label{tbl:it-dp}
 	\begin{tabular}{m{1cm}*{7}{>{\centering\arraybackslash}m{1.75cm}}}
@@ -591,11 +593,11 @@ The results shown in this section are gathered from the tests for intensity tran
 		\midrule
 		\xintFor #1 in {anpage, bplyce, drbost, ksunth, martin, pmives, rnpwil, sbains, swewin, yfhsie} \do {%
 		\texttt{#1} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_pwrtransform_#1_decrypted.png} \\ }%
-		\bottomrule         
+		\bottomrule
 	\end{tabular}
 \end{table*}
 
-Table~\ref{tbl:it-pal} shows the images obtained from the intensity transformation tests under the Paillier cryptosystem, while Table~\ref{tbl:it-pal} shows the resulting images from the same tests under the Dasgupta--Pal cryptosystem. Shown for each image is the original unecrypted image, and for each intensity transformation the \textit{plaintext domain transformation} (PDT) is given which is the resulting image after applying the transformation to the unencrypted image and the \textit{ciphertext domain transformation} (CDT) is the decrypted image of the processed encrypted image.
+Table~\ref{tbl:it-pal} shows the images obtained from the intensity transformation tests under the Paillier cryptosystem, while Table~\ref{tbl:it-dp} shows the resulting images from the same tests under the Dasgupta--Pal cryptosystem. Shown for each image is the original unecrypted image, and for each intensity transformation the \textit{plaintext domain transformation} (PDT) is given which is the resulting image after applying the transformation to the unencrypted image and the \textit{ciphertext domain transformation} (CDT) is the decrypted image of the processed encrypted image.
 
 The following tables show the resulting metric scores for mean squared error (MSE), peak signal to noise ratio (PSNR), and structural similarity index (SSIM), as well as time taken (in seconds) for encrypting the input image ($t_\text{enc}$), applying an operation to the encrypted image ($t_\text{apply}$), and decrypting the resulting encrypted image ($t_\text{dec}$), for each image in the test set. Tables~\ref{tbl:neg-pal} and~\ref{tbl:neg-dp} show the results obtained from applying image negation, Tables~\ref{tbl:log-pal} and~\ref{tbl:log-dp} from applying logarithm transformation, and Tables~\ref{tbl:pwr-pal} and~\ref{tbl:pwr-dp} from applying power-law transformation.
 
@@ -605,6 +607,7 @@ Both the Paillier and Dasgupta--Pal cryptosystems were able to perform image neg
 The Paillier cryptosystem performed better in terms of time, only taking about 0.01 seconds to apply image negation. On the other hand, the Dasgupta--Pal cryptosystem took about 22 seconds each to apply the same operation, which is expected since the implementation for Dasgupta--Pal was done in Python without using any external libraries.
 
 \begin{table}[h]
+	\centering
 	\caption{Image negation under Paillier}
 	\label{tbl:neg-pal}
     \begin{tabular}{lcccccc}
@@ -624,6 +627,7 @@ The Paillier cryptosystem performed better in terms of time, only taking about 0
     \end{tabular}
 \end{table}
 \begin{table}[h]
+	\centering
 	\caption{Image negation under Dasgupta--Pal}
 	\label{tbl:neg-dp}
     \begin{tabular}{lcccccc}
@@ -649,6 +653,7 @@ Unlike image negation, logarithm transformation involves more operations, so the
 The logarithm transformation under Dasgupta--Pal turned out to be more accurate than Paillier, whose mean squared errors approach zero and the SSIM values approach one for every image as shown in Table~\ref{tbl:log-dp}. Although the results from using Paillier show that it is also accurate enough with the mean squared errors being less than 30 and the SSIM values average to 0.99, Dasgupta--Pal has been able to produce an almost identical result to that of the plaintext domain transformation counterparts. This observation is rather unexpected, considering that the implementation used for Paillier is more robust (due to its use of external C/C++ libraries which makes computations faster).
 
 \begin{table}[h]
+	\centering
 	\caption{Logarithm transformation under Paillier}
 	\label{tbl:log-pal}
     \begin{tabular}{lcccccc}
@@ -691,6 +696,7 @@ The logarithm transformation under Dasgupta--Pal turned out to be more accurate 
 Applying the power-law transformation under both cryptosystems produced less than accurate images. The accuracy varies greatly across all the images as in the case of Paillier, with mean squared errors as high as 8270.696 and as low as 616.419, and SSIM scores ranging from 0.43185 to 0.92334, as seen in Table~\ref{tbl:pwr-pal}. As expected, the total processing time now takes about 15 to 20 seconds per image since the power-law transformation is more computationally intensive due to its approximation of an infinite series consisting of terms using the logarithm function, which is also approximated using a combination of addition and multiplication operations.
 
 \begin{table}[h]
+	\centering
 	\caption{Power-law transformation under Paillier}
 	\label{tbl:pwr-pal}
     \begin{tabular}{lcccccc}
@@ -713,24 +719,25 @@ Applying the power-law transformation under both cryptosystems produced less tha
 When Dasgupta--Pal was used in the power-law transformation, it completely failed to produce a discernible image and only resulted in a blank image. The mean squared errors for this case is an order of magnitude higher than the results from using Paillier. Furthermore, doing a power-law transformation under Dasgupta--Pal is not only impractical in terms of accuracy, but also it is impractical in terms of time efficiency because it took about 2 hours and 40 minutes on average to process each image.
 
 \begin{table}[h]
+	\centering
 	\caption{Power-law transformation under Dasgupta--Pal}
 	\label{tbl:pwr-dp}
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-		\texttt{anpage} & 25008.723 & 4.150 & 0.00000 & 0.376 & 9700.926 & 1.269 \\
-		\texttt{bplyce} & 22700.522 & 4.570 & 0.00000 & 0.230 & 9196.609 & 0.043 \\
+		\texttt{anpage} & 25008.723 & 4.150 & 0.000 & 0.376 & 9700.926 & 1.269 \\
+		\texttt{bplyce} & 22700.522 & 4.570 & 0.000 & 0.230 & 9196.609 & 0.043 \\
 		% \texttt{anpage} & 25115.891 & 4.131 & 0.00000 & 0.016 & 741.872 & 0.031 \\ 10x10
 		% \texttt{bplyce} & 22777.187 & 4.556 & 0.00000 & 0.017 & 730.873 & 0.003 \\ 10x10
 		% \texttt{drbost} & 18899.906 & 5.366 & 0.00000 & 0.014 & 733.409 & 0.003 \\
-		\texttt{drbost} & 18902.214 & 5.366 & 0.00000 & 0.277 & 9261.407 & 0.150 \\
-		\texttt{ksunth} & 12585.729 & 7.132 & 0.00000 & 0.257 & 9259.010 & 0.051 \\
-		\texttt{martin} & 17012.423 & 5.823 & 0.00000 & 0.279 & 9440.351 & 0.051 \\
-		\texttt{pmives} & 31124.615 & 3.200 & 0.00000 & 0.285 & 9492.149 & 0.052 \\
-		\texttt{rnpwil} & 22982.917 & 4.517 & 0.00000 & 0.289 & 9321.928 & 0.048 \\
-		\texttt{sbains} & 13469.155 & 6.837 & 0.00000 & 0.257 & 9233.818 & 0.048 \\
-		\texttt{swewin} & 37453.834 & 2.396 & 0.00000 & 0.262 & 9203.045 & 0.048 \\
-		\texttt{yfhsie} & 23037.762 & 4.506 & 0.00000 & 0.258 & 9210.393 & 0.048 \\
+		\texttt{drbost} & 18902.214 & 5.366 & 0.000 & 0.277 & 9261.407 & 0.150 \\
+		\texttt{ksunth} & 12585.729 & 7.132 & 0.000 & 0.257 & 9259.010 & 0.051 \\
+		\texttt{martin} & 17012.423 & 5.823 & 0.000 & 0.279 & 9440.351 & 0.051 \\
+		\texttt{pmives} & 31124.615 & 3.200 & 0.000 & 0.285 & 9492.149 & 0.052 \\
+		\texttt{rnpwil} & 22982.917 & 4.517 & 0.000 & 0.289 & 9321.928 & 0.048 \\
+		\texttt{sbains} & 13469.155 & 6.837 & 0.000 & 0.257 & 9233.818 & 0.048 \\
+		\texttt{swewin} & 37453.834 & 2.396 & 0.000 & 0.262 & 9203.045 & 0.048 \\
+		\texttt{yfhsie} & 23037.762 & 4.506 & 0.000 & 0.258 & 9210.393 & 0.048 \\
 		% \texttt{drbost} & 18902.214 & 5.366 & 0.00000 & 0.064 & 2261.407 & 0.110 \\ % 20x18
 		% \texttt{ksunth} & 12585.729 & 7.132 & 0.00000 & 0.044 & 2259.010 & 0.011 \\ % 20x18
 		% \texttt{martin} & 17012.423 & 5.823 & 0.00000 & 0.066 & 2440.351 & 0.011 \\

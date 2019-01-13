@@ -166,7 +166,7 @@ where
 		w_4 &= \frac{1}{21}\sqrt{245+14\sqrt{70}}\\
 		w_5 &= -\frac{1}{21}\sqrt{245+14\sqrt{70}}
 	\end{align*}
-	\columnbreak
+	% \columnbreak
 	\begin{align*}
 		x_1 &= \frac{128}{225}\\
 		x_2 &= \frac{1}{900}\left( 322 + 13\sqrt{70}\right)\\
@@ -175,18 +175,43 @@ where
 		x_5 &= \frac{1}{900}\left( 322 - 13\sqrt{70}\right)
 	\end{align*}
 \end{multicols}
-Applying this procedure to the integral in equation \ref{eq:log_integral} using SageMath 8.3 yields the following approximation:
+
+Applying this procedure to the integral in Equation~\ref{eq:log_integral} using SageMath 8.3 yields the following approximation:
 \begin{equation}\label{eq:standardquadrature}
   \log(1+x) \approx
   \frac{137x^5 + 2310x^4 + 9870x^3 + 15120x^2 + 7560x}
   {30x^5 + 900x^4 + 6300x^3 + 16800x^2 + 18900x + 7560}.
 \end{equation}
 
-While the closed form approximation in equation \ref{eq:standardquadrature} is accurate for values of $x$ near zero, it diverges from $\log{(1+x)}$ significantly for large values of $x$, as shown in figure \ref{fig:standardquadrature}.
+% \pgfplotsset{
+% 	every axis legend/.append style={anchor=south east},
+% }
+
+While the closed form approximation in Equation~\ref{eq:standardquadrature} is accurate for values of $x$ near zero, it diverges from $\log{(1+x)}$ significantly for large values of $x$, as shown in Figure~\ref{fig:standardquadrature}.
+% \begin{figure}[!ht]
+%     \centering
+%     \includegraphics[width=.8\linewidth]{figures/StandardQuadrature.png}
+%     \caption{Graph of $\log{(1+x)}$ and the approximation in equation \ref{eq:standardquadrature}}
+%     \label{fig:standardquadrature}
+% \end{figure}
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.8\linewidth]{figures/StandardQuadrature.png}
-    \caption{Graph of $\log{(1+x)}$ and the approximation in equation \ref{eq:standardquadrature}}
+	\begin{tikzpicture}
+		\begin{axis}[
+			% height=6cm, width=9cm,
+			xmin=0, xmax=300,
+			ymin=0, ymax=5.5, ytick={0,...,6},
+			xlabel={$x$}, ylabel={$y$},
+			grid=major,
+			legend pos=south east,
+			legend cell align=left,
+		]
+		\addplot[very thick, domain=0:300, samples=100]{1/30*(137*x^5 + 2310*x^4 + 9870*x^3 + 15120*x^2 + 7560*x)/(x^5 + 30*x^4 + 210*x^3 + 560*x^2 + 630*x + 252)};
+		\addplot[densely dashed, domain=0:300, samples=100]{ln(x)};
+		\legend{5-point quadrature approximation, Actual value of $\log(1+x)$}
+		\end{axis}
+	\end{tikzpicture}%
+    \caption{Graph of $\log{(1+x)}$ and the approximation in Equation~\ref{eq:standardquadrature}}
     \label{fig:standardquadrature}
 \end{figure}
 
@@ -209,16 +234,36 @@ Applying the five-point Gauss--Legendre quadrature rule with $\alpha = 1/20$ usi
   \end{split}
 \end{align}
 
-Figure \ref{fig:scaledquadrature} is a graph of the absolute error of the scaled approximation and the exact value of $\log{(1+x)}$. Using SageMath 8.3, it was numerically determined that the maximum absolute error of this approximation in the range $x\in[0,255]$ is approximately $0.0103315865985758$, occurring at $x=255$. This is an improvement from the approximation in equation \ref{eq:standardquadrature}, which has a maximum absolute error of $1.19717868468392$, similarly occurring at $x=255$.
+Figure~\ref{fig:scaledquadrature} is a graph of the absolute error of the scaled approximation and the exact value of $\log{(1+x)}$. Using SageMath 8.3, it was numerically determined that the maximum absolute error of this approximation in the range $x\in[0,255]$ is approximately $0.0103315865985758$, occurring at $x=255$. This is an improvement from the approximation in Equation~\ref{eq:standardquadrature}, which has a maximum absolute error of $1.19717868468392$, similarly occurring at $x=255$.
 
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=.9\linewidth]{figures/ModifiedQuadratureAbsoluteError.png}
+%     \caption{Graph of the absolute error of $\log{(1+x)}$ and the approximation in equation \ref{eq:scaledquadrature}}
+%     \label{fig:scaledquadrature}
+% \end{figure}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=.9\linewidth]{figures/ModifiedQuadratureAbsoluteError.png}
-    \caption{Graph of the absolute error of $\log{(1+x)}$ and the approximation in equation \ref{eq:scaledquadrature}}
+    \begin{tikzpicture}
+		\begin{axis}[
+			% height=6cm, width=9cm,
+			xmin=0, xmax=300,
+			ymin=0, ymax=0.04,
+			xlabel={$x$}, ylabel={Absolute error},
+			grid=major,
+			legend pos=south east,
+			legend cell align=left,
+			tick scale binop=\times,
+		]
+		\addplot[thick, domain=0:300, samples=100]{abs((1/30*(137*x^5 + 33185*x^4 + 931370*x^3 - 13403630*x^2 - 289469315*x - 713567363)/(x^5 + 505*x^4 + 42010*x^3 + 923010*x^2 + 5722005*x + 8040501))-ln((1/20)+(1/20)*x))};
+		\end{axis}
+	\end{tikzpicture}%
+    \caption{Graph of the absolute error of $\log{(1+x)}$ and the approximation in Equation~\ref{eq:scaledquadrature}}
     \label{fig:scaledquadrature}
 \end{figure}
 
 \subsection{Approximation for $x^\gamma$}
+\label{sec:approx-pwr}
 To approximate $x^\gamma$ for any $\gamma \in \mathbb{R}$, we rewrite $x^\gamma$ as follows:
 \begin{align*}
   x^\gamma = e^{\log{x^\gamma}} = e^{\gamma\log{x}}.
@@ -227,7 +272,7 @@ To approximate $x^\gamma$ for any $\gamma \in \mathbb{R}$, we rewrite $x^\gamma$
 This expression can then be approximated using the Maclaurin series expansion for $e^x$, which converges for all $x$.
 \begin{align*}
   e^x &= \sum_{n=0}^{\infty}{\frac{x^n}{n!}}\\
-  \Rightarrow e^{\gamma\log{x}} &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
+  \Rightarrow \quad e^{\gamma\log{x}} &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
 \end{align*}
 
 As we already have an approximation for the natural logarithm, we can evaluate partial sums of the above infinite series to arrive at approximations for $x^\gamma$.
