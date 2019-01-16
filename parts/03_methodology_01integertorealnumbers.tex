@@ -3,7 +3,7 @@ We will briefly discuss a protocol to enable cryptosystems built for integer inp
 The following protocol was also used by \textit{CryptoImg} for image processing \cite{ziad_cryptoimg:_2016}.
 
 We represent a floating-point (FP) number as a pair of two integers $(m,e)$ representing the mantissa and exponent of the FP number with respect to a base $b$. The mantissa $m$ is encrypted, while the exponent $e$ is unencrypted.
-Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c)$ respectively. Let $\oplus,\otimes$ represent the homomorphic operations which correspond to the addition and multiplication, respectively. We define the secure real number operations as follows:
+Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c)$ respectively. Let $\oplus,\otimes$ represent the homomorphic operations which correspond to the addition and multiplication, respectively. We define the corresponding FP number operations as follows:
 \begin{description}
   \item[Addition.]
     To compute $E(c)=E(a+b)$ we compute
