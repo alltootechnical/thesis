@@ -26,10 +26,10 @@ For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorp
 \end{align*}
 
 \subsection{Floating-Point Arithmetic}
+\label{sec:fp_operations}
 The Paillier cryptosystem encrypts integers and allows operations on these integers. We now briefly go over several extensions to the Paillier cryptosystem discussed in the literature, which allow us to perform privacy-preserving floating-point arithmetic.
 
 \subsubsection{Extending to Floating-Point Numbers}
-\label{sec:fp_operations}
 We can use the following protocol described in \cite{ziad_cryptoimg:_2016}, in order to extend the privacy-preserving integer addition and integer scalar multiplication of Paillier cryptosystem to floating-point numbers.
 
 We represent a floating-point (FP) number as a pair of two integers $(m,e)$ representing the mantissa and exponent of the FP number with respect to a base $b$. The mantissa $m$ is encrypted, while the exponent $e$ is unencrypted.
