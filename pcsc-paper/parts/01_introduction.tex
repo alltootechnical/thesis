@@ -2,16 +2,16 @@
 Research in digital privacy has involved the use of homomorphic cryptosystems, cryptosystems which allow for operations to be performed on encrypted data without leaking information about the operands.
 Previous research has highlighted the use of the Paillier cryptosystem, a partially homomorphic cryptosystem which allows two basic operations to be performed on encrypted integers: two encrypted integers can be added to obtain an encryption of their sum, and an encrypted integer can be multiplied to an unencrypted plaintext integer to obtain an encryption of their product.
 
-Applications of the Paillier cryptosystem have included such as use in linear digital image transformations \cite{ziad_cryptoimg:_2016}, and linear algebra applications \cite{hutchison_privacy-preserving_2009}. However, many extensions to the Paillier cryptosystem have also been published, allowing floating-point arithmetic. In this paper, we will summarize these extensions and concern ourselves with the approximation of the transcendental functions using the Paillier cryptosystem given input constraints shown in table \ref{tab:inputconstraints}. By demonstrating how the Paillier cryptosystem can be applied to approximate common non-linear functions, we hope to extend its usability as a tool for privacy-preserving computation.
+Applications of the Paillier cryptosystem have included such as use in linear digital image transformations~\cite{ziad_cryptoimg:_2016}, and linear algebra applications~\cite{hutchison_privacy-preserving_2009}. However, many extensions to the Paillier cryptosystem have also been published, allowing floating-point arithmetic. In this paper, we will summarize these extensions and concern ourselves with the approximation of the transcendental functions using the Paillier cryptosystem given input constraints shown in Table~\ref{tab:inputconstraints}. By demonstrating how the Paillier cryptosystem can be applied to approximate common non-linear functions, we hope to extend its usability as a tool for privacy-preserving computation.
 \begin{table}
-	\caption{Summary of Functions}
+	\caption{Summary of functions}
 	\label{tab:inputconstraints}
 	\begin{tabular}{ccl}
 		\toprule
-		Function & Input Constraints\\
+		Functions & Input constraints\\
 		\midrule
 		$\log(1+x)$ & $x\in[0,255]$\\
 		$\arctan x$ & $x\in[-1,1]$\\
-	\bottomrule
-\end{tabular}
+	    \bottomrule
+    \end{tabular}
 \end{table}
