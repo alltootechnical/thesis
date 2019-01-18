@@ -1,7 +1,7 @@
 \section{Inverse Trigonometric Functions}
-We will now show how a Gauss--Legendre quadrature approach can also be used for efficient privacy-preserving approximation of the inverse tangent function. Two well-known series representations of the arctangent function exist: the Maclaurin series expansion,
+We will now show how a Gauss--Legendre quadrature approach can also be used for efficient privacy-preserving approximation of the inverse tangent function. Two well-known series representations of the inverse tangent function exist: the Maclaurin series expansion,
 \begin{align} \label{eq:arctan_maclaurin}
-	\arctan x = \sum_{n=0}^{\infty}{\frac{(-1)^nx^{2n+1}}{2n+1}}, \text{ for }|x|\leq 1
+	\arctan x = \sum_{n=0}^{\infty}{\frac{(-1)^nx^{2n+1}}{2n+1}}, \text{ for }|x|\leq 1,
 \end{align}
 and the following series expansion discovered by Euler in 1755, which converges more rapidly for all $x$~\cite{chien-lih_89.67_2005}.
 \begin{align} \label{eq:arctan_euler}
@@ -13,7 +13,7 @@ and the following series expansion discovered by Euler in 1755, which converges 
 	\frac
 		{x^{2n+1}}
 		{(1+x^2)^{n+1}}
-	}
+	}.
 \end{align}
 We will compare the quadrature approach with the method of computing partial sums from each of these series.
 
@@ -27,7 +27,7 @@ and perform five-point Gauss--Legendre quadrature to obtain the following closed
 		&\arctan x \\
 		&\approx \frac
 		{4\left(225x^9 + 15925x^7 + 144753x^5 + 350595x^3 + 238140x\right)}
-		{15\left(x^{10} + 480x^8 + 11760x^6 + 64120x^4 + 114660x^2 + 63504\right)}
+		{15\left(x^{10} + 480x^8 + 11760x^6 + 64120x^4 + 114660x^2 + 63504\right)}.
 	\end{split}
 \end{align}
 
@@ -45,7 +45,7 @@ We note that in order to evaluate the quadrature approximation in Equation~\ref{
 		}\\
 		&= \frac
 		{965x^9 + 2370x^7 + 2688x^5 + 1470x^3 + 315x}
-		{315\left(x^{10} + 5x^8 + 10x^6 + 10x^4 + 5x^2 + 1\right)}
+		{315\left(x^{10} + 5x^8 + 10x^6 + 10x^4 + 5x^2 + 1\right)}.
 	\end{split}
 \end{align}
 
@@ -96,8 +96,8 @@ Figure~\ref{fig:arctan_error_2} shows the absolute error of the quadrature appro
 \begin{align*}
 	\arctan x =
 	\begin{cases}
-		\frac{\pi}{2}-\arctan{\frac{1}{x}} & \text{if } x > 0 \\
-		-\frac{\pi}{2}-\arctan{\frac{1}{x}} & \text{if } x < 0 
+		\frac{\pi}{2}-\arctan{\frac{1}{x}} & \text{if } x > 0, \\
+		-\frac{\pi}{2}-\arctan{\frac{1}{x}} & \text{if } x < 0.
 	\end{cases}
 \end{align*}
 

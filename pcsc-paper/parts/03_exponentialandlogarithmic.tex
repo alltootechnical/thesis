@@ -18,7 +18,7 @@ Applying the five-point Gauss--Legendre quadrature rule to approximate $\int_{n}
 		&\log(1+x) \\
 		&\approx \frac{137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 - 121239315x - 257804775}
 		{30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x + 3122577)}\\
-		&+ \log{16}
+		&+ \log{16}.
 	\end{split}
 \end{align}
 
@@ -51,11 +51,11 @@ Figure~\ref{fig:log_error_comparison} is a graph comparing the absolute error of
 \end{figure}
 
 We now show how we used numerical methods to determine that a scaling factor of $\alpha = 1/16$ minimizes the maximum absolute error of the scaled approximation for $\log{(1+x)}$, within the range $x \in [0, 255]$.
+
 Let $I(x,\alpha)$ be the function obtained by approximating $\int_{n}^{\alpha n + \alpha}{\frac{1}{x}\diff x}$ with five-point Gauss--Legendre quadrature. The absolute error of the approximation compared to  $\log{(1+x)}$ at a given $x$ and $\alpha$ is given by the following function.
 \begin{align*}
 	A(x,\alpha) = \left| I(x,\alpha) - \log\alpha - \log{(1+x)}\right|.
 \end{align*}
-
 We want to show that the function
 \begin{align*}
 	f(\alpha) = \max_{0\leq x \leq 255}{A(x,\alpha)}
@@ -113,8 +113,8 @@ It was determined numerically that the local maxima of $A(x,1/16)$ on the interv
 
 We have shown how we can adapt Khattri's approximation to allow for privacy-preserving logarithm computation over a larger interval. We note we only require the quadrature approach if series representations of the desired function are not suitable for privacy-preserving calculation using the floating-point arithmetic supported by the Paillier cryptosystem.
 
-As a concrete example, evaluating partial sums of the series representation for the exponential function
+As a concrete example, evaluating partial sums of the series representation for the exponential function,
 \begin{align*}
-	e^x = \sum_{n=0}^{\infty}{\frac{x^n}{n!}}
+	e^x = \sum_{n=0}^{\infty}{\frac{x^n}{n!}},
 \end{align*}
 is a valid approach for privacy-preserving computation, as this series converges for all $x$.

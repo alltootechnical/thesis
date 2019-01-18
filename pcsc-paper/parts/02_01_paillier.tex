@@ -17,22 +17,22 @@ The decryption function to decrypt a ciphertext $c \in \mathbb{Z}^*_{n^2}$ given
 	D(c) = L\left(c^\lambda \bmod n^2\right) \cdot \left(L\left(g^\lambda \bmod n^2\right)\right)^{-1} \mod n.
 \end{align*}
 \subsubsection{Homomorphic Properties of the Paillier Cryptosystem}
-The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. age. These homomorphic properties are used to add a plaintex scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively. They are defined as follows.
+The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These homomorphic properties are used to add a plaintext scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively. They are defined as follows.
 
-For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
+For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold:
 \begin{align*}
-	D(E(m_1)g^k\bmod n^2)=(m_1+k)\bmod n\\
-	D(E(m_1)E(m_2)\bmod n^2)=(m_1+m_2)\bmod n\\
-	D(E(m_1)^k\bmod n^2)= km_1\bmod n
+	D(E(m_1)g^k\bmod n^2)=(m_1+k)\bmod n,\\
+	D(E(m_1)E(m_2)\bmod n^2)=(m_1+m_2)\bmod n,\\
+	D(E(m_1)^k\bmod n^2)= km_1\bmod n.
 \end{align*}
 
 \subsection{Floating-Point Arithmetic}
 \label{sec:fp_operations}
-The Paillier cryptosystem encrypts integers and allows operations on these integers. We now briefly go over several extensions to the Paillier cryptosystem discussed in the literature, which allow us to perform privacy-preserving floating-point arithmetic.
+The Paillier cryptosystem encrypts and allows operations on integers. We now describe several extensions to the Paillier cryptosystem discussed in the literature which allow us to perform privacy-preserving floating-point arithmetic.
 
 \subsubsection{Extension to Floating-Point Numbers}
 \label{sec:fp_operations}
-We can use the following protocol described in~\cite{ziad_cryptoimg:_2016}, in order to extend the privacy-preserving integer addition and integer scalar multiplication of Paillier cryptosystem to floating-point numbers.
+We can use the following protocol described in~\cite{ziad_cryptoimg:_2016} in order to extend the privacy-preserving integer addition and integer scalar multiplication of Paillier cryptosystem to floating-point numbers.
 
 We represent a floating-point (FP) number as a pair of two integers $(m,e)$ representing the mantissa and exponent of the FP number with respect to a base $b$. The mantissa $m$ is encrypted, while the exponent $e$ is unencrypted.
 Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c)$ respectively. Let $\oplus,\otimes$ represent the homomorphic operations which correspond to the addition and multiplication of integers in the Paillier cryptosystem, respectively. We define the corresponding FP number operations as follows:
@@ -40,28 +40,29 @@ Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c
   \item[Addition.]
     To compute $E(c)=E(a+b)$ we compute
     \begin{align*}
-      E(m_c) &= E(m_1) \oplus (b^{e_b-e_a} \otimes E(m_b)), e_c = e_a & \text{ if } e_a \leq e_b \\
-      E(m_c) &= E(m_b) \oplus (b^{e_a-e_b} \otimes E(m_a)), e_c = e_b & \text{ if } e_a > e_b
+      E(m_c) &= E(m_1) \oplus (b^{e_b-e_a} \otimes E(m_b)), e_c = e_a & \text{ if } e_a \leq e_b, \\
+      E(m_c) &= E(m_b) \oplus (b^{e_a-e_b} \otimes E(m_a)), e_c = e_b & \text{ if } e_a > e_b.
     \end{align*}
   \item[Scalar multiplication.]
     To compute $E(c) = E(ab)$, where $a$ and $E(b)$ are known (i.e. $m_a$ is not encrypted), we compute
     \begin{align*}
-      E(m_c) &= m_a \otimes E(m_b)\\
-      e_c &= e_a + e_b
+      E(m_c) &= m_a \otimes E(m_b),\\
+      e_c &= e_a + e_b.
     \end{align*}
 \end{description}
 \subsubsection{Secure Division}
 We can use the following two-party scheme defined in~\cite{boukoros_lightweight_2017} to perform privacy-preserving division.
-Suppose Bob has $E(x)$ and $E(y)$ and wants to obtain $E(x/y)$ without exposing the value of either integer.
+
+Suppose Bob has $E(x)$ and $E(y)$ and wants to obtain $E(x/y)$ without exposing the value of either variable.
 \begin{itemize}
-	\item Bob first selects a random number $r$ and computes $E(rx)$ and $E(ry)$. Bob can do this since $r$ is a plaintext constant.
+	\item Bob first selects a random non-zero number $r$ and computes $E(rx)$ and $E(ry)$. Bob can do this since $r$ is a plaintext constant.
 	\item Bob sends $E(rx)$ and $E(ry)$ to Alice, who decrypts both values and computes $x/y$ in the plaintext domain.
 	\item Alice encrypts and sends $E(x/y)$ to Bob.
 \end{itemize}
 
 \subsubsection{Secure Exponentiation}
 \label{ssec:exponentiationprotocol}
-To extend the available privacy-preserving arithmetic operations beyond those already supported by the system, we can use the following two-party scheme, adapted from the protocol to calculate Euclidean distances used in \cite{hutchison_privacy-preserving_2009}.
+ We can use the following two-party scheme, adapted from the protocol to calculate Euclidean distances used in \cite{hutchison_privacy-preserving_2009}, in order to perform secure exponentiation.
 
 Suppose Alice encrypts an integer $x$ and sends it so Bob has $E(x)$, and wants to obtain $E(x^2)$ without exposing the value of $x$.
 \begin{itemize}
@@ -78,15 +79,15 @@ Suppose Alice encrypts an integer $x$ and sends it so Bob has $E(x)$, and wants 
 We can use the secure squaring protocol to arrive at a secure multiplication protocol, which then allows for the evaluation of polynomials.
 Suppose Alice encrypts integers $x$ and $y$, and Bob has $E(x), E(y)$ and wants to obtain $E(xy)$.
 \begin{itemize}
-	\item Bob acquires $E(x^2), E(y^2)$ using the secure squaring protocol.
+	\item Bob acquires $E(x^2)$ and $E(y^2)$ using the secure squaring protocol.
 	\item Bob sends $E(x+y)$ to Alice, who decrypts the ciphertext to obtain $x+y$.
 	\item Alice sends $E((x+y)^2)$ to Bob.
 	\item Bob then computes
 	\begin{align*}
 		\frac{1}{2}E((x+y)^2)E(x^2)^{-1}E(y^2)^{-1} &= \frac{1}{2}E((x+y)^2 - x^2 - y^2)\\
 		&= \frac{1}{2}E(2xy)\\
-		&= E(xy)
+		&= E(xy).
 	\end{align*}
 \end{itemize}
 
-Using these extensions to the Paillier cryptosystem, privacy-preserving floating-point arithmetic can be acheived.
+By applying these extensions to the Paillier cryptosystem, privacy-preserving floating-point arithmetic can be acheived.

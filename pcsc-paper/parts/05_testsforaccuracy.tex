@@ -4,7 +4,7 @@ We implemented privacy-preserving floating-point arithmetic using the system des
 \subsection{Logarithm Approximation}
 We then computed $\log(1+x)$ for various encrypted inputs using both the original quadrature formula by Khattri (Equation~\ref{eq:standard_logarithm_quadrature}) and our scaled approximation (Equation~\ref{eq:optimal_log_approximation}). These were compared with the values returned by the built-in logarithm function in Python. Several data points are shown in Table~\ref{tab:log_approximation}.
 
-We note that the privacy-preserving floating-point arithmetic resulted in some degree of floating-point error, as the observed floating point error in Table~\ref{tab:log_approximation} is greater than the raw absolute error observed in Figure~\ref{fig:log_error_comparison}. However, it can still be seen that the error of the scaled approximation is less than that of the original approximation for large inputs.
+We note that the privacy-preserving floating-point arithmetic resulted in some degree of floating-point error, as the observed floating point error in Table~\ref{tab:log_approximation} is greater than the raw absolute error observed in Figure~\ref{fig:log_error_comparison}. However, it can still be seen that the error of the scaled approximation is less than that of the original approximation for large inputs, although this approximation loses accuracy for smaller inputs.
 \begin{table}[h]
 	\caption{Comparison of logarithm approximation errors under Paillier}
 	\label{tab:log_approximation}
