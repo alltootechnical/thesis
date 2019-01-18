@@ -4,16 +4,14 @@ Previous research has highlighted the use of the Paillier cryptosystem, a partia
 
 Applications of the Paillier cryptosystem have included such as use in linear digital image transformations~\cite{ziad_cryptoimg:_2016}, and linear algebra applications~\cite{hutchison_privacy-preserving_2009}. However, many extensions to the Paillier cryptosystem have also been published, allowing floating-point arithmetic. In this paper, we will summarize these extensions and concern ourselves with the approximation of the transcendental functions using the Paillier cryptosystem given input constraints shown in Table~\ref{tab:inputconstraints}. By demonstrating how the Paillier cryptosystem can be applied to approximate common non-linear functions, we hope to extend its usability as a tool for privacy-preserving computation.
 \begin{table}
-	\caption{Summary of functions [WIP]}
+	\caption{Summary of functions}
 	\label{tab:inputconstraints}
 	\begin{tabular}{ccl}
 		\toprule
 		Functions & Input constraints\\
 		\midrule
-		$e^x$ & $x\in[0,255]$\\
 		$\log(1+x)$ & $x\in[0,255]$\\
-		$\sin x$ & $x\in[-2\pi,2\pi]$ \\
-		$\arctan x$ & $x\in[-255,255]$\\
-		\bottomrule
-\end{tabular}
+		$\arctan x$ & $x\in[-1,1]$\\
+	    \bottomrule
+    \end{tabular}
 \end{table}

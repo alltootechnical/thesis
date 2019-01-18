@@ -1,1 +1,44 @@
-\section{Experiments on Accuracy [WIP]}
+\section{Experiments on Accuracy}
+We implemented privacy-preserving floating-point arithmetic using the system described in section \ref{sec:fp_operations}, using the python-paillier library (\url{https://github.com/n1analytics/python-paillier}) on Python 3.
+
+\subsection{Logarithm approximation}
+We then computed $\log(1+x)$ for various encrypted inputs using both the original quadrature formula by Khattri (equation \ref{eq:standard_logarithm_quadrature}) and our scaled approximation (equation \ref{eq:optimal_log_approximation}). These were compared with the values returned by the built-in logarithm function in Python 3. Several data points are shown in table \ref{tab:log_approximation}.
+
+We note that the privacy-preserving floating-point arithmetic resulted in some degree of floating-point error, as the observed floating point error in table \ref{tab:log_approximation} is greater than the raw absolute error observed in figure \ref{fig:log_error_comparison}. However, it can still be seen that the error of the scaled approximation is less than that of the original approximation for large inputs.
+\begin{table}
+	\caption{Comparison of Logarithm Approximation Error under Paillier}
+	\label{tab:log_approximation}
+	\begin{tabular}{ccc}
+		\toprule
+		Input & Original quadrature & Scaled quadrature\\
+		\midrule
+		$\log(1)$ & $0$ & $2.053729 \times 10^{-2}$\\
+		$\log(10)$ & $2.833179 \times 10^{-2} $ & $2.280124 \times 10^{-1}$\\
+		$\log(50)$ & $2.170779 \times 10^{-2}$ & $2.437148 \times 10^{-2}$\\
+		$\log(100)$ & $3.524916 \times 10^{-1}$ & $2.122159 \times 10^{-2}$\\
+		$\log(200)$ & $8.859869 \times 10^{-1}$ & $1.441611 \times 10^{-1}$\\
+		$\log(256)$ & $1.098463 \times 10^{0}$ & $1.993136 \times 10^{-1}$\\
+	\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Inverse tangent approximation}
+We also computed $\arctan x$ using for various encrypted inputs using both the first four terms of Euler's series for the arctangent (equation \ref{eq:arctan_euler_partial}) and our quadrature approximation (equation \ref{eq:arctan_quadrature}). These were compared with the values returned by the built-in arctangent function in Python 3.We show several data points in table \ref{tab:arctan_approximation}. Similar to the logarithm approximations, we note that there is a degree of floating-point error compared to that predicted by figure \ref{fig:arctan_error}, but the quadrature approach obtains higher accuracy despite requiring a similar number of floating-point operations to execute.
+
+\begin{table}
+	\caption{Comparison of Inverse Tangent Approximation Error under Paillier}
+	\label{tab:arctan_approximation}
+	\begin{tabular}{ccc}
+		\toprule
+		Input & Partial sum of infinite series & Quadrature\\
+		\midrule
+		$\arctan -1$ & $6.564089 \times 10^{-1}$ & $4.629557 \times 10^{-1}$\\
+		$\arctan -0.1$ & $4.523405 \times 10^{-3}$ & $1.451929 \times 10^{-3}$\\
+		$\arctan -0.01$ & $4.665260 \times 10^{-6}$ & $1.472027 \times 10^{-6}$\\
+		$\arctan 0$ & $0$ & $0$\\
+		$\arctan 0.01$ & $4.665228 \times 10^{-6}$ & $1.472020 \times 10^{-6}$\\
+		$\arctan 0.1$ & $4.523405 \times 10^{-3} $ & $1.451929 \times 10^{-3}$\\
+		$\arctan 1$ & $6.564089 \times 10^{-1} $ & $4.629557 \times 10^{-1}$\\
+	\bottomrule
+\end{tabular}
+\end{table}
