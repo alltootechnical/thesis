@@ -11,7 +11,7 @@ tags
 # LaTeX temp files
 *.aux
 *.log
-*.synctex.gz
+*.synctex*
 *.toc
 *.out
 *.bbl

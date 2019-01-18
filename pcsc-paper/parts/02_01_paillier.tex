@@ -1,5 +1,5 @@
 \subsection{The Paillier Cryptosystem}
-The Paillier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Paillier, is a probabilistic encryption scheme which is based on the composite residuosity class problem. The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic. We now state the encryption and decryption algorithms of the Paillier cryptosystem and its homomorphic properties.
+The Paillier cryptosystem~\cite{stern_public-key_1999}, developed by Pascal Paillier, is a probabilistic encryption scheme which is based on the composite residuosity class problem. The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic. We now state the encryption and decryption algorithms of the Paillier cryptosystem and its homomorphic properties.
 
 \subsubsection{Key Generation}
 We first define a function $L(x)$ as the largest integer $v$ greater than zero such that $x-1 \geq vn$.
@@ -28,9 +28,9 @@ For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorp
 \subsection{Floating-Point Arithmetic}
 The Paillier cryptosystem encrypts integers and allows operations on these integers. We now briefly go over several extensions to the Paillier cryptosystem discussed in the literature, which allow us to perform privacy-preserving floating-point arithmetic.
 
-\subsubsection{Extending to Floating-Point Numbers}
+\subsubsection{Extension to Floating-Point Numbers}
 \label{sec:fp_operations}
-We can use the following protocol described in \cite{ziad_cryptoimg:_2016}, in order to extend the privacy-preserving integer addition and integer scalar multiplication of Paillier cryptosystem to floating-point numbers.
+We can use the following protocol described in~\cite{ziad_cryptoimg:_2016}, in order to extend the privacy-preserving integer addition and integer scalar multiplication of Paillier cryptosystem to floating-point numbers.
 
 We represent a floating-point (FP) number as a pair of two integers $(m,e)$ representing the mantissa and exponent of the FP number with respect to a base $b$. The mantissa $m$ is encrypted, while the exponent $e$ is unencrypted.
 Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c)$ respectively. Let $\oplus,\otimes$ represent the homomorphic operations which correspond to the addition and multiplication of integers in the Paillier cryptosystem, respectively. We define the corresponding FP number operations as follows:
@@ -49,7 +49,7 @@ Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c
     \end{align*}
 \end{description}
 \subsubsection{Secure Division}
-We can use the following two-party scheme defined in \cite{boukoros_lightweight_2017} to perform privacy-preserving division.
+We can use the following two-party scheme defined in~\cite{boukoros_lightweight_2017} to perform privacy-preserving division.
 Suppose Bob has $E(x)$ and $E(y)$ and wants to obtain $E(x/y)$ without exposing the value of either integer.
 \begin{itemize}
 	\item Bob first selects a random number $r$ and computes $E(rx)$ and $E(ry)$. Bob can do this since $r$ is a plaintext constant.
