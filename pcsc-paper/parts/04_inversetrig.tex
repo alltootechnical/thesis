@@ -19,22 +19,22 @@ We will compare the quadrature approach with the method of computing partial sum
 
 To obtain a Gauss--Legendre quadrature-based approximation, we take the following integral,
 \begin{align*}
-	\arctan x = \int_0^x{\frac{1}{1+x^2}\diff x},
+	\arctan x = \int_0^x{\frac{1}{1+t^2}\diff t},
 \end{align*}
 and perform five-point Gauss--Legendre quadrature to obtain the following closed-form approximation:
 \begin{align} \label{eq:arctan_quadrature}
 	\begin{split}
 		&\arctan x \\
-		&= \frac
+		&\approx \frac
 		{4\left(225x^9 + 15925x^7 + 144753x^5 + 350595x^3 + 238140x\right)}
 		{15\left(x^{10} + 480x^8 + 11760x^6 + 64120x^4 + 114660x^2 + 63504\right)}
 	\end{split}
 \end{align}
 
-We note that in order to evaluate the quadrature approximation in Equation~\ref{eq:arctan_quadrature}, we must compute the value of $x^{10}$, which requires several rounds of the squaring and multiplication protocols to compute. We now compare the quadrature approximation to the partial sum composed of the first 4 terms of Euler's series expansion in Equation~\ref{eq:arctan_euler}, which requires a similar number of floating-point operations to compute:
+We note that in order to evaluate the quadrature approximation in Equation~\ref{eq:arctan_quadrature}, we must compute the value of $x^{10}$, which requires several rounds of the squaring and multiplication protocols to compute. We now compare the quadrature approximation to the partial sum composed of the first five terms of Euler's series expansion in Equation~\ref{eq:arctan_euler}, which requires a similar number of floating-point operations to compute:
 \begin{align} \label{eq:arctan_euler_partial}
 	\begin{split}
-		&\sum_{n=0}^{3}
+		&\sum_{n=0}^{4}
 		{
 		\frac
 			{2^{2n}(n!)^2}
@@ -49,12 +49,47 @@ We note that in order to evaluate the quadrature approximation in Equation~\ref{
 	\end{split}
 \end{align}
 
-Figure~\ref{fig:arctan_error} shows that despite requiring a similar number of floating-point operations, the quadrature based approximation in Equation~\ref{eq:arctan_quadrature} gives accurate approximations over a larger interval, making it a more viable candidate for efficient computation.
+Figure~\ref{fig:arctan_error} shows that despite requiring a similar number of floating-point operations, the quadrature-based approximation in Equation~\ref{eq:arctan_quadrature} gives accurate approximations over a larger interval, making it a more viable candidate for efficient computation as seen in Figure~\ref{fig:arctan_comparison}.
 \begin{figure}[!ht]
-		\centering
-		\includegraphics[width=.9\linewidth]{figures/single_alpha_plot.png}
-		\caption{Comparison of the absolute error of the approximations for $\arctan x$ using quadrature approximation (Equation~\ref{eq:arctan_quadrature}) and the first 4 terms of Euler's series (Equation~\ref{eq:arctan_euler_partial})}
-		\label{fig:arctan_error}
+	\centering
+	\begin{tikzpicture}
+		\begin{semilogyaxis}[
+			xmin=-40, xmax=40,
+			ymin=1e-11, ymax=2,
+			xlabel={$x$}, ylabel={Absolute error},
+			grid=major,
+			legend pos=south east,
+			legend cell align=left,
+			tick scale binop=\times,
+		]
+		\addplot[thick, ACMDarkBlue] table[x=x, y=gl] {plots/abs_err_arctan.txt};
+		\addplot[thick, ACMOrange] table[x=x, y=euler] {plots/abs_err_arctan.txt};
+		\legend{Gauss--Legendre quadrature, Euler's series}
+		\end{semilogyaxis}
+	\end{tikzpicture}%
+	\caption{Comparison of the absolute error of the approximations for $\arctan x$ using quadrature approximation (Equation~\ref{eq:arctan_quadrature}) and the first five terms of Euler's series (Equation~\ref{eq:arctan_euler_partial})}
+	\label{fig:arctan_error}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+    \begin{tikzpicture}
+		\begin{axis}[
+			xmin=-12, xmax=12,
+			ymin=-2.6, ymax=2.6,
+			xlabel={$x$}, ylabel={$y$},
+			grid=major,
+			legend pos=south east,
+			legend cell align=left,
+			tick scale binop=\times,
+		]
+		\addplot[very thick, ACMDarkBlue] table[x=x, y=yhat] {plots/plot_arctan.txt};
+		\addplot[densely dashed] table[x=x, y=y] {plots/plot_arctan.txt};
+		\legend{5-point quadrature approximation, Actual value of $\arctan x$}
+	\end{axis}
+	\end{tikzpicture}%
+	\caption{Graph of $\arctan x$ and the approximation in Equation~\ref{eq:arctan_quadrature}}
+	\label{fig:arctan_comparison}
 \end{figure}
 
 Figure~\ref{fig:arctan_error_2} shows the absolute error of the quadrature approximation over the interval $[-1,1]$. Since the quadrature approximation yields results with high accuracy over this interval, potential implmentations may use the following trigonometric identities to calculate values of the inverse tangent at larger arguments.
@@ -68,8 +103,20 @@ Figure~\ref{fig:arctan_error_2} shows the absolute error of the quadrature appro
 
 To carry out the conditional check required to use these identities, a privacy-preserving comparison protocol may be used, such as in~\cite{veugen_improving_2012}.
 \begin{figure}[!ht]
-		\centering
-		\includegraphics[width=.9\linewidth]{figures/arctan_error_2.png}
-		\caption{Absolute error of the approximation for $\arctan x$ using quadrature approximation (Equation~\ref{eq:arctan_quadrature}) over the interval $[-1,1]$}
-		\label{fig:arctan_error_2}
+	\centering
+	\begin{tikzpicture}
+		\begin{semilogyaxis}[
+			xmin=-1.25, xmax=1.25,
+			ymin=1e-18, ymax=5e-5, ytickten={-18,-16,...,0},
+			xlabel={$x$}, ylabel={Absolute error},
+			grid=major,
+			legend pos=south east,
+			legend cell align=left,
+			tick scale binop=\times,
+		]
+		\addplot[thick, ACMDarkBlue] table[x=x, y=gl] {plots/abs_err_arctan.txt};
+		\end{semilogyaxis}
+	\end{tikzpicture}%
+	\caption{Absolute error of the approximation for $\arctan x$ using quadrature approximation (Equation~\ref{eq:arctan_quadrature}) over the interval $[-1,1]$}
+	\label{fig:arctan_error_2}
 \end{figure}

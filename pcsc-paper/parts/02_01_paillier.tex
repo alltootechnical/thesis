@@ -14,10 +14,11 @@ The encryption function to encrypt a plaintext $m \in \mathbb{Z}_n$ given a publ
 where $r$ is a random non-negative integer less than $n^2$.
 The decryption function to decrypt a ciphertext $c \in \mathbb{Z}^*_{n^2}$ given a private key $(p,q)$ is defined as:
 \begin{align*}
-	D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n.
+	D(c) = L\left(c^\lambda \bmod n^2\right) \cdot \left(L\left(g^\lambda \bmod n^2\right)\right)^{-1} \mod n.
 \end{align*}
 \subsubsection{Homomorphic Properties of the Paillier Cryptosystem}
-The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These operations are defined as follows. These properties are used
+The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. age. These homomorphic properties are used to add a plaintex scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively. They are defined as follows.
+
 For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
 \begin{align*}
 	D(E(m_1)g^k\bmod n^2)=(m_1+k)\bmod n\\
