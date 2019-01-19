@@ -40,7 +40,7 @@ Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c
   \item[Addition.]
     To compute $E(c)=E(a+b)$ we compute
     \begin{align*}
-      E(m_c) &= E(m_1) \oplus (b^{e_b-e_a} \otimes E(m_b)), e_c = e_a & \text{ if } e_a \leq e_b, \\
+      E(m_c) &= E(m_a) \oplus (b^{e_b-e_a} \otimes E(m_b)), e_c = e_a & \text{ if } e_a \leq e_b, \\
       E(m_c) &= E(m_b) \oplus (b^{e_a-e_b} \otimes E(m_a)), e_c = e_b & \text{ if } e_a > e_b.
     \end{align*}
   \item[Scalar multiplication.]
