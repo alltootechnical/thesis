@@ -39,23 +39,23 @@ Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c
 \begin{description}
   \item[Addition.]
     To compute $E\left(c\right)=E\left(a+b\right)$ we compute
-    \begin{align*}
-		E\left(m_c\right) &= E\left(m_a\right) \oplus \left(b^{e_b-e_a} \otimes E\left(m_b\right)\right) \text{and } e_c = e_a & \text{ if } e_a \leq e_b, \\
-		E\left(m_c\right) &= E\left(m_b\right) \oplus \left(b^{e_a-e_b} \otimes E\left(m_a\right)\right) \text{and } e_c = e_b & \text{ if } e_a > e_b.
-	\end{align*}
-	% \begin{align*}
-	% 	E\left(m_c\right) &= 
-	% 	\begin{cases}
-	% 		E\left(m_a\right) \oplus \left(b^{e_b-e_a} \otimes E\left(m_b\right)\right) & \text{if } e_a \leq e_b \\
-	% 		E\left(m_b\right) \oplus \left(b^{e_a-e_b} \otimes E\left(m_a\right)\right) & \text{if } e_a > e_b
-	% 	\end{cases} \\
-	% 	% \text{ and }
-	% 	e_c &= \min\left(e_a, e_b \right).	
-	% 	% \begin{cases}
-	% 	% 	e_a & \text{if } e_a \leq e_b \\
-	% 	% 	e_b & \text{if } e_a > e_b
-	% 	% \end{cases}.
+    % \begin{align*}
+	% 	E\left(m_c\right) &= E\left(m_a\right) \oplus \left(b^{e_b-e_a} \otimes E\left(m_b\right)\right) \text{and } e_c = e_a & \text{ if } e_a \leq e_b, \\
+	% 	E\left(m_c\right) &= E\left(m_b\right) \oplus \left(b^{e_a-e_b} \otimes E\left(m_a\right)\right) \text{and } e_c = e_b & \text{ if } e_a > e_b.
 	% \end{align*}
+	\begin{align*}
+		E\left(m_c\right) &= 
+		\begin{cases}
+			E\left(m_a\right) \oplus \left(b^{e_b-e_a} \otimes E\left(m_b\right)\right) & \text{if } e_a \leq e_b \\
+			E\left(m_b\right) \oplus \left(b^{e_a-e_b} \otimes E\left(m_a\right)\right) & \text{if } e_a > e_b
+		\end{cases}, \\
+		% \text{ and }
+		e_c &= %\min\left(e_a, e_b \right).	
+		\begin{cases}
+			e_a & \text{if } e_a \leq e_b \\
+			e_b & \text{if } e_a > e_b
+		\end{cases}.
+	\end{align*}
   \item[Scalar multiplication.]
     To compute $E\left(c\right) = E\left(ab\right)$, where $a$ and $E\left(b\right)$ are known (i.e., $m_a$ is not encrypted), we compute
     \begin{align*}

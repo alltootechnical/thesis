@@ -22,6 +22,27 @@ We note that the privacy-preserving floating-point arithmetic resulted in some d
 \end{tabular}
 \end{table}
 
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+		\begin{semilogyaxis}[
+			xmin=0, xmax=255,
+			ymin=1e-3, ymax=1.5,
+			xlabel={$x$}, ylabel={Absolute error},
+			grid=major,
+			legend pos=south east,
+			legend cell align=left,
+			tick scale binop=\times,
+		]
+		\addplot[very thick, ACMDarkBlue] table[x=x, y=newerr] {plots/comp_log_errs.txt};
+		\addplot[thick, ACMOrange] table[x=x, y=olderr] {plots/comp_log_errs.txt};
+		\legend{Scaled quadrature, Original quadrature}
+		\end{semilogyaxis}
+	\end{tikzpicture}%
+	\caption{Comparison of logarithm approximation errors under Paillier}
+	\label{fig:comp_log}
+\end{figure}
+
 \subsection{Inverse Tangent Approximation}
 We also computed $\arctan x$ using for various encrypted inputs using both the first five terms of Euler's series for the inverse tangent function (Equation~\ref{eq:arctan_euler_partial}) and our quadrature approximation (Equation~\ref{eq:arctan_quadrature}). These were compared with the values returned by the built-in inverse tangent function in Python. We show several data points in Table~\ref{tab:arctan_approximation}. Similar to the logarithm approximations, we note that there is a degree of floating-point error compared to that predicted by Figure~\ref{fig:arctan_error}, but the quadrature approach obtains higher accuracy despite requiring a similar number of floating-point operations to execute.
 
@@ -42,3 +63,25 @@ We also computed $\arctan x$ using for various encrypted inputs using both the f
 	\bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+		\begin{semilogyaxis}[
+			xmin=-1, xmax=1,
+			ymin=1e-7, ymax=1,
+			xlabel={$x$}, ylabel={Absolute error},
+			grid=major,
+			legend pos=south east,
+			legend cell align=left,
+			tick scale binop=\times,
+		]
+		\addplot[very thick, ACMDarkBlue] table[x=x, y=newerr] {plots/comp_arctan_errs.txt};
+		\addplot[thick, ACMOrange] table[x=x, y=olderr] {plots/comp_arctan_errs.txt};
+		\legend{Gauss--Legendre quadrature, Partial sum of Euler's series}
+		\end{semilogyaxis}
+	\end{tikzpicture}%
+	\caption{Comparison of inverse tangent approximation errors under Paillier}
+	\label{fig:comp_arctan}
+\end{figure}
+
