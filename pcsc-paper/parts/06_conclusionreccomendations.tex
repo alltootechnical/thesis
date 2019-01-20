@@ -1,5 +1,7 @@
 \section{Conclusion}
-We have shown new closed-form approximations to the logarithm and arctangent functions and showed how they can be implemented together with the Paillier cryptosystem to allow for privacy-preserving function calculation. We have compared our approach to other closed-form approximations which require a similar number of secure arithmetic operations to evaluate, and have shown our new approximation procedures can yield more accurate results over larger ranges of inputs.
+We have shown new closed-form approximations to the logarithm and inverse tangent functions and showed how they can be implemented together with the Paillier cryptosystem to allow for privacy-preserving function calculation. We have compared our approach to other closed-form approximations which require a similar number of secure arithmetic operations to evaluate, and have shown our new approximation procedures can generally yield more accurate results over larger ranges of inputs.
+
+While other approximation procedures for the logarithm and inverse tangent functions may yield better accuracy, the rational approximations shown in this paper are suitable enough for privacy-preserving protocols where the precise input values are not exposed, and arithmetic operations are limited and more computationally expensive.
 
 \section{Recommendations}
 Further research can be done regarding implementation of other transcendental functions, either by using known infinite series, or by using identities with the quadrature-based approximations we have presented in this paper. Furthermore, testing with other types of homomorphic cryptosystems can be done, to potentially reduce noise encountered in secure floating-point operations.
