@@ -64,7 +64,7 @@ Figure~\ref{fig:arctan_error} shows that despite requiring a similar number of f
 		]
 		\addplot[thick, ACMDarkBlue] table[x=x, y=gl] {plots/abs_err_arctan.txt};
 		\addplot[thick, ACMOrange] table[x=x, y=euler] {plots/abs_err_arctan.txt};
-		\legend{Gauss--Legendre quadrature, Euler's series}
+		\legend{Gauss--Legendre quadrature, Partial sum of Euler's series}
 		\end{semilogyaxis}
 	\end{tikzpicture}%
 	\caption{Comparison of the absolute error of the approximations for $\arctan x$ using quadrature approximation (Equation~\ref{eq:arctan_quadrature}) and the first five terms of Euler's series (Equation~\ref{eq:arctan_euler_partial})}
