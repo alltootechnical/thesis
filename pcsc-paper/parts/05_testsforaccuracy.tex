@@ -4,7 +4,8 @@ We implemented privacy-preserving floating-point arithmetic using the system des
 \subsection{Logarithm Approximation}
 We then computed $\log\left(1+x\right)$ for various encrypted inputs using both the original quadrature formula by Khattri (Equation~\ref{eq:standard_logarithm_quadrature}) and our scaled approximation (Equation~\ref{eq:optimal_log_approximation}). These were compared with the values returned by the built-in logarithm function in Python. Several data points are shown in Table~\ref{tab:log_approximation}.
 
-We note that the privacy-preserving floating-point arithmetic resulted in some degree of floating-point error, as the observed floating point error in Table~\ref{tab:log_approximation} is greater than the raw absolute error observed in Figure~\ref{fig:log_error_comparison}. However, it can still be seen that the error of the scaled approximation is less than that of the original approximation for large inputs, although this approximation loses accuracy for smaller inputs.
+We note that the privacy-preserving floating-point arithmetic resulted in some degree of floating-point error, as the observed floating point error in Table~\ref{tab:log_approximation} is greater than the raw absolute error observed in Figure~\ref{fig:log_error_comparison}. Figure~\ref{fig:comp_log} shows a plot of the observed absolute error of the original quadrature approximation and scaled quadrature approximation to the logarithm, when computed using privacy-preserving arithmetic through the Paillier cryptosystem. While there are intervals where the original quadrature approximation is more accurate than the scaled quadrature approximation, we can see that the scaled quadrature is more accurate for larger inputs.
+
 \begin{table}[ht]
 	\caption{Comparison of logarithm approximation errors under Paillier}
 	\label{tab:log_approximation}
@@ -44,7 +45,7 @@ We note that the privacy-preserving floating-point arithmetic resulted in some d
 \end{figure}
 
 \subsection{Inverse Tangent Approximation}
-We also computed $\arctan x$ using for various encrypted inputs using both the first five terms of Euler's series for the inverse tangent function (Equation~\ref{eq:arctan_euler_partial}) and our quadrature approximation (Equation~\ref{eq:arctan_quadrature}). These were compared with the values returned by the built-in inverse tangent function in Python. We show several data points in Table~\ref{tab:arctan_approximation}. Similar to the logarithm approximations, we note that there is a degree of floating-point error compared to that predicted by Figure~\ref{fig:arctan_error}, but the quadrature approach obtains higher accuracy despite requiring a similar number of floating-point operations to execute.
+We also computed $\arctan x$ using for various encrypted inputs using both the first five terms of Euler's series for the inverse tangent function (Equation~\ref{eq:arctan_euler_partial}) and our quadrature approximation (Equation~\ref{eq:arctan_quadrature}). These were compared with the values returned by the built-in inverse tangent function in Python. We show several data points in Table~\ref{tab:arctan_approximation}, and show graphs of the observed error in Figure~\ref{fig:comp_arctan}. Similar to the logarithm approximations, we note that there is a degree of floating-point error compared to that predicted by Figure~\ref{fig:arctan_error}, but the quadrature approach obtains higher accuracy despite requiring a similar number of floating-point operations to execute.
 
 \begin{table}[ht]
 	\caption{Comparison of inverse tangent approximation errors under Paillier}
@@ -84,4 +85,3 @@ We also computed $\arctan x$ using for various encrypted inputs using both the f
 	\caption{Comparison of inverse tangent approximation errors under Paillier}
 	\label{fig:comp_arctan}
 \end{figure}
-
