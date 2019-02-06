@@ -32,7 +32,7 @@ def sort_utility(array, l, m, r):
             array[k] = L[i]
             k += 1
             i += 1
-        else
+        else:
             array[k] = R[j]
             k += 1
             j += 1
@@ -67,7 +67,7 @@ def bit_size(x):
     
     return temp
 
-def mpz_mod_modified(op1, op2)
+def mpz_mod_modified(op1, op2):
     rop = gmpy2.f_mod(op1,op2)
     temp = gmpy2.f_div(op2, two)
     if rop > temp:
@@ -75,3 +75,4 @@ def mpz_mod_modified(op1, op2)
     return rop
 
 def generate_random(x, bitsize, include_negative_range, seeded, full_range):
+    return
