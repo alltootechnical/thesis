@@ -1,5 +1,5 @@
 import gmpy2
-from gmpy2 import mpz,mpq,mpfr,mpc
+from gmpy2 import mpz
 zero = mpz(0)
 one = mpz(1)
 two = mpz(2)
@@ -22,7 +22,7 @@ def sort_utility(array, l, m, r):
     n_1 = m - l + 1
     n_2 = r - m
     L = [mpz(array[l + i]) for i in range(n_1)]
-    R = [mpz(array[m + 1 + j]) for i in range(n_2)]
+    R = [mpz(array[m + 1 + j]) for j in range(n_2)]
 
     i = 0
     j = 0
@@ -49,7 +49,7 @@ def sort_utility(array, l, m, r):
 
 def sort_huge_numbers(array, l, r):
     if l < r:
-        m = (l + r)//2
+        m = (l + r) // 2
         sort_huge_numbers(array, l, m)
         sort_huge_numbers(array, m + 1, r)
         sort_utility(array, l, m, r)
@@ -68,7 +68,7 @@ def bit_size(x):
     return temp
 
 def mpz_mod_modified(op1, op2):
-    rop = gmpy2.f_mod(op1,op2)
+    rop = gmpy2.f_mod(op1, op2)
     temp = gmpy2.f_div(op2, two)
     if rop > temp:
         rop = gmpy2.sub(rop, op2)
@@ -89,7 +89,7 @@ def generate_random(bit_size, include_negative_range, seeded, full_range):
             tmp = gmpy2.mul_2exp(one, bit_size - 1)
             x = gmpy2.sub(x, tmp)
         return x
-    for i in range(bit_size-32, 0-1, -32):
+    for i in range(bit_size - 32, 0 - 1, -32):
         tmp = gmpy2.get_random()
         tmp = gmpy2.mul_2exp(tmp, i)
         x = gmpy2.add(x, tmp)
@@ -112,7 +112,7 @@ def generate_x_i(sk, length):
     tmp, q, r = 0, 0, 0
     q = gmpy2.mul_2exp(one, length - 1)
     gmpy2.random_state()
-    for i in range(length-32, 0-1, -32):
+    for i in range(length - 32, 0 - 1, -32):
         tmp = gmpy2.get_random()
         tmp = gmpy2.mul_2exp(tmp, i)
         q = gmpy2.add(tmp, q)

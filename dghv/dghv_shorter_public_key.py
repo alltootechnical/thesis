@@ -108,9 +108,9 @@ class cryptosystem:
             seed = generate_sparse_matrix(u_1, self.modified_secret_key, x_p)
             for i in range(Theta):
                 if self.modified_secret_key[i] is True:
-                    symmetric_encryption(self.encrypted_sk[i], 1)
+                    self.encrypted_sk[i] = symmetric_encryption(1)
                 else:
-                    symmetric_encryption(self.encrypted_sk[i], 0)
+                    self.encrypted_sk[i] = symmetric_encryption(0)
             enc_sk_file = open('short_public_key.txt', 'w')
             enc_sk_file.write(seed)
             enc_sk_file.write(u_1)
@@ -149,15 +149,15 @@ class cryptosystem:
             while self.pk[i] >= self.pk[0]:
                 generate_x(pk[i], sk)
 
-    def encrypt_bit(ct, bit):
+    def encrypt_bit(self, bit):
         tmp, temp, test = mpz(), mpz(), mpz()
         ct = mpz(bit)
-        generate_random(tmp, sigma, True, False, False)
+        tmp = generate_random(sigma, True, False, False)
         tmp *= 2
         ct += tmp
         for i in range(1, beta + 1):
             for j in range(1, beta + 1):
-                generate_random(tmp, alpha, False, False, False)
+                tmp = generate_random(alpha, False, False, False)
                 temp = self.pk[2 * j] * self.pk[2 * i - 1]
                 temp %= self.pk[0]
                 tmp *= temp
@@ -166,13 +166,118 @@ class cryptosystem:
                 tmp %= self.pk[0]
                 ct += tmp
                 ct += pk[0]
+        return ct
 
-    def symmetric_encryption(ct, m):
-        generate_x(ct, self.sk)
+    def symmetric_encryption(self, m):
+        ct = generate_x(self.sk)
         ct *= 2
         ct += m
+        return ct
 
-    def decrypt_bit(m, ct):
+    def decrypt_bit(self, m, ct):
         m = mpz_mod_modified(ct, self.sk)
         m %= 2
+        return m
+
+    def AND_GATE(self, ct_1, ct_2):
+        return (ct_1 * ct_2) % self.pk[0]
+    
+    def XOR_GATE(self, ct_1, ct_2):
+        return (ct_1 + ct_2) % self.pk[0]
+    
+    def NOT_GATE(self, ct_1):
+        return XOR_GATE(ct_1, 1)
+
+    def OR_GATE(self, ct_1, ct_2):
+        return NOT_GATE(AND_GATE(NOT_GATE(ct_1), NOT_GATE(ct_2)))
+    
+    def recrypt_util(self, encrypted_z, ct, PKC):
+        u_i = [mpz() for i in range(Theta)]
+        u_i[0] = self.u_1
+        gmpy2.random_state()
+
+        for i in range(1, Theta):
+            u_i[i] = generate_random(kappa + 1, False, True, False)
+
+        z_i = []
+        den = mpz(2 ** kappa)
+        Sum = binary_real(den, one, kappa)
+
+        for i in range(Theta):
+            num = u_i[i] * ct
+            z_i.append(binary_real(num, den, n + e))
         
+        for i in range(Theta):
+            for j in range(n + 1 + e):
+                if j == 0:
+                    if z_i[i].decimal == 1:
+                        encrypted_z[i][j] = mpz(1)
+                    else:
+                        encrypted_z[i][j] = mpz(0)
+                else:
+                    if z_i[i].value[j - 1] is True:
+                        encrypted_z[i][j] = mpz(1)
+                    else:
+                        encrypted_z[i][j] = mpz(0)
+
+def two_for_three_trick(a, b, c, pkc):
+    temp_1, temp_2, temp_3 = mpz(), mpz(), mpz()
+    temp_2 = pkc.XOR_GATE(a,b)
+    temp_2 = pkc.XOR_GATE(temp_2, c)
+    temp_1 = pkc.AND_GATE(a, b)
+    temp_3 = pkc.XOR_GATE(a, b)
+    temp_3 = pkc.AND_GATE(temp_3, c)
+    temp_1 = pkc.XOR_GATE(temp_1, temp_3)
+    return temp_1, temp2
+
+class ciphertext:
+    def __init__(self, pkc=None, m=None):
+        self.value = mpz()
+        if not(pkc is None) and m is None:
+            self.pkc = pkc
+        elif not(pkc is None) and not(m is None):
+            self.degree = 1
+            self.pkc = pkc
+            self.value = mpz(pkc.encrypt_bit(m))
+
+    def decrypt(self):
+        return self.pkc.decrypt_bit(self.value)
+    
+    def initialize(self, pkc, m):
+        self.value = pkc.encrypt_bit(m)
+        self.degree = 1
+        self.pkc = pkc
+    
+    def custom_setup(self, val, deg, pkc):
+        self.value = mpz(val)
+        self.degree = deg
+        self.pkc = pkc
+    
+    def __add__(self, other):
+        result = ciphertext(self.pkc)
+        result.value = self.pkc.XOR_GATE(self.value, other.value)
+        result.degree = max(self.degree, other.degree)
+        return result
+
+    def __mult__(self, other):
+        result = ciphertext(self.pkc)
+        result.value = self.pkc.AND_GATE(self.value, other.value)
+        result.degree = self.degree + other.degree
+        return result
+
+    def __xor__(self, other):
+        result = ciphertext(self.pkc)
+        result.value = self.pkc.OR_GATE(self.value, other.value)
+        result.degree = self.degree + other.degree
+        return result
+    
+    def __not__(self):
+        result = ciphertext(self.pkc)
+        result.value = pkc.NOT_GATE(self.value)
+        result.degree = self.degree
+        return result
+    
+    def recrypt(self, pkc):
+        encrypted_z = [[mpz() for j in range(n + 1  + e)] for i in range(Theta)]
+        pkc.recrypt_util(encrypted_z, self.value, pkc)
+        # continue from line 531
