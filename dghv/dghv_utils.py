@@ -76,13 +76,13 @@ def mpz_mod_modified(op1, op2):
 
 def generate_random(bit_size, include_negative_range, seeded, full_range):
     if not seeded:
-        gmpy2.random_state()
+        seeded = gmpy2.random_state()
     x = zero
     if full_range:
         x = gmpy2.mul_2exp(one, bit_size - 1)
     tmp = 0
     if bit_size < 33:
-        tmp = gmpy2.get_random()
+        tmp = gmpy2.mpz_random(seeded, 2 ** 64)
         temp = (1 << bit_size)
         x = gmpy2.f_mod(tmp, temp)
         if include_negative_range:
@@ -90,14 +90,14 @@ def generate_random(bit_size, include_negative_range, seeded, full_range):
             x = gmpy2.sub(x, tmp)
         return x
     for i in range(bit_size - 32, 0 - 1, -32):
-        tmp = gmpy2.get_random()
+        tmp = gmpy2.mpz_random(seeded, 2 ** 64)
         tmp = gmpy2.mul_2exp(tmp, i)
         x = gmpy2.add(x, tmp)
-    x = gmpy2.add(x, gmpy2.get_random())
+    x = gmpy2.add(x, gmpy2.mpz_random(seeded, 2 ** 64))
     if include_negative_range:
         tmp = gmpy2.mul_2exp(one, bit_size - 1)
         x = gmpy2.sub(x, tmp)
-    return x
+    return mpz(x)
         
 def generate_x(sk):
     gmpy2.random_state()
