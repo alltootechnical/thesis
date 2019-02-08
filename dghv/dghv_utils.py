@@ -1,9 +1,10 @@
+import time
 import gmpy2
 from gmpy2 import mpz
 zero = mpz(0)
 one = mpz(1)
 two = mpz(2)
-
+global_random_state = None
 Lambda = 42
 alpha = 42
 rho = 16
@@ -68,21 +69,24 @@ def bit_size(x):
     return temp
 
 def mpz_mod_modified(op1, op2):
-    rop = gmpy2.f_mod(op1, op2)
-    temp = gmpy2.f_div(op2, two)
+    print(op1)
+    print(op2)
+    rop = gmpy2.f_mod(mpz(op1), mpz(op2))
+    temp = gmpy2.f_div(mpz(op2), two)
     if rop > temp:
-        rop = gmpy2.sub(rop, op2)
+        rop = gmpy2.sub(rop, mpz(op2))
     return rop
 
 def generate_random(bit_size, include_negative_range, seeded, full_range):
-    if not seeded:
-        seeded = gmpy2.random_state()
+    global global_random_state
+    if not seeded or global_random_state is None:
+        global_random_state = gmpy2.random_state()
     x = zero
     if full_range:
         x = gmpy2.mul_2exp(one, bit_size - 1)
     tmp = 0
     if bit_size < 33:
-        tmp = gmpy2.mpz_random(seeded, 2 ** 64)
+        tmp = gmpy2.mpz_random(global_random_state, 2 ** 64)
         temp = (1 << bit_size)
         x = gmpy2.f_mod(tmp, temp)
         if include_negative_range:
@@ -90,23 +94,23 @@ def generate_random(bit_size, include_negative_range, seeded, full_range):
             x = gmpy2.sub(x, tmp)
         return x
     for i in range(bit_size - 32, 0 - 1, -32):
-        tmp = gmpy2.mpz_random(seeded, 2 ** 64)
+        tmp = gmpy2.mpz_random(global_random_state, 2 ** 64)
         tmp = gmpy2.mul_2exp(tmp, i)
         x = gmpy2.add(x, tmp)
-    x = gmpy2.add(x, gmpy2.mpz_random(seeded, 2 ** 64))
+    x = gmpy2.add(x, gmpy2.mpz_random(global_random_state, 2 ** 64))
     if include_negative_range:
         tmp = gmpy2.mul_2exp(one, bit_size - 1)
         x = gmpy2.sub(x, tmp)
     return mpz(x)
         
-def generate_x(sk):
+def generate_x(x, sk):
     gmpy2.random_state()
     q, r = 0, 0
     q = generate_random(gamma - eta, False, False, False)
     r = generate_random(rho, True, False, False)
     x = gmpy2.mul(q, sk)
     x = gmpy2.add(r, x)
-    return x
+    return mpz(x)
 
 def generate_x_i(sk, length):
     tmp, q, r = 0, 0, 0
@@ -123,7 +127,9 @@ def generate_x_i(sk, length):
     return x_i
     
 def generate_sparse_matrix(u_1, modified_secret_key, x_p):
-    gmpy2.random_state()
+    global global_random_state
+    seed = mpz(time.time())    
+    global_random_state = gmpy2.random_state(seed)
     Theta_vector = [0 for _ in range(Theta)]
     for i in range(1, Theta):
         Theta_vector[i] = generate_random(kappa + 1, False, True, False)
@@ -133,7 +139,7 @@ def generate_sparse_matrix(u_1, modified_secret_key, x_p):
     count = theta - 1
     gmpy2.random_state()
     while count > 0:
-        index = gmpy2.get_random() % Theta
+        index = gmpy2.mpz_random(global_random_state, 2 ** 64) % Theta
         if not modified_secret_key[index]:
             modified_secret_key[index] = True
             count -= 1
@@ -142,9 +148,9 @@ def generate_sparse_matrix(u_1, modified_secret_key, x_p):
     for i in range(1, Theta):
         if modified_secret_key[i]:
             sum_ = gmpy2.add(sum_, Theta_vector[i])
-    sum_ = gmpy2.mod(sum_, temp)
+    sum_ %= temp
     u_1 = gmpy2.sub(x_p, sum_)
     if u_1 < zero:
         u_1 = gmpy2.add(temp, u_1)
-    return
+    return seed
 

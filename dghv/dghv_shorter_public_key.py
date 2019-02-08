@@ -79,56 +79,57 @@ class cryptosystem:
 
         sk_file_check = Path('secret_key.txt')
         if not sk_file_check.is_file():
+            print('generating secret key')
             sk_file = open('secret_key.txt', 'w')
             self.generate_secret_key()
-            print('secret key:', self.sk)
             sk_file.write(self.sk.digits())
             sk_file.close()
         else:
+            print('loading secret key')
             sk_file = open('secret_key.txt', 'r')
             self.sk = mpz(sk_file.read())
             sk_file.close()
+        print('secret key:', self.sk)
 
         pk_file_check = Path('short_public_key.txt')
         if not pk_file_check.is_file():
             pk_file = open('short_public_key.txt', 'w')
             self.generate_public_key()
-            print('public key')
-            for pk_i in self.pk:
-                pk_file.write(pk_i.digits())
-                print(pk_i.digits())
+            pk_file.writelines("%s\n" % str(pk_i.digits()) for pk_i in self.pk)
+            print('public key generated,', len(self.pk), 'elements')
+            #print([str(pk_i) for pk_i in self.pk])
             pk_file.close()
         else:
             pk_file = open('short_public_key.txt', 'r')
-            for i in range(2 * beta + 1):
-                self.pk[i] = mpz(pk_file.read())
+            self.pk = [mpz(element.rstrip()) for element in pk_file.readlines()]
+            print('public key loaded,', len(self.pk), 'elements')
             pk_file.close()
 
         enc_sk_file_check = Path('encrypted_sk_and_seed.txt')
         if not enc_sk_file_check.is_file():
             x_p = mpz(2) ** kappa
-            x_p = gmpy2.f_div(x_p, sk)
-            seed = generate_sparse_matrix(u_1, self.modified_secret_key, x_p)
+            x_p = gmpy2.f_div(x_p, self.sk)
+            self.seed = generate_sparse_matrix(self.u_1, self.modified_secret_key, x_p)
             for i in range(Theta):
                 if self.modified_secret_key[i] is True:
-                    self.encrypted_sk[i] = symmetric_encryption(1)
+                    self.encrypted_sk[i] = self.symmetric_encryption(self.encrypted_sk[i], 1)
                 else:
-                    self.encrypted_sk[i] = symmetric_encryption(0)
-            enc_sk_file = open('short_public_key.txt', 'w')
-            enc_sk_file.write(seed)
-            enc_sk_file.write(u_1)
+                    self.encrypted_sk[i] = self.symmetric_encryption(self.encrypted_sk[i], 0)
+            enc_sk_file = open('encrypted_sk_and_seed.txt', 'w')
+            enc_sk_file.write('%s\n' %  str(self.seed))
+            enc_sk_file.write('%s\n' % str(self.u_1))
             for i in range(Theta):
-                enc_sk_file.write(self.encrypted_sk[i])
+                enc_sk_file.write('%s\n' % str(self.encrypted_sk[i]))
             enc_sk_file.close()
         else:
-            enc_sk_file = open('short_public_key.txt', 'r')
-            seed = enc_sk_file.read()
-            self.u_1 = enc_sk_file.read()
+            enc_sk_file = open('encrypted_sk_and_seed.txt', 'r')
+            file_contents = [element.rstrip() for element in enc_sk_file.readlines()]
+            self.seed = int(file_contents[0])
+            self.u_1 = mpz(file_contents[1])
             temp = mpz()
             for i in range(Theta):
-                Input = enc_sk_file.read()
-                self.encrypted_sk[i] = Input
-                temp = self.decrypt_bit(encrypted_sk[i])
+                self.encrypted_sk[i] = mpz(file_contents[i+2])
+                temp = self.decrypt_bit(self.encrypted_sk[i])
                 if temp == 1:
                     self.modified_secret_key[i] = True
                 else:
@@ -150,16 +151,20 @@ class cryptosystem:
 
     def generate_public_key(self):
         tmp = mpz()
+        self.pk[0] = self.sk
         temp = (gamma - eta) // (Lambda**2) + 1
+
         for i in range(temp):
+            print('public key generation phase 1/2: iteration', i+1, 'of', temp)
             tmp = generate_random( Lambda**2, False, False, True)
             tmp = gmpy2.next_prime(tmp)
             self.pk[0] *= tmp
 
         for i in range(1, 2 * beta + 1):
-            generate_x(self.pk[i], self.sk)
+            print('public key generation phase 2/2: iteration', i+1, 'of', 2 * beta + 1)
+            self.pk[i] = generate_x(self.pk[i], self.sk)
             while self.pk[i] >= self.pk[0]:
-                generate_x(pk[i], sk)
+                self.pk[i] = generate_x(self.pk[i], self.sk)
 
     def encrypt_bit(self, bit):
         tmp, temp, test = mpz(), mpz(), mpz()
@@ -177,11 +182,11 @@ class cryptosystem:
                 tmp *= 2
                 tmp %= self.pk[0]
                 ct += tmp
-                ct += pk[0]
+                ct += self.pk[0]
         return ct
 
-    def symmetric_encryption(self, m):
-        ct = generate_x(self.sk)
+    def symmetric_encryption(self, ct, m):
+        ct = generate_x(ct, self.sk)
         ct *= 2
         ct += m
         return ct
@@ -359,7 +364,7 @@ class ciphertext:
 
 # driver
 pkc = cryptosystem()
-result = ciphertext(pkc, 75)
-print(result.value)
+result = ciphertext(pkc, mpz(75))
+print('encrypted:', result.value)
 result = result.decrypt()
-print(result.value)
+print('decrypted:', result)
