@@ -18,6 +18,7 @@ theta = 15
 n = 4
 kappa = 161569 + 2 + n
 e = 0
+RAND_MAX = 1 << rho + 1
 
 def sort_utility(array, l, m, r):
     n_1 = m - l + 1
@@ -69,8 +70,6 @@ def bit_size(x):
     return temp
 
 def mpz_mod_modified(op1, op2):
-    print(op1)
-    print(op2)
     rop = gmpy2.f_mod(mpz(op1), mpz(op2))
     temp = gmpy2.f_div(mpz(op2), two)
     if rop > temp:
@@ -86,7 +85,7 @@ def generate_random(bit_size, include_negative_range, seeded, full_range):
         x = gmpy2.mul_2exp(one, bit_size - 1)
     tmp = 0
     if bit_size < 33:
-        tmp = gmpy2.mpz_random(global_random_state, 2 ** 64)
+        tmp = gmpy2.mpz_random(global_random_state, RAND_MAX)
         temp = (1 << bit_size)
         x = gmpy2.f_mod(tmp, temp)
         if include_negative_range:
@@ -94,10 +93,10 @@ def generate_random(bit_size, include_negative_range, seeded, full_range):
             x = gmpy2.sub(x, tmp)
         return x
     for i in range(bit_size - 32, 0 - 1, -32):
-        tmp = gmpy2.mpz_random(global_random_state, 2 ** 64)
+        tmp = gmpy2.mpz_random(global_random_state, RAND_MAX)
         tmp = gmpy2.mul_2exp(tmp, i)
         x = gmpy2.add(x, tmp)
-    x = gmpy2.add(x, gmpy2.mpz_random(global_random_state, 2 ** 64))
+    x = gmpy2.add(x, gmpy2.mpz_random(global_random_state, RAND_MAX))
     if include_negative_range:
         tmp = gmpy2.mul_2exp(one, bit_size - 1)
         x = gmpy2.sub(x, tmp)
@@ -139,7 +138,7 @@ def generate_sparse_matrix(u_1, modified_secret_key, x_p):
     count = theta - 1
     gmpy2.random_state()
     while count > 0:
-        index = gmpy2.mpz_random(global_random_state, 2 ** 64) % Theta
+        index = gmpy2.mpz_random(global_random_state, RAND_MAX) % Theta
         if not modified_secret_key[index]:
             modified_secret_key[index] = True
             count -= 1

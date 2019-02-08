@@ -139,14 +139,14 @@ class cryptosystem:
     def generate_secret_key(self):
         tmp = mpz()
         self.sk = mpz(2)**(eta - mpz(1))
-        random_state = gmpy2.random_state()
+        random_state = gmpy2.random_state(mpz(time.time()))
         i = eta - 32
         while i >= 0:
-            tmp = gmpy2.mpz_random(random_state, 2 ** 64)
+            tmp = gmpy2.mpz_random(random_state, RAND_MAX)
             tmp = tmp * (mpz(2)**i)
             self.sk += tmp
             i -= 32
-        self.sk += gmpy2.mpz_random(random_state, 2 ** 64)
+        self.sk += gmpy2.mpz_random(random_state, RAND_MAX)
         self.sk = self.sk * 2 + 1
 
     def generate_public_key(self):
@@ -155,13 +155,13 @@ class cryptosystem:
         temp = (gamma - eta) // (Lambda**2) + 1
 
         for i in range(temp):
-            print('public key generation phase 1/2: iteration', i+1, 'of', temp)
+            print('public key generation phase 1/2: iteration', i + 1, 'of', temp)
             tmp = generate_random( Lambda**2, False, False, True)
             tmp = gmpy2.next_prime(tmp)
             self.pk[0] *= tmp
 
         for i in range(1, 2 * beta + 1):
-            print('public key generation phase 2/2: iteration', i+1, 'of', 2 * beta + 1)
+            print('public key generation phase 2/2: iteration', i + 1, 'of', 2 * beta + 1)
             self.pk[i] = generate_x(self.pk[i], self.sk)
             while self.pk[i] >= self.pk[0]:
                 self.pk[i] = generate_x(self.pk[i], self.sk)
@@ -245,7 +245,7 @@ def two_for_three_trick(a, b, c, pkc):
     temp_3 = pkc.XOR_GATE(a, b)
     temp_3 = pkc.AND_GATE(temp_3, c)
     temp_1 = pkc.XOR_GATE(temp_1, temp_3)
-    return temp_1, temp2
+    return temp_1, temp_2
 
 class ciphertext:
     def __init__(self, pkc=None, m=None):
@@ -276,7 +276,7 @@ class ciphertext:
         result.degree = max(self.degree, other.degree)
         return result
 
-    def __mult__(self, other):
+    def __mul__(self, other):
         result = ciphertext(self.pkc)
         result.value = self.pkc.AND_GATE(self.value, other.value)
         result.degree = self.degree + other.degree
@@ -305,9 +305,9 @@ class ciphertext:
                 encrypted_z[i][j] = pkc.AND_GATE(encrypted_z[i][j], pkc.encrypted_sk[i])
                 a[i][j].custom_setup(encrypted_z[i][j], 2, pkc)
 
-        dp = [[ciphertext() for j in range(Theta + 1)] for i in range(2**(n - 1))]
+        dp = [[ciphertext() for j in range(Theta + 1)] for i in range(2**(n - 1) + 1)]
         W = [[ciphertext() for j in range(n + 1)] for i in range(n + 1 + e)]
-        for i in range(2**(n - 1)):
+        for i in range(2**(n - 1) + 1):
             dp[i][0].custom_setup(0, 1, pkc)
         for i in range(Theta + 1):
             dp[0][i].custom_setup(1, 1, pkc)
@@ -335,7 +335,7 @@ class ciphertext:
                 W[l + 1][0].value = pkc.XOR_GATE(W[l + 1][0].value, W[k + 2][0].value)
 
                 for j in range(1, n + 1):
-                    W[l][j - 1].value, W[l + 1][j].value = two_for_three_trick(W[k][j].value, W[k + 1][j].value, W[k + 2][j].value, PKC)
+                    W[l][j - 1].value, W[l + 1][j].value = two_for_three_trick(W[k][j].value, W[k + 1][j].value, W[k + 2][j].value, pkc)
                 W[l][n].value = 0
                 l += 2
                 k += 3
@@ -364,7 +364,14 @@ class ciphertext:
 
 # driver
 pkc = cryptosystem()
-result = ciphertext(pkc, mpz(75))
-print('encrypted:', result.value)
-result = result.decrypt()
-print('decrypted:', result)
+a = ciphertext(pkc, 0)
+b = ciphertext(pkc, 1)
+print('0 + 0:', (a+a).decrypt())
+print('1 + 0:', (b+a).decrypt())
+print('0 + 1:', (a+b).decrypt())
+print('1 + 1:', (b+b).decrypt())
+print('0 * 0:', (a*a).decrypt())
+print('1 * 0:', (b*a).decrypt())
+print('0 * 1:', (a*b).decrypt())
+print('1 * 1:', (b*b).decrypt())
+
