@@ -151,5 +151,5 @@ def generate_sparse_matrix(u_1, modified_secret_key, x_p):
     u_1 = gmpy2.sub(x_p, sum_)
     if u_1 < zero:
         u_1 = gmpy2.add(temp, u_1)
-    return seed
+    return mpz(seed), mpz(u_1)
 

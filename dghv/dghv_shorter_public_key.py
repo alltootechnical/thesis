@@ -48,10 +48,10 @@ class binary_real:
 
         carry = False
         for i in range(prec):
-            if int(self.value[prec - i - 1]) + int(other.value[prec - i - i]) + int(carry) == 3:
+            if int(self.value[prec - i - 1]) + int(other.value[prec - i - 1]) + int(carry) == 3:
                 bits.append(True)
                 carry = True
-            elif int(self.value[prec - i - 1]) + int(other.value[prec - i - i]) + int(carry) == 2:
+            elif int(self.value[prec - i - 1]) + int(other.value[prec - i - 1]) + int(carry) == 2:
                 bits.append(False)
                 carry = True
             else:
@@ -107,9 +107,9 @@ class cryptosystem:
 
         enc_sk_file_check = Path('encrypted_sk_and_seed.txt')
         if not enc_sk_file_check.is_file():
-            x_p = mpz(2) ** kappa
+            x_p = gmpy2.mul_2exp(1, kappa)
             x_p = gmpy2.f_div(x_p, self.sk)
-            self.seed = generate_sparse_matrix(self.u_1, self.modified_secret_key, x_p)
+            self.seed, self.u_1 = generate_sparse_matrix(self.u_1, self.modified_secret_key, x_p)
             for i in range(Theta):
                 if self.modified_secret_key[i] is True:
                     self.encrypted_sk[i] = self.symmetric_encryption(self.encrypted_sk[i], 1)
@@ -138,12 +138,12 @@ class cryptosystem:
 
     def generate_secret_key(self):
         tmp = mpz()
-        self.sk = mpz(2)**(eta - mpz(1))
+        self.sk = gmpy2.mul_2exp(1, eta - 1)
         random_state = gmpy2.random_state(mpz(time.time()))
         i = eta - 32
         while i >= 0:
             tmp = gmpy2.mpz_random(random_state, RAND_MAX)
-            tmp = tmp * (mpz(2)**i)
+            tmp = gmpy2.mul_2exp(tmp, i)
             self.sk += tmp
             i -= 32
         self.sk += gmpy2.mpz_random(random_state, RAND_MAX)
@@ -203,22 +203,23 @@ class cryptosystem:
         return (ct_1 + ct_2) % self.pk[0]
 
     def NOT_GATE(self, ct_1):
-        return XOR_GATE(ct_1, 1)
+        return self.XOR_GATE(ct_1, 1)
 
     def OR_GATE(self, ct_1, ct_2):
-        return NOT_GATE(AND_GATE(NOT_GATE(ct_1), NOT_GATE(ct_2)))
+        return self.NOT_GATE(self.AND_GATE(self.NOT_GATE(ct_1), self.NOT_GATE(ct_2)))
 
     def recrypt_util(self, encrypted_z, ct, PKC):
+        global global_random_state
         u_i = [mpz() for i in range(Theta)]
         u_i[0] = self.u_1
-        gmpy2.random_state()
+        global_random_state = gmpy2.random_state(self.seed)
 
         for i in range(1, Theta):
             u_i[i] = generate_random(kappa + 1, False, True, False)
 
         z_i = []
-        den = mpz(2 ** kappa)
-        Sum = binary_real(den, one, kappa)
+        den = gmpy2.mul_2exp(1, kappa)
+        Sum = binary_real(zero, one, n + e)
 
         for i in range(Theta):
             num = u_i[i] * ct
@@ -288,7 +289,7 @@ class ciphertext:
         result.degree = self.degree + other.degree
         return result
 
-    def __not__(self):
+    def __invert__(self):
         result = ciphertext(self.pkc)
         result.value = pkc.NOT_GATE(self.value)
         result.degree = self.degree
@@ -297,7 +298,6 @@ class ciphertext:
     def recrypt(self, pkc):
         encrypted_z = [[mpz() for j in range(n + 1 + e)] for i in range(Theta)]
         pkc.recrypt_util(encrypted_z, self.value, pkc)
-        # continue from line 531
         temp = mpz()
         a = [[ciphertext() for j in range(n + 1 + e)] for i in range(Theta)]
         for i in range(Theta):
@@ -374,4 +374,11 @@ print('0 * 0:', (a*a).decrypt())
 print('1 * 0:', (b*a).decrypt())
 print('0 * 1:', (a*b).decrypt())
 print('1 * 1:', (b*b).decrypt())
+c = ciphertext(pkc, 1)
+for i in range(10):
+    c = c + ciphertext(pkc, 1)
+    #c.recrypt(pkc)
+    print(c.decrypt())
+    if i % 3 == 0:
+        c.recrypt(pkc)
 
