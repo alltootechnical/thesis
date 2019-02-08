@@ -257,6 +257,7 @@ class ciphertext:
             self.degree = 1
             self.pkc = pkc
             self.value = mpz(pkc.encrypt_bit(m))
+            print('encrypting bit', m)
 
     def decrypt(self):
         return self.pkc.decrypt_bit(self.value)
@@ -363,22 +364,22 @@ class ciphertext:
 
 
 # driver
-pkc = cryptosystem()
-a = ciphertext(pkc, 0)
-b = ciphertext(pkc, 1)
-print('0 + 0:', (a+a).decrypt())
-print('1 + 0:', (b+a).decrypt())
-print('0 + 1:', (a+b).decrypt())
-print('1 + 1:', (b+b).decrypt())
-print('0 * 0:', (a*a).decrypt())
-print('1 * 0:', (b*a).decrypt())
-print('0 * 1:', (a*b).decrypt())
-print('1 * 1:', (b*b).decrypt())
-c = ciphertext(pkc, 1)
-for i in range(10):
-    print('+',i%2,'=')
-    c = c + ciphertext(pkc, i%2)
-    #c.recrypt(pkc)
-    print(c.decrypt())
-    #c.recrypt(pkc)
+# pkc = cryptosystem()
+# a = ciphertext(pkc, 0)
+# b = ciphertext(pkc, 1)
+# print('0 + 0:', (a+a).decrypt())
+# print('1 + 0:', (b+a).decrypt())
+# print('0 + 1:', (a+b).decrypt())
+# print('1 + 1:', (b+b).decrypt())
+# print('0 * 0:', (a*a).decrypt())
+# print('1 * 0:', (b*a).decrypt())
+# print('0 * 1:', (a*b).decrypt())
+# print('1 * 1:', (b*b).decrypt())
+# c = ciphertext(pkc, 1)
+# for i in range(10):
+#     print('+',i%2,'=')
+#     c = c + ciphertext(pkc, i%2)
+#     #c.recrypt(pkc)
+#     print(c.decrypt())
+#     #c.recrypt(pkc)
 
