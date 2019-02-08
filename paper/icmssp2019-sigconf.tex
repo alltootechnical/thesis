@@ -81,12 +81,9 @@
 }
 
 \maketitle
-% The default list of authors is too long for headers.
-% \renewcommand{\shorttitle}{Impl. and Analysis of Homomorphic Facial Image Encryption and Manipulation}
-% \renewcommand{\shortauthors}{A. Asuncion and B. Guadalupe}
 
 \begin{abstract}
-Homomorphic cryptography allows for encrypted data to be modified and operated on without requiring decryption, although current homomorphic cryptosystems are either limited in their permitted operations or are significantly more time-intensive than standard non-homomorphic cryptosystems. Regardless, homomorphic cryptography has been targeted for use in secure image processing and facial recognition, due to their ability to maintain data privacy, In this paper, we compared the viability of the Paillier, Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK), Dasgupta--Pal, and Brakerski--Gentry--Vaikuntanathan (BGV) cryptosystems for facial image processing applications, by implementing a software library equipped with these cryptosystems, and comparing their time efficiency and accuracy. Furthermore, as an extension to previous research, we attempt to support non-linear image processing operations. Preliminary results have shown that the Paillier and Dasgupta--Pal cryptosystems are comparable in accuracy and may be used to approximate a logarithm transformation, but the Dasgupta--Pal cryptosystem is significantly slower.
+Homomorphic cryptography allows for encrypted data to be modified and operated on without requiring decryption, although current homomorphic cryptosystems are either limited in their permitted operations or are significantly more time-intensive than standard non-homomorphic cryptosystems. Regardless, homomorphic cryptography has been targeted for use in secure image processing and facial recognition, due to their ability to maintain data privacy. In this paper, we compared the viability of the Paillier, Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK), Dasgupta--Pal, and Brakerski--Gentry--Vaikuntanathan (BGV) cryptosystems for facial image processing applications, by implementing a software library equipped with these cryptosystems, and comparing their time efficiency and accuracy. Furthermore, as an extension to previous research, we attempt to support non-linear image processing operations. Preliminary results have shown that the Paillier and Dasgupta--Pal cryptosystems are comparable in accuracy and may be used to approximate a logarithm transformation, but the Dasgupta--Pal cryptosystem is significantly slower.
 \end{abstract}
 
 %
@@ -117,15 +114,6 @@ Homomorphic cryptography allows for encrypted data to be modified and operated o
   <concept_significance>500</concept_significance>
   </concept>
   <concept>
-  <concept_id>10002950.10003714.10003736.10003737</concept_id>
-  <concept_desc>Mathematics of computing~Approximation</concept_desc>
-  <concept_significance>300</concept_significance>
-  </concept>
-  <concept>
-  <concept_id>10002950.10003714.10003740</concept_id>
-  <concept_desc>Mathematics of computing~Quadrature</concept_desc>
-  <concept_significance>100</concept_significance>
-  </concept>
   </ccs2012>
 \end{CCSXML}
 
@@ -133,11 +121,9 @@ Homomorphic cryptography allows for encrypted data to be modified and operated o
 \ccsdesc[300]{Security and privacy~Management and querying of encrypted data}
 \ccsdesc[300]{Security and privacy~Privacy protections}
 \ccsdesc[500]{Computing methodologies~Image processing}
-\ccsdesc[300]{Mathematics of computing~Approximation}
-\ccsdesc[100]{Mathematics of computing~Quadrature}
 
 \printccsdesc
-\keywords{cryptography; homomorphic encryption; data privacy; image processing; intensity transformation; facial recognition; numerical approximations}
+\keywords{cryptography; homomorphic encryption; data privacy; image processing; intensity transformation; facial recognition}
 
 % \maketitle
 
@@ -156,8 +142,8 @@ Due acknowlegement is also given to the University of Essex for making the \text
 \bibliography{thesis_refs}
 \balancecolumns
 
-\appendix
-\input{appendix}
-\balancecolumns
+% \appendix
+% \input{appendix}
+% \balancecolumns
 
 \end{document}
