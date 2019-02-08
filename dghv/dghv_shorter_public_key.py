@@ -107,8 +107,8 @@ class cryptosystem:
 
         enc_sk_file_check = Path('encrypted_sk_and_seed.txt')
         if not enc_sk_file_check.is_file():
-            x_p = gmpy2.mul_2exp(1, kappa)
-            x_p = gmpy2.f_div(x_p, self.sk)
+            x_p = mpz(gmpy2.mul_2exp(1, kappa))
+            x_p = mpz(gmpy2.f_div(x_p, self.sk))
             self.seed, self.u_1 = generate_sparse_matrix(self.u_1, self.modified_secret_key, x_p)
             for i in range(Theta):
                 if self.modified_secret_key[i] is True:
@@ -147,7 +147,7 @@ class cryptosystem:
             self.sk += tmp
             i -= 32
         self.sk += gmpy2.mpz_random(random_state, RAND_MAX)
-        self.sk = self.sk * 2 + 1
+        self.sk = mpz(self.sk * 2 + 1)
 
     def generate_public_key(self):
         tmp = mpz()
@@ -376,9 +376,9 @@ print('0 * 1:', (a*b).decrypt())
 print('1 * 1:', (b*b).decrypt())
 c = ciphertext(pkc, 1)
 for i in range(10):
-    c = c + ciphertext(pkc, 1)
+    print('+',i%2,'=')
+    c = c + ciphertext(pkc, i%2)
     #c.recrypt(pkc)
     print(c.decrypt())
-    if i % 3 == 0:
-        c.recrypt(pkc)
+    #c.recrypt(pkc)
 
