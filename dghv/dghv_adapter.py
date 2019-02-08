@@ -108,9 +108,10 @@ class DGHV_Integer(object):
         return bitstring.BitArray(num).int
 
     def refresh(self, c):
-        for ci in c:
-            ci.recrypt(self.system)
-    
+        #for ci in c:
+        #    ci.recrypt(self.system)
+        return
+
     # binary operation primitives
     def xor_bits(self, x, y):
         return x + y
@@ -127,7 +128,7 @@ class DGHV_Integer(object):
     def shift_poly(self, p, x):
         return ([dghv_text(self.system, 0) for i in range(x)] + p)[:self.n]
     def nby1_poly(self, p, x):
-        return [and_bits(a,x) for a in p]
+        return [self.and_bits(a,x) for a in p]
     
     def add(self, A,B):
         result = []
@@ -150,11 +151,12 @@ class DGHV_Integer(object):
         return self.add(p1, self.encrypt(k))
     
     def multiply(self,p1,p2):
-        product = [0]*self.n
+        product = [dghv_text(self.system, 0) for i in range(self.n)]
         for i in range(len(p2)):
             partial_sum = self.shift_poly(self.nby1_poly(p1,p2[i]),i)
             product = self.add(product, partial_sum)
-        product = self.refresh(product)[:self.n]
+        product = product[:self.n]
+        self.refresh(product)
         return product
     
     def multiplyc(self,p1,k):
@@ -167,7 +169,7 @@ class DGHV_Integer(object):
 
 dghvcs = DGHV_Integer()
 a = dghvcs.encrypt(5)
-b = dghvcs.encrypt(7)
+b = dghvcs.encrypt(-7)
 c = dghvcs.add(a,b)
 d = dghvcs.multiply(a,b)
 print(dghvcs.decrypt(a))
