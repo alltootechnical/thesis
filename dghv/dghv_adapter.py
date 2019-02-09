@@ -4,11 +4,11 @@ import sys
 import bitstring
 from dghv_shorter_public_key import cryptosystem as dghv_system
 from dghv_shorter_public_key import ciphertext as  dghv_text
-""" class DGHV_FP(object):
+class DGHV_FP(object):
     
     def __init__(self):
-        self.dp = DasguptaPalInteger()
-        self.R_k = self.dp.R_k
+        self.dp = DGHV_Integer()
+        self.n = self.dp.n
         self.BASE = 16
         self.LOG2_BASE = math.log(self.BASE, 2)
         self.FLOAT_MANTISSA_BITS = sys.float_info.mant_dig
@@ -79,11 +79,12 @@ from dghv_shorter_public_key import ciphertext as  dghv_text
         return {'mantissa':mantissa, 'exponent':exponent}
     
     def negate(self,a):
-        return {'mantissa':self.dp.negate(a['mantissa']), 'exponent':a['exponent']} """
+        return {'mantissa':self.dp.negate(a['mantissa']), 'exponent':a['exponent']}
+
 class DGHV_Integer(object):
     def __init__(self):
         self.system = dghv_system()
-        self.n = 8
+        self.n = 70
         print('dghv initialized')
 
     # pairwise add poly
@@ -134,7 +135,6 @@ class DGHV_Integer(object):
         result = []
         carry = dghv_text(self.system, 0)
         for i in range(len(A)):
-            print('addition round', i)
             a = A[i]
             b = B[i]
             c = carry
@@ -167,8 +167,9 @@ class DGHV_Integer(object):
         p = self.add(p,self.encrypt(1))
         return self.refresh(p)
 
-dghvcs = DGHV_Integer()
-a = dghvcs.encrypt(5)
+
+dghvcs = DGHV_FP()
+a = dghvcs.encrypt(5.5)
 b = dghvcs.encrypt(-7)
 c = dghvcs.add(a,b)
 d = dghvcs.multiply(a,b)
