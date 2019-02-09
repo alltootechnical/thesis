@@ -211,13 +211,22 @@ def dgk_decrypt(pub, prv, ciphertext):
     
     return res
 
+def add_dgk_ct(pub, x, y):
+    return (x * y) % pub.n
 
-pubkey, privatekey = dgk_keygen(1024, 32)
-a = dgk_encrypt_plain(pubkey, 74)
-b = dgk_encrypt_plain(pubkey, 56)
-c = dgk_decrypt(pubkey,privatekey,a*b)
-d = dgk_decrypt(pubkey,privatekey,a ** 3)
-print('a:',a)
-print('b:',b)
-print('c:',c, 74+56)
-print('d:',d, 74*3)
+def scalar_add_dgk(pub, x, k):
+    return (x * gmpy2.powmod(pub.g,k,pub.n)) % pub.n
+
+def scalar_mul_dgk(pub, x, k):
+    return gmpy2.powmod(x,k,pub.n)
+
+# pubkey, privatekey = dgk_keygen(1024, 32)
+# a = dgk_encrypt_plain(pubkey, 74)
+# b = dgk_encrypt_plain(pubkey, 56)
+# c = dgk_decrypt(pubkey,privatekey,a*b*b*b*b%pubkey.n)
+# d = dgk_decrypt(pubkey,privatekey,a ** 3)
+# print('a:',a)
+# print('b:',b)
+# print('c:',c, 74+56+56+56+56)
+# print('d:',d, 74*3)
+# print(dgk_decrypt(pubkey,privatekey, scalar_add_dgk(pubkey,a,8)))
