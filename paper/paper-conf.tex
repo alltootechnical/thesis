@@ -580,8 +580,8 @@ The results shown in this section are gathered from the tests for intensity tran
 		\multirow{2}{*}{Image} & \multirow{2}{*}{Original} & \multicolumn{2}{c}{Image negation} & \multicolumn{2}{c}{Logarithm transformation} & \multicolumn{2}{c}{Power-law transformation} \\
 							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\ 
 		\midrule
-		\xintFor #1 in {anpage, bplyce, drbost, ksunth, martin, pmives, rnpwil, sbains, swewin, yfhsie} \do {%
-		\texttt{#1} & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_decrypted.png} \\ }%
+		\xintForpair #1#2 in {(anpage,a), (bplyce,b), (drbost,c), (ksunth,d), (martin,e), (pmives,f), (rnpwil,g), (sbains,h), (swewin,i), (yfhsie,j)} \do {%
+		(#2) & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_decrypted.png} \\ }%
 		\bottomrule         
 	\end{tabular}
 \end{table*}
@@ -595,8 +595,8 @@ The results shown in this section are gathered from the tests for intensity tran
 		\multirow{2}{*}{Image} & \multirow{2}{*}{Original} & \multicolumn{2}{c}{Image negation} & \multicolumn{2}{c}{Logarithm transformation} & \multicolumn{2}{c}{Power-law transformation} \\
 							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\ 
 		\midrule
-		\xintFor #1 in {anpage, bplyce, drbost, ksunth, martin, pmives, rnpwil, sbains, swewin, yfhsie} \do {%
-		\texttt{#1} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_pwrtransform_#1_decrypted.png} \\ }%
+		\xintForpair #1#2 in {(anpage,a), (bplyce,b), (drbost,c), (ksunth,d), (martin,e), (pmives,f), (rnpwil,g), (sbains,h), (swewin,i), (yfhsie,j)} \do {%
+		(#2) & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_pwrtransform_#1_decrypted.png} \\ }%
 		\bottomrule
 	\end{tabular}
 \end{table*}
@@ -617,16 +617,16 @@ The Paillier cryptosystem performed better in terms of time, only taking about 0
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-        \texttt{anpage} & 0.000 & $\infty$ & 1.00000 & 0.128 & 0.013 & 0.041 \\
-		\texttt{bplyce} & 0.000 & $\infty$ & 1.00000 & 0.084 & 0.013 & 0.024 \\
-		\texttt{drbost} & 0.000 & $\infty$ & 1.00000 & 0.099 & 0.012 & 0.031 \\
-		\texttt{ksunth} & 0.000 & $\infty$ & 1.00000 & 0.109 & 0.012 & 0.048 \\
-		\texttt{martin} & 0.000 & $\infty$ & 1.00000 & 0.117 & 0.015 & 0.043 \\
-		\texttt{pmives} & 0.000 & $\infty$ & 1.00000 & 0.111 & 0.012 & 0.025 \\
-		\texttt{rnpwil} & 0.000 & $\infty$ & 1.00000 & 0.099 & 0.012 & 0.023 \\
-		\texttt{sbains} & 0.000 & $\infty$ & 1.00000 & 0.084 & 0.012 & 0.024 \\
-		\texttt{swewin} & 0.000 & $\infty$ & 1.00000 & 0.089 & 0.012 & 0.023 \\
-		\texttt{yfhsie} & 0.000 & $\infty$ & 1.00000 & 0.081 & 0.012 & 0.029 \\
+        (a) & 0.000 & $\infty$ & 1.00000 & 0.128 & 0.013 & 0.041 \\
+		(b) & 0.000 & $\infty$ & 1.00000 & 0.084 & 0.013 & 0.024 \\
+		(c) & 0.000 & $\infty$ & 1.00000 & 0.099 & 0.012 & 0.031 \\
+		(d) & 0.000 & $\infty$ & 1.00000 & 0.109 & 0.012 & 0.048 \\
+		(e) & 0.000 & $\infty$ & 1.00000 & 0.117 & 0.015 & 0.043 \\
+		(f) & 0.000 & $\infty$ & 1.00000 & 0.111 & 0.012 & 0.025 \\
+		(g) & 0.000 & $\infty$ & 1.00000 & 0.099 & 0.012 & 0.023 \\
+		(h) & 0.000 & $\infty$ & 1.00000 & 0.084 & 0.012 & 0.024 \\
+		(i) & 0.000 & $\infty$ & 1.00000 & 0.089 & 0.012 & 0.023 \\
+		(j) & 0.000 & $\infty$ & 1.00000 & 0.081 & 0.012 & 0.029 \\
 		\bottomrule
     \end{tabular}
 \end{table}
@@ -637,16 +637,16 @@ The Paillier cryptosystem performed better in terms of time, only taking about 0
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-		\texttt{anpage} & 0.000 & $\infty$ & 1.00000 & 0.221 & 30.217 & 0.239 \\
-		\texttt{bplyce} & 0.000 & $\infty$ & 1.00000 & 0.190 & 30.919 & 0.216 \\
-		\texttt{drbost} & 0.000 & $\infty$ & 1.00000 & 0.284 & 31.182 & 0.268 \\
-		\texttt{ksunth} & 0.000 & $\infty$ & 1.00000 & 0.225 & 32.581 & 0.223 \\
-		\texttt{martin} & 0.000 & $\infty$ & 1.00000 & 0.220 & 32.220 & 0.271 \\
-		\texttt{pmives} & 0.000 & $\infty$ & 1.00000 & 0.287 & 31.224 & 0.294 \\
-		\texttt{rnpwil} & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.478 & 0.284 \\
-		\texttt{sbains} & 0.000 & $\infty$ & 1.00000 & 0.186 & 29.784 & 0.362 \\
-		\texttt{swewin} & 0.000 & $\infty$ & 1.00000 & 0.243 & 38.407 & 0.220 \\
-		\texttt{yfhsie} & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.488 & 0.449 \\		
+		(a) & 0.000 & $\infty$ & 1.00000 & 0.221 & 30.217 & 0.239 \\
+		(b) & 0.000 & $\infty$ & 1.00000 & 0.190 & 30.919 & 0.216 \\
+		(c) & 0.000 & $\infty$ & 1.00000 & 0.284 & 31.182 & 0.268 \\
+		(d) & 0.000 & $\infty$ & 1.00000 & 0.225 & 32.581 & 0.223 \\
+		(e) & 0.000 & $\infty$ & 1.00000 & 0.220 & 32.220 & 0.271 \\
+		(f) & 0.000 & $\infty$ & 1.00000 & 0.287 & 31.224 & 0.294 \\
+		(g) & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.478 & 0.284 \\
+		(h) & 0.000 & $\infty$ & 1.00000 & 0.186 & 29.784 & 0.362 \\
+		(i) & 0.000 & $\infty$ & 1.00000 & 0.243 & 38.407 & 0.220 \\
+		(j) & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.488 & 0.449 \\		
 		\bottomrule
         \end{tabular}
 \end{table}
@@ -663,16 +663,16 @@ The logarithm transformation under Dasgupta--Pal turned out to be more accurate 
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-		\texttt{anpage} & 13.369 & 36.870 & 0.99263 & 0.085 & 1.813 & 0.023 \\
-		\texttt{bplyce} & 7.072 & 39.635 & 0.99017 & 0.089 & 2.073 & 0.023 \\
-		\texttt{drbost} & 8.151 & 39.019 & 0.98688 & 0.091 & 1.913 & 0.023 \\
-		\texttt{ksunth} & 25.253 & 34.108 & 0.98927 & 0.089 & 1.919 & 0.023 \\
-		\texttt{martin} & 10.374 & 37.971 & 0.98695 & 0.106 & 1.829 & 0.023 \\
-		\texttt{pmives} & 2.426 & 44.283 & 0.99401 & 0.127 & 1.900 & 0.023 \\
-		\texttt{rnpwil} & 5.184 & 40.985 & 0.98971 & 0.096 & 1.853 & 0.023 \\
-		\texttt{sbains} & 16.772 & 35.885 & 0.98492 & 0.081 & 1.746 & 0.024 \\
-		\texttt{swewin} & 5.803 & 40.494 & 0.99241 & 0.091 & 1.827 & 0.027 \\
-		\texttt{yfhsie} & 12.192 & 37.270 & 0.99354 & 0.081 & 1.815 & 0.023 \\
+		(a) & 13.369 & 36.870 & 0.99263 & 0.085 & 1.813 & 0.023 \\
+		(b) & 7.072 & 39.635 & 0.99017 & 0.089 & 2.073 & 0.023 \\
+		(c) & 8.151 & 39.019 & 0.98688 & 0.091 & 1.913 & 0.023 \\
+		(d) & 25.253 & 34.108 & 0.98927 & 0.089 & 1.919 & 0.023 \\
+		(e) & 10.374 & 37.971 & 0.98695 & 0.106 & 1.829 & 0.023 \\
+		(f) & 2.426 & 44.283 & 0.99401 & 0.127 & 1.900 & 0.023 \\
+		(g) & 5.184 & 40.985 & 0.98971 & 0.096 & 1.853 & 0.023 \\
+		(h) & 16.772 & 35.885 & 0.98492 & 0.081 & 1.746 & 0.024 \\
+		(i) & 5.803 & 40.494 & 0.99241 & 0.091 & 1.827 & 0.027 \\
+		(j) & 12.192 & 37.270 & 0.99354 & 0.081 & 1.815 & 0.023 \\
 		\bottomrule
         \end{tabular}
 \end{table}
@@ -682,16 +682,16 @@ The logarithm transformation under Dasgupta--Pal turned out to be more accurate 
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-		\texttt{anpage} & 0.004 & 71.624 & 0.99999 & 0.287 & 802.957 & 0.036 \\
-		\texttt{bplyce} & 0.000 & 82.043 & 1.00000 & 0.190 & 815.384 & 0.048 \\
-		\texttt{drbost} & 0.004 & 72.480 & 1.00000 & 0.270 & 813.640 & 0.036 \\
-		\texttt{ksunth} & 0.000 & 87.372 & 1.00000 & 0.204 & 804.629 & 0.047 \\
-		\texttt{martin} & 0.001 & 77.421 & 1.00000 & 0.245 & 822.940 & 0.036 \\
-		\texttt{pmives} & 0.001 & 76.934 & 1.00000 & 0.194 & 814.132 & 0.036 \\
-		\texttt{rnpwil} & 0.000 & 83.135 & 1.00000 & 0.197 & 808.503 & 0.047 \\
-		\texttt{sbains} & 0.001 & 77.301 & 1.00000 & 0.270 & 809.406 & 0.047 \\
-		\texttt{swewin} & 0.006 & 70.004 & 0.99999 & 0.268 & 813.217 & 0.051 \\
-		\texttt{yfhsie} & 0.001 & 78.576 & 1.00000 & 0.243 & 830.640 & 0.039 \\
+		(a) & 0.004 & 71.624 & 0.99999 & 0.287 & 802.957 & 0.036 \\
+		(b) & 0.000 & 82.043 & 1.00000 & 0.190 & 815.384 & 0.048 \\
+		(c) & 0.004 & 72.480 & 1.00000 & 0.270 & 813.640 & 0.036 \\
+		(d) & 0.000 & 87.372 & 1.00000 & 0.204 & 804.629 & 0.047 \\
+		(e) & 0.001 & 77.421 & 1.00000 & 0.245 & 822.940 & 0.036 \\
+		(f) & 0.001 & 76.934 & 1.00000 & 0.194 & 814.132 & 0.036 \\
+		(g) & 0.000 & 83.135 & 1.00000 & 0.197 & 808.503 & 0.047 \\
+		(h) & 0.001 & 77.301 & 1.00000 & 0.270 & 809.406 & 0.047 \\
+		(i) & 0.006 & 70.004 & 0.99999 & 0.268 & 813.217 & 0.051 \\
+		(j) & 0.001 & 78.576 & 1.00000 & 0.243 & 830.640 & 0.039 \\
 		\bottomrule
         \end{tabular}
 \end{table}
@@ -706,16 +706,16 @@ Applying the power-law transformation under both cryptosystems produced less tha
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-        \texttt{anpage} & 3910.678 & 12.208 & 0.46712 & 0.099 & 14.695 & 0.024 \\
-		\texttt{bplyce} & 873.064 & 18.720 & 0.84379 & 0.139 & 16.190 & 0.023 \\
-		\texttt{drbost} & 1261.059 & 17.123 & 0.77229 & 0.082 & 13.866 & 0.023 \\
-		\texttt{ksunth} & 653.049 & 19.981 & 0.90673 & 0.083 & 15.507 & 0.023 \\
-		\texttt{martin} & 646.310 & 20.026 & 0.88157 & 0.108 & 15.727 & 0.045 \\
-		\texttt{pmives} & 2047.933 & 15.018 & 0.69408 & 0.113 & 14.728 & 0.034 \\
-		\texttt{rnpwil} & 806.473 & 19.065 & 0.85346 & 0.082 & 14.253 & 0.024 \\
-		\texttt{sbains} & 616.419 & 20.232 & 0.92334 & 0.121 & 14.415 & 0.023 \\
-		\texttt{swewin} & 8270.696 & 8.955 & 0.43185 & 0.112 & 14.362 & 0.065 \\
-		\texttt{yfhsie} & 1715.478 & 15.787 & 0.73857 & 0.145 & 20.239 & 0.023 \\
+        (a) & 3910.678 & 12.208 & 0.46712 & 0.099 & 14.695 & 0.024 \\
+		(b) & 873.064 & 18.720 & 0.84379 & 0.139 & 16.190 & 0.023 \\
+		(c) & 1261.059 & 17.123 & 0.77229 & 0.082 & 13.866 & 0.023 \\
+		(d) & 653.049 & 19.981 & 0.90673 & 0.083 & 15.507 & 0.023 \\
+		(e) & 646.310 & 20.026 & 0.88157 & 0.108 & 15.727 & 0.045 \\
+		(f) & 2047.933 & 15.018 & 0.69408 & 0.113 & 14.728 & 0.034 \\
+		(g) & 806.473 & 19.065 & 0.85346 & 0.082 & 14.253 & 0.024 \\
+		(h) & 616.419 & 20.232 & 0.92334 & 0.121 & 14.415 & 0.023 \\
+		(i) & 8270.696 & 8.955 & 0.43185 & 0.112 & 14.362 & 0.065 \\
+		(j) & 1715.478 & 15.787 & 0.73857 & 0.145 & 20.239 & 0.023 \\
 		\bottomrule
         \end{tabular}
 \end{table}
@@ -729,19 +729,19 @@ When Dasgupta--Pal was used in the power-law transformation, it completely faile
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-		\texttt{anpage} & 25008.723 & 4.150 & 0.000 & 0.376 & 9700.926 & 1.269 \\
-		\texttt{bplyce} & 22700.522 & 4.570 & 0.000 & 0.230 & 9196.609 & 0.043 \\
 		% \texttt{anpage} & 25115.891 & 4.131 & 0.00000 & 0.016 & 741.872 & 0.031 \\ 10x10
 		% \texttt{bplyce} & 22777.187 & 4.556 & 0.00000 & 0.017 & 730.873 & 0.003 \\ 10x10
 		% \texttt{drbost} & 18899.906 & 5.366 & 0.00000 & 0.014 & 733.409 & 0.003 \\
-		\texttt{drbost} & 18902.214 & 5.366 & 0.000 & 0.277 & 9261.407 & 0.150 \\
-		\texttt{ksunth} & 12585.729 & 7.132 & 0.000 & 0.257 & 9259.010 & 0.051 \\
-		\texttt{martin} & 17012.423 & 5.823 & 0.000 & 0.279 & 9440.351 & 0.051 \\
-		\texttt{pmives} & 31124.615 & 3.200 & 0.000 & 0.285 & 9492.149 & 0.052 \\
-		\texttt{rnpwil} & 22982.917 & 4.517 & 0.000 & 0.289 & 9321.928 & 0.048 \\
-		\texttt{sbains} & 13469.155 & 6.837 & 0.000 & 0.257 & 9233.818 & 0.048 \\
-		\texttt{swewin} & 37453.834 & 2.396 & 0.000 & 0.262 & 9203.045 & 0.048 \\
-		\texttt{yfhsie} & 23037.762 & 4.506 & 0.000 & 0.258 & 9210.393 & 0.048 \\
+		(a) & 25008.723 & 4.150 & 0.000 & 0.376 & 9700.926 & 1.269 \\
+		(b) & 22700.522 & 4.570 & 0.000 & 0.230 & 9196.609 & 0.043 \\
+		(c) & 18902.214 & 5.366 & 0.000 & 0.277 & 9261.407 & 0.150 \\
+		(d) & 12585.729 & 7.132 & 0.000 & 0.257 & 9259.010 & 0.051 \\
+		(e) & 17012.423 & 5.823 & 0.000 & 0.279 & 9440.351 & 0.051 \\
+		(f) & 31124.615 & 3.200 & 0.000 & 0.285 & 9492.149 & 0.052 \\
+		(g) & 22982.917 & 4.517 & 0.000 & 0.289 & 9321.928 & 0.048 \\
+		(h) & 13469.155 & 6.837 & 0.000 & 0.257 & 9233.818 & 0.048 \\
+		(i) & 37453.834 & 2.396 & 0.000 & 0.262 & 9203.045 & 0.048 \\
+		(j) & 23037.762 & 4.506 & 0.000 & 0.258 & 9210.393 & 0.048 \\
 		% \texttt{drbost} & 18902.214 & 5.366 & 0.00000 & 0.064 & 2261.407 & 0.110 \\ % 20x18
 		% \texttt{ksunth} & 12585.729 & 7.132 & 0.00000 & 0.044 & 2259.010 & 0.011 \\ % 20x18
 		% \texttt{martin} & 17012.423 & 5.823 & 0.00000 & 0.066 & 2440.351 & 0.011 \\
