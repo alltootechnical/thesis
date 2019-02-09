@@ -211,14 +211,14 @@ class cryptosystem:
     def recrypt_util(self, encrypted_z, ct, PKC):
         global global_random_state
         u_i = [mpz() for i in range(Theta)]
-        u_i[0] = self.u_1
+        u_i[0] = mpz(self.u_1)
         global_random_state = gmpy2.random_state(self.seed)
 
         for i in range(1, Theta):
             u_i[i] = generate_random(kappa + 1, False, True, False)
 
         z_i = []
-        den = gmpy2.mul_2exp(1, kappa)
+        den = mpz(gmpy2.mul_2exp(1, kappa))
         Sum = binary_real(zero, one, n + e)
 
         for i in range(Theta):
@@ -308,7 +308,7 @@ class ciphertext:
 
         dp = [[ciphertext() for j in range(Theta + 1)] for i in range(2**(n - 1) + 1)]
         W = [[ciphertext() for j in range(n + 1)] for i in range(n + 1 + e)]
-        for i in range(2**(n - 1) + 1):
+        for i in range(1, 2**(n - 1) + 1):
             dp[i][0].custom_setup(0, 1, pkc)
         for i in range(Theta + 1):
             dp[0][i].custom_setup(1, 1, pkc)
@@ -318,12 +318,12 @@ class ciphertext:
                     dp[i][j] = a[j - 1][k] * dp[i - 1][j - 1]
                     dp[i][j] = dp[i][j] + dp[i][j - 1]
 
-        if k < n:
-            for i in range(k + 1):
-                W[k][i].custom_setup(dp[2**(k - i)][Theta].value, dp[2**(k - i)][Theta].degree, pkc)
-        else:
-            for i in range(k + 1 - n, n + 1):
-                W[k][i].custom_setup(dp[2**(k - i)][Theta].value, dp[2**(k - i)][Theta].degree, pkc)
+            if k < n:
+                for i in range(k + 1):
+                    W[k][i].custom_setup(dp[2**(k - i)][Theta].value, dp[2**(k - i)][Theta].degree, pkc)
+            else:
+                for i in range(k + 1 - n, n + 1):
+                    W[k][i].custom_setup(dp[2**(k - i)][Theta].value, dp[2**(k - i)][Theta].degree, pkc)
 
         k = 0
         l = 0
@@ -337,7 +337,7 @@ class ciphertext:
 
                 for j in range(1, n + 1):
                     W[l][j - 1].value, W[l + 1][j].value = two_for_three_trick(W[k][j].value, W[k + 1][j].value, W[k + 2][j].value, pkc)
-                W[l][n].value = 0
+                W[l][n].value = mpz(0)
                 l += 2
                 k += 3
 
@@ -352,7 +352,6 @@ class ciphertext:
                 l += 1
             size = l
 
-        c_p_bit = mpz()
         c_p_bit = pkc.AND_GATE(W[0][1].value, W[1][1].value)
         c_p_bit = pkc.XOR_GATE(c_p_bit, W[1][0].value)
         c_p_bit = pkc.XOR_GATE(c_p_bit, W[0][0].value)
@@ -364,22 +363,22 @@ class ciphertext:
 
 
 # driver
-# pkc = cryptosystem()
-# a = ciphertext(pkc, 0)
-# b = ciphertext(pkc, 1)
-# print('0 + 0:', (a+a).decrypt())
-# print('1 + 0:', (b+a).decrypt())
-# print('0 + 1:', (a+b).decrypt())
-# print('1 + 1:', (b+b).decrypt())
-# print('0 * 0:', (a*a).decrypt())
-# print('1 * 0:', (b*a).decrypt())
-# print('0 * 1:', (a*b).decrypt())
-# print('1 * 1:', (b*b).decrypt())
-# c = ciphertext(pkc, 1)
-# for i in range(10):
-#     print('+',i%2,'=')
-#     c = c + ciphertext(pkc, i%2)
-#     #c.recrypt(pkc)
-#     print(c.decrypt())
-#     #c.recrypt(pkc)
+pkc = cryptosystem()
+a = ciphertext(pkc, 0)
+b = ciphertext(pkc, 1)
+print('0 + 0:', (a+a).decrypt())
+print('1 + 0:', (b+a).decrypt())
+print('0 + 1:', (a+b).decrypt())
+print('1 + 1:', (b+b).decrypt())
+print('0 * 0:', (a*a).decrypt())
+print('1 * 0:', (b*a).decrypt())
+print('0 * 1:', (a*b).decrypt())
+print('1 * 1:', (b*b).decrypt())
+c = ciphertext(pkc, 1)
+for i in range(10):
+    print('+',i%2,'=')
+    c = c + ciphertext(pkc, i%2)
+    c.recrypt(pkc)
+    print(c.decrypt())
+    #c.recrypt(pkc)
 
