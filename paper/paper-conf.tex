@@ -444,13 +444,19 @@ In this study we apply three homomorphic encryption schemes~\cite{ziad_cryptoimg
 \subsection{Cryptosystem Implementation}
 Three homomorphic encryption schemes are investigated, and a wrapper library was created in Python that integrates these cryptosystems into a unified interface.
 \begin{itemize}
-	\item The Paillier cryptosystem is incorporated using the implementation at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
+	\item The Paillier cryptosystem is incorporated using the python-paillier library at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
 	\item The DGK cryptosystem is ported from the C++ implementation at \url{https://github.com/encryptogroup/ENCRYPTO_utils}, developed by Daniel Demmler from EC-SPRIDE.
 	\item The BGV cryptosystem is implemented using the Pyfhel library (\url{https://github.com/ibarrond/Pyfhel}) using a HElib backend from (\url{https://github.com/shaih/HElib}).
 \end{itemize}
 
 \subsubsection{Extension of Partially Homomorphic Cryptosystems}
-\label{sse:pheextension}
+\label{sssec:pheextension}
+In order to use Paillier and DGK for secure image processing, we require the two schemes to support the encryption of floating-point (FP)numbers, as well as multiplication and division of arbitrary ciphertexts. We extend the two cryptosystems to FP operations by using an approach shown in~\cite{ziad_cryptoimg:_2016}. This approach represents FP numbers using a pair $(m,e)$, where $m$ represents the mantissa (which is encrypted), and $e$ represents the exponent (which is not encrypted). This approach is also used by the python-paillier library. This represntation allows us to extend the addition and plaintext multiplication homomorphisms of the Paillier and DGK cryptosystems to floating-point numbers.
+
+Various two-party protocols can be used to facilitate ciphertext multiplication and division. These allow a server armed with only knowledge of the public key, to obtain the product and quotient of ciphertexts, by communicating with the client, who has the private key. For division, we use the protocol defined in~\cite{boukoros_lightweight_2017}: to obtain $E(x/y)$ from $E(x)$ and $E(y)$, the server sends $E(rx)$ and $E(ry)$ to the client, (where $r$ is a random non-zero number), allowing the client to compute $E(rx/ry)$ and give the result back to the server.
+
+For multiplication, we adapt the protocol to calculate Euclidean distances used in \cite{hutchison_privacy-preserving_2009}, which provides a two-party protocol which yields $E(x^2)$ given $E(x)$. We use this protocol together with the additive homomorphism of the partially homomorphic cryptosystems to instead compute $E((x + y)^2 - x^2 - y^2) = E(2xy)$, from which we can easily obtain $E(xy)$ through plaintext multiplication.
+
 % [TO-DO: This is further explained in another paper.]
 % We will briefly discuss a protocol to enable cryptosystems built for integer inputs to handle real number inputs.
 % The following protocol was also used by \textit{CryptoImg} for image processing \cite{ziad_cryptoimg:_2016}.
@@ -475,7 +481,7 @@ Three homomorphic encryption schemes are investigated, and a wrapper library was
 
 \subsection{Non-Linear Intensity Transformations}
 We will implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}.
-We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Paillier, DGK), if exponentiation and multiplication is required, the secure protocols in section \ref{ssec:pheextension} will be used.
+We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Paillier, DGK), if ciphertext multiplication or division is required, the secure protocols in section \ref{sssec:pheextension} will be used.
 
 \subsubsection{Logarithm Transformation}
 The logarithm transformation of a pixel intensity value $x$ is defined as
@@ -497,7 +503,7 @@ where
 	a(x) &= 137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 \\
 	&- 121239315x - 257804775\\
 	b(x) &= 30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x \\
-	&+ 3122577)
+	&+ 3122577).
 	\end{split}
 \end{align*}
 % \begin{align}\label{eq:optimal_log_approximation}
