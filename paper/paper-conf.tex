@@ -426,28 +426,32 @@ The match finding step is done by comparing the distances obtained from the prev
 
 
 \section{Methodology}
-In this study we apply three homomorphic encryption schemes~\cite{ziad_cryptoimg:_2016, pieprzyk_efficient_2007, garay_algorithms_2014} for use in image processing and facial recognition applications.
-While the Paillier and DGK cryptosystems have been implemented for use in image processing in~\cite{ziad_cryptoimg:_2016, hutchison_privacy-preserving_2009}, the other cryptosystems have to be adapted for this study.
-Two experiments are conducted in this study:
-\begin{enumerate}
-	\item Assessment of non-linear image intensity transformations under each of the four cryptosystems.
-	\item Assessment of efficiency of each of the four cryptosystems when applied for use in privacy-preserving facial recognition and detection using eigenfaces.
-\end{enumerate}
-The results of the image intensity transformations are tested for image quality using benchmarks in~\cite{ahmed_benchmark_2016}.
-
-\subsection{Cryptosystem Implementation}
-Four homomorphic encryption schemes are investigated. For cryptosystems with readily available open-source implementations, such implementations are used. For the remaining cryptosystems, the encryption and decryption methods were implemented in Python.
+In this study we apply three homomorphic encryption schemes~\cite{ziad_cryptoimg:_2016, pieprzyk_efficient_2007, garay_algorithms_2014} for use in image processing and facial recognition applications. In particular, the study consists of the following:
 \begin{itemize}
-	\item The Paillier cryptosystem is incorporated using the implementation at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
-	\item The BGV cryptosystem is implemented using the Pyfhel library (\url{https://github.com/ibarrond/Pyfhel}) using a HElib backend from (\url{https://github.com/shaih/HElib}).
-	\item The DGK and Dasgupta--Pal cryptosystems are implemented from scratch with Python.
+	\item Creating a wrapper library that acts as a unified interface which implements the Paillier, DGK, and BGV homomorphic cryptosystems.
+	\item An implementation of image processing operations (intensity transformations, facial recognition) under the above cryptosystems.
+	\item Conducting tests for image quality, processing time, using images from the \texttt{faces94} dataset.
 \end{itemize}
 
-For convenience, a wrapper library is created that integrates the three cryptosystems into a unified interface.
+% While the Paillier and DGK cryptosystems have been implemented for use in image processing in~\cite{ziad_cryptoimg:_2016, hutchison_privacy-preserving_2009}, the other cryptosystems have to be adapted for this study.
+% Two experiments are conducted in this study:
+% \begin{enumerate}
+% 	\item Assessment of non-linear image intensity transformations under each of the three cryptosystems.
+% 	\item Assessment of efficiency of each of the four cryptosystems when applied for use in privacy-preserving facial recognition and detection using eigenfaces.
+% \end{enumerate}
+% The results of the image intensity transformations are tested for image quality using benchmarks in~\cite{ahmed_benchmark_2016}.
 
-\subsection{Extension of Partially Homomorphic Cryptosystems}
+\subsection{Cryptosystem Implementation}
+Three homomorphic encryption schemes are investigated, and a wrapper library was created in Python that integrates these cryptosystems into a unified interface.
+\begin{itemize}
+	\item The Paillier cryptosystem is incorporated using the implementation at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
+	\item The DGK cryptosystem is ported from the C++ implementation at \url{https://github.com/encryptogroup/ENCRYPTO_utils}, developed by Daniel Demmler from EC-SPRIDE.
+	\item The BGV cryptosystem is implemented using the Pyfhel library (\url{https://github.com/ibarrond/Pyfhel}) using a HElib backend from (\url{https://github.com/shaih/HElib}).
+\end{itemize}
+
+\subsubsection{Extension of Partially Homomorphic Cryptosystems}
 \label{sse:pheextension}
-[TO-DO: This is further explained in another paper.]
+% [TO-DO: This is further explained in another paper.]
 % We will briefly discuss a protocol to enable cryptosystems built for integer inputs to handle real number inputs.
 % The following protocol was also used by \textit{CryptoImg} for image processing \cite{ziad_cryptoimg:_2016}.
 % This is also used for our own implementation of the Dasgupta--Pal cryptosystem in order to handle real numbers.
@@ -480,16 +484,30 @@ The logarithm transformation of a pixel intensity value $x$ is defined as
 \end{align}
 where $c$ is a constant.
 
-In order to perform this transformation under a homomorphic cryptosystem, we must provide an approximation for $\log\left(1 + x\right)$ in terms of addition and multiplication operations (or their inverses). We have derived a closed form approximation in Appendix \ref{sec:logapproximation}.
-\begin{align}
-	\label{eq:scaledquadraturech3}
-  \begin{split}
-    &\log(1+x) \\
-    &\approx \frac{137x^5 + 33185x^4 + 931370x^3 - 13403630x^2 - 289469315x - 713567363}
-	{30(x^5 + 505x^4 + 42010x^3 + 923010x^2 + 5722005x + 8040501)} \\
-	&+ \log{20}
-  \end{split}
+In order to perform this transformation under Paillier and DGK, we provide the following closed-form approximation for $\log\left(1 + x\right)$.
+% TODO: IDK HOW TO CITE OUR PCSC PAPER
+\begin{align}\label{eq:optimal_log_approximation}
+	\begin{split}
+		&\log\left(1+x\right) \approx \frac{a(x)}{b(x)} + \log{16}
+	\end{split}
 \end{align}
+where
+\begin{align*}
+	\begin{split}
+	a(x) &= 137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 \\
+	&- 121239315x - 257804775\\
+	b(x) &= 30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x \\
+	&+ 3122577)
+	\end{split}
+\end{align*}
+% \begin{align}\label{eq:optimal_log_approximation}
+% 	\begin{split}
+% 		&\log\left(1+x\right) \\
+% 		&\approx \frac{137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 - 121239315x - 257804775}
+% 		{30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x + 3122577)}\\
+% 		&+ \log{16}.
+% 	\end{split}
+% \end{align}
 
 \subsubsection{Power-Law Transformation}
 The power-law transformation of a pixel intensity value $x$ is defined as
@@ -498,12 +516,13 @@ The power-law transformation of a pixel intensity value $x$ is defined as
 \end{equation}
 where $c>0$ and $\gamma > 0$.
 
-Similar to the logarithm transformation, we must provide an approximation for $x^\gamma$.
-We have derived an infinite series in Appendix~\ref{sec:approx-pwr}.
+Similar to the logarithm transformation, to apply this transformation using Paillier and DGK, we must provide an approximation for $x^\gamma$.
+We can use partial sums of the following series, which relies on the logarithm function.
 \begin{align}
 	x^\gamma &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
 \end{align}
-Partial sums of the above infinite series can be calculated based on the closed form approximation for the logarithm in Equation \ref{eq:scaledquadraturech3}. For the implementation of the power-law transformation, a partial sum consisting of the first five terms of the infinite series were used.
+% Partial sums of the above infinite series can be calculated based on the closed form approximation for the logarithm in Equation \ref{eq:scaledquadraturech3}. 
+For the implementation of the power-law transformation for this paper, a partial sum consisting of the first five terms of the infinite series were used.
 
 \subsection{Assessment of Homomorphic Encryption Schemes}
 A laptop computer with a 2.5 GHz Intel Core i7 quad-core processor and 8 GB of RAM is used to perform the computations, and processing time was tracked using built-in timing functions. The processing time for all cases were recorded. All of the tests are done using Python 3.7.1 running on Linux.
@@ -567,13 +586,14 @@ The facial recognition tests are done using ten-fold cross-validation for each c
 
 Prior to splitting the dataset, the images within each set are shuffled. Since there are twenty (20) images per set, two images are taken at a time for each round of cross-validation. The first round would take the first two images from each set as part of the test set, and the rest of the images will be part of the training set. Then, the succeeding round would take the next two images from each set as part of the test set, and so on until ten rounds have been done. After every round of cross-validation, the accuracy score, confusion matrix, and total processing time are obtained. 
 
-\subsection{Summary}
-In summary, the study consists of:
-\begin{itemize}
-	\item Creating a wrapper library that acts as a unified interface which implements the Paillier, DGK, Dasgupta--Pal, and BGV homomorphic cryptosystems.
-	\item An implementation of image processing operations (intensity transformations, facial recognition) under the above cryptosystems.
-	\item Conducting tests for image quality, processing time, using images from the \texttt{faces94} dataset.
-\end{itemize}
+%% Summary not needed, this was only important for the thesis proposal - Aldrich
+% \subsection{Summary}
+% In summary, the study consists of:
+% \begin{itemize}
+% 	\item Creating a wrapper library that acts as a unified interface which implements the Paillier, DGK, Dasgupta--Pal, and BGV homomorphic cryptosystems.
+% 	\item An implementation of image processing operations (intensity transformations, facial recognition) under the above cryptosystems.
+% 	\item Conducting tests for image quality, processing time, using images from the \texttt{faces94} dataset.
+% \end{itemize}
 
 \section{Preliminary Results and Discussion}
 The results shown in this section are gathered from the tests for intensity transformations under Paillier and Dasgupta--Pal cryptosystems. During testing, initial results obtained from BGV, particularly with image operations involving floating-point numbers like the logarithmic transformation, were unstable (i.e. the results vary drastically every time the same tests were done). This is because the Pyfhel library being used for the BGV cryptosystem is still in alpha development stage \cite{pyfhel_2018}. 
