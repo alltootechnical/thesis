@@ -1,10 +1,10 @@
 \section{Introduction}
 \subsection{Context of the Study}
-Digital data privacy and security is a growing concern in various fields, such as cloud computing~\cite{potey_homomorphic_2016}, health information systems~\cite{kester_cryptographic_2015}, and video surveillance~\cite{upmanyu_efficient_2009}. To meet these needs, various cryptosystems have been developed. A cryptosystem is a system which operates on plaintexts, ciphertexts and keys using an encryption algorithm, which maps a plaintext to a ciphertext, together with a decryption algorithm, which maps a ciphertext to a plaintext, given an appropriate key~\cite{bauer_cryptosystem_2005}. The encryption and decryption algorithms are chosen such that the plaintext cannot easily be recovered from the ciphertext without knowledge of the key. This allows data to be securely transmitted over an insecure channel. Much research has been done on the development and application of various cryptosystems.
+Digital data privacy and security is a growing concern in various fields, such as cloud computing~\cite{potey_homomorphic_2016}, health information systems~\cite{kester_cryptographic_2015}, and video surveillance~\cite{upmanyu_efficient_2009}. To meet these needs, various cryptosystems have been developed. A cryptosystem is a system which operates on plaintexts, ciphertexts and keys using an encryption algorithm, which maps a plaintext to a ciphertext, together with a decryption algorithm, which maps a ciphertext to a plaintext, given an appropriate key~\cite{bauer_cryptosystem_2005}. The encryption and decryption algorithms are chosen such that the plaintext cannot easily be recovered from the ciphertext without knowledge of the key. This allows data to be securely transmitted over an insecure channel. 
 
 One particular application of cryptography is image encryption. While cryptosystems used to encrypt digital data in general, such as the Advanced Encryption Standard (AES) or elliptic curve cryptography, can also be used to encrypt images~\cite{jain_image_2016, singh_image_2015} other algorithms created specifically for image encryption have also been developed~\cite{murugan_survey_2018}.
 
-In a homomorphic cryptosystem, operations such as addition and multiplication can be performed on encrypted data. These operations are then preserved when the data is decrypted. In this manner, data is manipulated without compromising data privacy, as the encrypted data being operated on remains secure~\cite{fontaine_survey_2007, sen_homomorphic_2013}. While numerous homomorphic cryptosystems exist for use with digital data in general, in the area of homomorphic image encryption, there is additional interest in being able to perform image manipulation operations on the encrypted data such as image adjustment, filtering, and morphological/feature extraction operations~\cite{ziad_cryptoimg:_2016, gonzalez_digital_2008}. More advanced operations have also been implemented using homomorphic cryptosystems, such as facial recognition \cite{hutchison_privacy-preserving_2009} and neural networks \cite{hesamifard_cryptodl:_2017}. This study in particular focuses on facial recognition.
+In a homomorphic cryptosystem, operations such as addition and multiplication can be performed on encrypted data. These operations are then preserved when the data is decrypted. In this manner, data is manipulated without compromising data privacy, as the encrypted data being operated on remains secure~\cite{fontaine_survey_2007, sen_homomorphic_2013}. In the area of homomorphic image encryption, there is interest in being able to perform image manipulation operations on the encrypted data such as image adjustment, filtering, and morphological/feature extraction operations~\cite{ziad_cryptoimg:_2016, gonzalez_digital_2008}. More advanced operations have also been implemented using homomorphic cryptosystems, such as facial recognition \cite{hutchison_privacy-preserving_2009} and neural networks \cite{hesamifard_cryptodl:_2017}. This study in particular focuses on facial recognition.
 
 % \subsection{Research Questions}
 % By implementing homomorphic cryptosystems and creating a library so they can be easily used, we aim to address our main research question: What is the best method for facial image data to be encrypted and manipulated for practical applications?
@@ -18,25 +18,29 @@ In a homomorphic cryptosystem, operations such as addition and multiplication ca
 
 
 \subsection{Research Objectives}
-Previous attempts in the literature to provide image processing tasks such as image manipulation \cite{ziad_cryptoimg:_2016} and  facial recognition \cite{hutchison_privacy-preserving_2009} have primarily used the Paillier and  Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK) cryptosystems to perform linear operations on encrypted data. In this study, we extend this research to provide an objective comparison of various homomorphic cryptosystems currently in the literature in performing non-linear operations, as opposed to just linear operations, and facial detection, as opposed to just facial recognition.
+% Previous attempts in the literature to provide image processing tasks such as image manipulation \cite{ziad_cryptoimg:_2016} and  facial recognition \cite{hutchison_privacy-preserving_2009} have primarily used the Paillier and  Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK) cryptosystems to perform linear operations on encrypted data. 
+% In this study, we extend this research to provide an objective comparison of various homomorphic cryptosystems currently in the literature in performing non-linear operations, and facial detection, as opposed to just linear operations and facial recognition.
 
-Our main research objective is to assess the practicality of various homomorphic cryptosystems with regard to image processing on faces. Homomorphic cryptosystems are known to be slower in terms of encryption, operation, and decryption time~\cite{sen_homomorphic_2013}. Furthermore, the operations on encrypted data supported by homomorphic cryptosystems are limited, and some schemes require preprocessing to be performed on images, limiting the range of operations which can be performed efficiently~\cite{li_elliptic_2012}.
+Our main research objective is to assess the practicality of various homomorphic cryptosystems with regard to image processing on faces. 
+% Homomorphic cryptosystems are known to be slower in terms of encryption, operation, and decryption time~\cite{sen_homomorphic_2013}. Furthermore, the operations on encrypted data supported by homomorphic cryptosystems are limited, and some schemes require preprocessing to be performed on images, limiting the range of operations which can be performed efficiently~\cite{li_elliptic_2012}.
 
-In summary, in this study, we wish to
+% In summary, in this study, we wish to
+More specifically, we wish to do the following:
 \begin{enumerate}
-    \item Implement common image processing operations using known homomorphic encryption schemes, then determine which schemes admit more image processing operations and extend known cryptosystems to support more operations, if possible;
+    \item Implement common linear and non-linear image processing operations using known homomorphic encryption schemes, then determine which schemes admit more image processing operations and extend known cryptosystems to support more operations, if possible;
     \item Compare the time efficiency and accuracy of common image processing operations under known homomorphic encryption schemes, and of common image processing operations without using homomorphic encryption;
     \item Create a library to allow for convenient use and comparison of these homomorphic encryption schemes for image processing and facial recognition.
 \end{enumerate}
 
 \subsection{Scope and Limitations}
-Our study will be limited in terms of the cryptosystems to be tested, the image processing operations we will implement, and the statistical tests we will use to gauge the security of the cryptosystems. Below is a listing of the scope of the study.
+% Our study will be limited in terms of the cryptosystems to be tested, the image processing operations we will implement, and the statistical tests we will use to gauge the security of the cryptosystems. Below is a listing of the scope of the study.
 
-We will implement and test the following algorithms:
+% We will implement and test the following algorithms:
+In this study, we will implement and test the following cryptosystems:
 \begin{enumerate}
 	\item A variant of the Paillier cryptosystem~\cite{stern_public-key_1999} which supports floating-point operations, used in \textit{CryptoImg}~\cite{ziad_cryptoimg:_2016}.
     \item The Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK) cryptosystem~\cite{pieprzyk_efficient_2007, cryptoeprint:2008:321} which is primarily used for secure integer comparison.
-	\item A fully homomorphic encryption scheme by Dasgupta and Pal, which uses polynomial rings~\cite{dasgupta_design_2016}.
+	% \item A fully homomorphic encryption scheme by Dasgupta and Pal, which uses polynomial rings~\cite{dasgupta_design_2016}.
 	\item The Brakerski--Gentry--Vaikuntanathan (BGV) cryptosystem \cite{cryptoeprint:2011:277}, an improvement on the lattice-based cryptosystem by Gentry~\cite{gentry_fully_2009}, with optimizations from Smart, Vercauteren, and Halevi \cite{hutchison_fully_2010, cryptoeprint:2011:566}.
 \end{enumerate}
 We will implement and test the following categories of image manipulation operations:
@@ -78,17 +82,18 @@ A cryptosystem consists of an encryption function $\mathcal{E}$ and a decryption
 % \end{equation}
 
 % In other words, 
-A homomorphic cryptosystem preserves the operations that can be done with the plaintext without requiring an intermediary step of decrypting the ciphertext beforehand. It is important to note that the operations $\boxplus$ and $\boxdot$ need not be the same. A simple operation in the plaintext space may require a computationally intensive operation in the ciphertext space.
+A homomorphic cryptosystem preserves the operations that can be done with the plaintext without requiring an intermediary step of decrypting the ciphertext beforehand. It is important to note that the operations in the plaintext space and ciphertext space need not be the same. A simple operation in the plaintext space may require a computationally intensive operation in the ciphertext space.
 
 % Homomorphic cryptosystems can be classified according to the plaintext and ciphertext operations, $\boxplus$ and $\boxdot$. If the plaintext operation $\boxplus$ is addition, the cryptosystem is said to be \textit{additively homomorphic}, and the cryptosystem is said to be \textit{multiplicatively homomorphic} if the plaintext operation $\boxplus$ is multiplication.
 
 \subsection{Partially Homomorphic Cryptosystems}
-In this section, we will present two classical partially homomorphic cryptosystems which we will be testing in the study: the Paillier cryptosystem and the DGK cryptosystem. Both of these cryptosystems encrypt integer plaintexts and are additively homomorphic.
+In this section, we will present two classical partially homomorphic cryptosystems which we will be testing in the study: the Paillier cryptosystem and the DGK cryptosystem. Both of these cryptosystems encrypt integer plaintexts as integer ciphertexts. In our description of each cryptosystem, we use $E(m)$ to denote the encryption of a plaintext $m$, and $D(c)$ to denote the decryption of a ciphertext $c$.
 
-We will then show that the cryptosystems can be modified to support privacy-perserving polynomial evaluation in a client-server protocol: given an encrypted message $m$, evaluate $f(m)$ where $f$ is a polynomial function.
+% We will then show that the cryptosystems can be modified to support privacy-perserving polynomial evaluation in a client-server protocol: given an encrypted message $m$, evaluate $f(m)$ where $f$ is a polynomial function.
 
 \subsubsection{The Paillier Cryptosystem}
-The Paillier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Paillier, is a probabilistic encryption scheme which is based on the composite residuosity class problem. The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic. 
+The Paillier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Paillier, is a probabilistic encryption scheme which is based on the composite residuosity class problem. The scheme has several well--known homomorphic properties.
+% The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic.
 % We now state the encryption and decryption algorithms of the Paillier cryptosystem and its homomorphic properties.
 
 % \paragraph{Key Generation}
@@ -109,18 +114,21 @@ The Paillier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Pail
 %   D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n
 % \end{align*}
 
-\paragraph{Homomorphic Properties of the Paillier Cryptosystem}
-The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These homomorphic properties are used to add a plaintext scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively. They are defined as follows.
+% \paragraph{Homomorphic Properties of the Paillier Cryptosystem}
+% The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These homomorphic properties are used to add a plaintext scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively. They are defined as follows.
 
-For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
+For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorphic properties hold for the Paillier cryptosystem with public key $(g,n)$.
 \begin{align*}
   D(E(m_1)g^k\bmod n^2) &=(m_1+k)\bmod n\\
   D(E(m_1)E(m_2)\bmod n^2) &=(m_1+m_2)\bmod n\\
   D(E(m_1)^k\bmod n^2) &= km_1\bmod n
 \end{align*}
 
+These homomorphic properties are used to add a plaintext scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively.
+
 \subsubsection{The DGK Cryptosystem}
-The DGK cryptosystem was published by Damg{\aa}rd, Geisler, and Kr{\o}igaard in 2007 in an effort to create a secure integer comparison scheme \cite{pieprzyk_efficient_2007, cryptoeprint:2008:321} which is widely used in the literature \cite{veugen_improving_2012}.
+The DGK cryptosystem was published by Damg{\aa}rd, Geisler, and Kr{\o}igaard in 2007 in an effort to create a secure integer comparison scheme \cite{pieprzyk_efficient_2007, cryptoeprint:2008:321} which is widely used in the literature \cite{veugen_improving_2012}. 
+The DGK cryptosystem has homomorphic properties similar to the Paillier cryptosystem.
 
 % \paragraph{Key Generation}
 % We denote $k,t,\ell$ as security parameters of the scheme, where $k>t>\ell$.
@@ -148,10 +156,10 @@ The DGK cryptosystem was published by Damg{\aa}rd, Geisler, and Kr{\o}igaard in 
 % \end{align*}
 % Since $(g^{v_pv_q})^m$ has order $u$, there is a one-to-one correspondence between plaintexts in $\mathbb{Z}_u$ and  $(g^{v_pv_q})^m$. A lookup table can thus be generated privately to successfully recover $m$.
 
-\paragraph{Homomorphic Properties of the DGK Cryptosystem}
-The DGK cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These homomorphic properties are used to add a plaintext scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively. They are defined as follows.
+% \paragraph{Homomorphic Properties of the DGK Cryptosystem}
+% The DGK cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These homomorphic properties are used to add a plaintext scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively. They are defined as follows.
 
-For all $m_1,m_2 \in \mathbb{Z}_u$ and $k\in \mathbb{N}$, the following homomorphic properties hold.
+For all $m_1,m_2 \in \mathbb{Z}_u$ and $k\in \mathbb{N}$, the following homomorphic properties hold for the DGK cryptosystem with public key $(n,g,h,u)$.
 \begin{align*}
     D(E(m_1)g^k) &=(m_1+k)\bmod u\\
     D(E(m_1)E(m_2)) &=(m_1+m_2)\bmod u\\
@@ -166,15 +174,15 @@ As the multiplicative homomorphism was not presented in the original paper, we p
     (g^m \cdot h^r \bmod{n})^k \bmod n
     &= (g^m \cdot h^r)^k \bmod{n}\\
     &= (g^m)^k \cdot (h^r)^k \bmod{n}\\
-    &= g^{km} \cdot (h^kr) \bmod{n}\\
+    &= g^{km} \cdot (h^kr) \bmod{n}
   \end{align*}
   Since $r$ is a random integer, $kr$ is also a random integer, Therefore, $g^{km} \cdot (h^kr) \bmod{n} = D(E(m_1)^k)$ is a valid encryption of the message $km$.
 \end{proof}
 
 
-\subsubsection{Secure Exponentiation and Multiplication Protocols}
-\label{ssec:exponentiationprotocol}
-[TO-DO: This is further explained in another paper.]
+% \subsubsection{Secure Exponentiation and Multiplication Protocols}
+% \label{ssec:exponentiationprotocol}
+% [TO-DO: This is further explained in another paper.]
 % In order to perform polynomial evaluation, we first present a protocol for privacy-preserving exponentiation to a positive integer power, adapted from the protocol to calculate Euclidean distances used in \cite{hutchison_privacy-preserving_2009}.
 
 % The following protocols apply to both the Paillier and DGK cryptosystems, as they share similar homomorphisms. We first present a secure squaring protocol.
@@ -206,7 +214,6 @@ We will also be testing fully homomorphic cryptosytems, which allow aribitrary c
 While generally being more flexible, fully homomorphic cryptosytems are known to be significantly slower than partially homomorphic cryptosytems; improving the efficiency of fully homomorphic cryptosytems is an active area of research \cite{sen_homomorphic_2013}.
 
 % We will present two such cryptosystems, the Dasgupta--Pal cryptosystem, which we present in full to explain a correction we propose to it, and the BGV cryptosystem, which has open source implementations availble primarily used in homomorphic cryptography research.
-We will present the BGV cryptosystem, which has open source implementations availble primarily used in homomorphic cryptography research.
 
 % \subsubsection{The Dasgupta--Pal Cryptosystem}
 % The Dasgupta--Pal cryptosystem is a fully homomorphic cryptosystem proposed in 2016 by Smaranika Dasgupta and S. K. Pal \cite{dasgupta_design_2016}, which encrypts integer plaintexts in $\mathbb{Z}_n$ to polynomial ciphertexts. We begin our presentation of the Dasgupta--Pal cryptosystem with the following definition.
@@ -266,7 +273,7 @@ We will present the BGV cryptosystem, which has open source implementations avai
 
 % Arbitrary computation on data can thus be achived using these bitwise operations. While the Dasgupta--Pal cryptosystem requires significant amounts of memory, as each bit of plaintext is encrypted into an integer, this approach provides a flexible method to perform relatively fast arbitrary computation on encrypted data. Encryption and decryption in the Dasgupta--Pal cryptosystem are accomplished using few arithmetic operations.
 
-\subsubsection{HElib and the BGV Cryptosystem}
+% \subsubsection{HElib and the BGV Cryptosystem}
 The BGV (Brakerski--Gentry--Vaikuntanathan) cryptosystem \cite{cryptoeprint:2011:277} is a fully homomorphic cryptosystem created based on the ring-learning with error problem. The BGV cryptosystem was constructed to surpass the limitations of prior fully homomorphic cryptosystems, which were based on the first fully homomorphic cryptosystem by Gentry \cite{gentry_fully_2009}.
 
 The details regarding the construction of the BGV cryptosystem are beyond the scope of this paper. For this study, we will be using \textit{HElib} \cite{garay_algorithms_2014}, an open-source library which implements the BGV cryptosystem with optimizations to improve efficiency. Evaluation of operations on 120 inputs in HELib was performed in around 4 minutes, with an average of 2 seconds to process a single input \cite{hutchison_fully_2010,cryptoeprint:2011:566}.
@@ -305,7 +312,7 @@ We now discuss several limitations in the \textit{CryptoImg} study which we focu
 Second, the \textit{CryptoImg} library only considered the Paillier cryptosystem. We consider testing the performance of other homomorphic cryptosystems, which differ in their processing time and supported operations.
 
 \subsection{Image Intensity Transformations}
-We represent a digital image $R$ as an $M \times N$ matrix of pixel intensity values, each value in the range $\left[0, L-1\right]$, for some positive integer $L$. We use $R(x,y)$ to represent the entry at the $x$th row and $y$th column of a matrix $R$.
+We represent a digital image $R$ as an $M \times N$ matrix of pixel intensity values, each value in the range $\left[0, L-1\right]$, for some positive integer $L$. We denote with $R(x,y)$ the entry at the $x$th row and $y$th column of a matrix $R$.
 An intensity transformation on an image $R$ can be defined as a function $T$ which maps a pixel value $r$ to a new value $r^\prime$, which we can write as $r^\prime = T\left(r\right)$. This function is then applied to every pixel in $R$.
 The \textit{CryptoImg} library implemented two types of linear intensity transformations: image negation and brightness control.
 
@@ -340,7 +347,6 @@ A power-law transformation defined by the above equation can calibrate the opera
 To implement non-linear intensity transformations using addition and multiplication in a homomorphic system, it is necessary to approximate the logarithm and exponential functions, which may result in higher computational overhead. In our software library implementation, we investigate methods required to approximate the logarithm and power functions. Non-linear intensity transformations such as the logarithm transformation have applications in intensity normalization \cite{oravec_illumination_2010}, which is used in some facial recognition algorithms to account for differences in lighting which make facial recognition difficult.
 
 \subsection{Facial Detection and Recognition}
-%% TODO: Brian dump ur stuff here
 
 Since simple image operations mentioned earlier can be done within a homomorphic cryptosystem, these operations can be assembled together in order to do more complex operations. A prominent application of image processing that often uses complex image operations is \textit{facial recognition}.
 
@@ -408,7 +414,8 @@ Before Bob sends $\left[\bar{\omega}_i\right]$ to Alice for squaring, he adds a 
 	\left[\mathcal{S}_3\right] = \left[\mathcal{S}_3^\prime\right] \cdot \prod_{j=1}^{K} \left(\left[\bar{\omega}_j\right]^{-2r_j} \cdot \left[-r_j^2\right]\right)
 \end{equation}
 
-The protocol for squaring a number as described earlier is a workaround for the limitations of Paillier or any other partially homomorphic cryptosystem that only supports addition and scalar multiplication. This can be possibly extended so that operations such as pairwise multiplication and exponentiation are also supported, provided that the protocol involves two parties.
+The protocol for squaring a number as described earlier is a workaround for the limitations of Paillier or any other partially homomorphic cryptosystem that only supports addition and scalar multiplication. 
+% This can be possibly extended so that operations such as pairwise multiplication and exponentiation are also supported, provided that the protocol involves two parties.
 
 The match finding step is done by comparing the distances obtained from the previous step to a specified threshold $T$. If the minimum distance is smaller than $T$, then a match is found, and the encrypted identity of the match is returned to Alice \cite{hutchison_privacy-preserving_2009}. Getting the minimum among the encrypted distances would involve comparing two encrypted numbers, which Paillier does not support. Instead, the DGK cryptosystem \cite{pieprzyk_efficient_2007} is used for the comparison protocol.
 
@@ -419,7 +426,7 @@ The match finding step is done by comparing the distances obtained from the prev
 
 
 \section{Methodology}
-In this study we apply four homomorphic encryption schemes~\cite{ziad_cryptoimg:_2016, pieprzyk_efficient_2007, dasgupta_design_2016, garay_algorithms_2014} for use in image processing and facial recognition applications.
+In this study we apply three homomorphic encryption schemes~\cite{ziad_cryptoimg:_2016, pieprzyk_efficient_2007, garay_algorithms_2014} for use in image processing and facial recognition applications.
 While the Paillier and DGK cryptosystems have been implemented for use in image processing in~\cite{ziad_cryptoimg:_2016, hutchison_privacy-preserving_2009}, the other cryptosystems have to be adapted for this study.
 Two experiments are conducted in this study:
 \begin{enumerate}
@@ -436,9 +443,10 @@ Four homomorphic encryption schemes are investigated. For cryptosystems with rea
 	\item The DGK and Dasgupta--Pal cryptosystems are implemented from scratch with Python.
 \end{itemize}
 
-For convenience, a wrapper library is created that integrates the four cryptosystems into a unified interface.
+For convenience, a wrapper library is created that integrates the three cryptosystems into a unified interface.
 
-\subsection{Secure Computation with Real Numbers}
+\subsection{Extension of Partially Homomorphic Cryptosystems}
+\label{sse:pheextension}
 [TO-DO: This is further explained in another paper.]
 % We will briefly discuss a protocol to enable cryptosystems built for integer inputs to handle real number inputs.
 % The following protocol was also used by \textit{CryptoImg} for image processing \cite{ziad_cryptoimg:_2016}.
@@ -462,8 +470,8 @@ For convenience, a wrapper library is created that integrates the four cryptosys
 % \end{description}
 
 \subsection{Non-Linear Intensity Transformations}
-Aside from implementing the homomorphic encryption and decryption algorithms, we will also implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}.
-We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Paillier, DGK), if  exponentiation and multiplication is required, the secure protocols in section \ref{ssec:exponentiationprotocol} will be used.
+We will implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}.
+We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Paillier, DGK), if exponentiation and multiplication is required, the secure protocols in section \ref{ssec:pheextension} will be used.
 
 \subsubsection{Logarithm Transformation}
 The logarithm transformation of a pixel intensity value $x$ is defined as
