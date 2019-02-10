@@ -68,18 +68,19 @@ A cryptosystem consists of an encryption function $\mathcal{E}$ and a decryption
 
 % On the other hand, asymmetric-key (or public-key) cryptosystems use separate keys for encryption and decryption. The encryption key (also called the \textit{public key}) is shared publicly, while the decryption key (also called the \textit{private key}) is kept secret. Since the public key and private keys are different, there is no need to agree upon secure key exchange protocols. Usually, the security of asymmetric-key cryptosystems relies on the intractability of certain computational problems, for example, the RSA cryptosystem depends on the difficulty of big integer factorization~\cite{rivest_method_1978}, while the ElGamal cryptosystem depends on the difficulty of the discrete logarithm problem~\cite{blakley_public_1985}.
 
-Homomorphic cryptosystems are a special type of cryptosystem in which operations can be securely performed on encrypted data. Suppose that for a public-key cryptosystem, $\mathcal{E}_k \left(p \right)$ is the encryption function using the public key $k \in \mathcal{K}$, and $\mathcal{D}_l \left(c \right)$ be the decryption function using the private key $l$. A cryptosystem is said to be homomorphic if its encryption function is homomorphic, that is, if it satisfies the relation
-\begin{equation}
-    \mathcal{E}_k \left(p_1 \boxplus p_2\right) = \mathcal{E}_k \left(p_1\right) \boxdot \mathcal{E}_k \left(p_2\right)
-\end{equation}
-where $p_1, p_2 \in \mathcal{P}$ are the plaintexts, and $\boxplus$ and $\boxdot$ are operations in $\mathcal{P}$ and $\mathcal{C}$ respectively~\cite{fontaine_survey_2007}. Furthermore, a homomorphic cryptosystem also satisfies~\cite{li_elliptic_2012}
-\begin{equation}
-    p_1 \boxplus p_2 = \mathcal{D}_l \left( \mathcal{E}_k \left(p_1\right) \boxdot \mathcal{E}_k \left(p_2\right) \right).
-\end{equation}
+% Homomorphic cryptosystems are a special type of cryptosystem in which operations can be securely performed on encrypted data. Suppose that for a public-key cryptosystem, $\mathcal{E}_k \left(p \right)$ is the encryption function using the public key $k \in \mathcal{K}$, and $\mathcal{D}_l \left(c \right)$ be the decryption function using the private key $l$. A cryptosystem is said to be homomorphic if its encryption function is homomorphic, that is, if it satisfies the relation
+% \begin{equation}
+%     \mathcal{E}_k \left(p_1 \boxplus p_2\right) = \mathcal{E}_k \left(p_1\right) \boxdot \mathcal{E}_k \left(p_2\right)
+% \end{equation}
+% where $p_1, p_2 \in \mathcal{P}$ are the plaintexts, and $\boxplus$ and $\boxdot$ are operations in $\mathcal{P}$ and $\mathcal{C}$ respectively~\cite{fontaine_survey_2007}. Furthermore, a homomorphic cryptosystem also satisfies~\cite{li_elliptic_2012}
+% \begin{equation}
+%     p_1 \boxplus p_2 = \mathcal{D}_l \left( \mathcal{E}_k \left(p_1\right) \boxdot \mathcal{E}_k \left(p_2\right) \right).
+% \end{equation}
 
-In other words, a homomorphic cryptosystem preserves the operations that can be done with the plaintext without requiring an intermediary step of decrypting the ciphertext beforehand. It is important to note that the operations $\boxplus$ and $\boxdot$ need not be the same. A simple operation in the plaintext space may require a computationally intensive operation in the ciphertext space.
+% In other words, 
+A homomorphic cryptosystem preserves the operations that can be done with the plaintext without requiring an intermediary step of decrypting the ciphertext beforehand. It is important to note that the operations $\boxplus$ and $\boxdot$ need not be the same. A simple operation in the plaintext space may require a computationally intensive operation in the ciphertext space.
 
-Homomorphic cryptosystems can be classified according to the plaintext and ciphertext operations, $\boxplus$ and $\boxdot$. If the plaintext operation $\boxplus$ is addition, the cryptosystem is said to be \textit{additively homomorphic}, and the cryptosystem is said to be \textit{multiplicatively homomorphic} if the plaintext operation $\boxplus$ is multiplication.
+% Homomorphic cryptosystems can be classified according to the plaintext and ciphertext operations, $\boxplus$ and $\boxdot$. If the plaintext operation $\boxplus$ is addition, the cryptosystem is said to be \textit{additively homomorphic}, and the cryptosystem is said to be \textit{multiplicatively homomorphic} if the plaintext operation $\boxplus$ is multiplication.
 
 \subsection{Partially Homomorphic Cryptosystems}
 In this section, we will present two classical partially homomorphic cryptosystems which we will be testing in the study: the Paillier cryptosystem and the DGK cryptosystem. Both of these cryptosystems encrypt integer plaintexts and are additively homomorphic.
@@ -204,65 +205,66 @@ As the multiplicative homomorphism was not presented in the original paper, we p
 We will also be testing fully homomorphic cryptosytems, which allow aribitrary computation on encrypted data.
 While generally being more flexible, fully homomorphic cryptosytems are known to be significantly slower than partially homomorphic cryptosytems; improving the efficiency of fully homomorphic cryptosytems is an active area of research \cite{sen_homomorphic_2013}.
 
-We will present two such cryptosystems, the Dasgupta--Pal cryptosystem, which we present in full to explain a correction we propose to it, and the BGV cryptosystem, which has open source implementations availble primarily used in homomorphic cryptography research.
+% We will present two such cryptosystems, the Dasgupta--Pal cryptosystem, which we present in full to explain a correction we propose to it, and the BGV cryptosystem, which has open source implementations availble primarily used in homomorphic cryptography research.
+We will present the BGV cryptosystem, which has open source implementations availble primarily used in homomorphic cryptography research.
 
-\subsubsection{The Dasgupta--Pal Cryptosystem}
-The Dasgupta--Pal cryptosystem is a fully homomorphic cryptosystem proposed in 2016 by Smaranika Dasgupta and S. K. Pal \cite{dasgupta_design_2016}, which encrypts integer plaintexts in $\mathbb{Z}_n$ to polynomial ciphertexts. We begin our presentation of the Dasgupta--Pal cryptosystem with the following definition.
+% \subsubsection{The Dasgupta--Pal Cryptosystem}
+% The Dasgupta--Pal cryptosystem is a fully homomorphic cryptosystem proposed in 2016 by Smaranika Dasgupta and S. K. Pal \cite{dasgupta_design_2016}, which encrypts integer plaintexts in $\mathbb{Z}_n$ to polynomial ciphertexts. We begin our presentation of the Dasgupta--Pal cryptosystem with the following definition.
 
-Given a message $m \in \mathbb{Z}$, we denote
-\begin{align*}
-		m_p(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_k x^k
-\end{align*}
-where $a_k a_{k-1}\cdots a_2 a_1 a_0$ is the binary representation of $m$.
+% Given a message $m \in \mathbb{Z}$, we denote
+% \begin{align*}
+% 		m_p(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_k x^k
+% \end{align*}
+% where $a_k a_{k-1}\cdots a_2 a_1 a_0$ is the binary representation of $m$.
 
-In the original scheme presented in \cite{dasgupta_design_2016}, the secret key $S_k$ is set to be a large prime. In Appendix \ref{chap:correction}, we present a case where the Dasgupta--Pal cryptosystem fails and prove that setting the secret key $S_k = 2p$, where $p$ is a large prime, corrects errors in the Dasgupta--Pal cryptosystem.
-We now decribe the correct cryptosystem.
-\paragraph{Corrected Dasgupta--Pal Cryptosystem Description}
-Let $\ell$ denote the security parameter of the cryptosystem.
-Let $S_k = 2p$, where $p$ is a prime number with $\ell - 1$ bits.
-Choose a random even integer $z$ of length $\log_2{\ell}$.
+% In the original scheme presented in \cite{dasgupta_design_2016}, the secret key $S_k$ is set to be a large prime. In Appendix \ref{chap:correction}, we present a case where the Dasgupta--Pal cryptosystem fails and prove that setting the secret key $S_k = 2p$, where $p$ is a large prime, corrects errors in the Dasgupta--Pal cryptosystem.
+% We now decribe the correct cryptosystem.
+% \paragraph{Corrected Dasgupta--Pal Cryptosystem Description}
+% Let $\ell$ denote the security parameter of the cryptosystem.
+% Let $S_k = 2p$, where $p$ is a prime number with $\ell - 1$ bits.
+% Choose a random even integer $z$ of length $\log_2{\ell}$.
 
-Let the secret key be $S_k$, and let the refresh key be $R_k = z \cdot S_k$. The secret key is kept private to the encrypting/decrypting parties, while the refresh key is made publicly available.
+% Let the secret key be $S_k$, and let the refresh key be $R_k = z \cdot S_k$. The secret key is kept private to the encrypting/decrypting parties, while the refresh key is made publicly available.
 
-The scheme defines the encryption algorithm for a message $m$ as follows:
-\begin{align*}
-	E(m) = y(x) + S_k\times d(x)
-\end{align*}
-where
-$y(x)$ is a polynomial of degree $n$ such that $m_p(x) \equiv y(x) \bmod S_k$ and $d(x)$ is a randomly chosen polynomial of degree $n$. This encrypts each coefficient of $m_p(x)$ by adding some multiple of $S_k$ to it. Through this process, each bit of the message is encrypted separately.
+% The scheme defines the encryption algorithm for a message $m$ as follows:
+% \begin{align*}
+% 	E(m) = y(x) + S_k\times d(x)
+% \end{align*}
+% where
+% $y(x)$ is a polynomial of degree $n$ such that $m_p(x) \equiv y(x) \bmod S_k$ and $d(x)$ is a randomly chosen polynomial of degree $n$. This encrypts each coefficient of $m_p(x)$ by adding some multiple of $S_k$ to it. Through this process, each bit of the message is encrypted separately.
 
-Furthermore, the decryption algorithm to recover $m_p(x)$ from a ciphertext polynomial $c(x)$ as
-\begin{align*}
-	m_p(x) = c(x) \bmod S_k \bmod 2.
-\end{align*}
-Thus $D(c(x))$ is defined as the integer recovered from the coefficients of the polynomial $c(x) \bmod S_k \bmod 2$.
+% Furthermore, the decryption algorithm to recover $m_p(x)$ from a ciphertext polynomial $c(x)$ as
+% \begin{align*}
+% 	m_p(x) = c(x) \bmod S_k \bmod 2.
+% \end{align*}
+% Thus $D(c(x))$ is defined as the integer recovered from the coefficients of the polynomial $c(x) \bmod S_k \bmod 2$.
 
-Dasgupta and Pal note that homomorphic operations on ciphertext introduce noise which may interfere with decryption, due to the potential increase in ciphertext values.
-To eliminate noise from a polynomial ciphertext, the following refresh function is used:
-\begin{align*}
-	R(c(x)) = c(x) \bmod R_k.
-\end{align*}
+% Dasgupta and Pal note that homomorphic operations on ciphertext introduce noise which may interfere with decryption, due to the potential increase in ciphertext values.
+% To eliminate noise from a polynomial ciphertext, the following refresh function is used:
+% \begin{align*}
+% 	R(c(x)) = c(x) \bmod R_k.
+% \end{align*}
 
-\paragraph{Homomorphic Properties of the Dasgupta--Pal Cryptosystem}
-It has been shown \cite{dasgupta_design_2016} that the following properties hold for all integer messages $m_1, m_2 \in \mathbb{Z}_n$ in the Dasgupta--Pal cryptosystem. These properties arise since each coefficient in a ciphertext polynomial is essentially an independently encrypted bit of the original message.
-\begin{description}
-	\item[\textsc{xor} on ciphertexts]
-	A bitwise exclusive or (\textsc{xor}) operation on integer messages can be achieved by adding the coefficients pairwise between two ciphertexts.
-	\begin{align*}
-		D(E(m_1)+E(m_2)) = m_1 \textsc{ xor } m_2
-	\end{align*}
-	\item[\textsc{and} on ciphertexts]
-	Similarly, pair-wise multiplication corresponds to bitwise \textsc{and} of integer messages.
-	\begin{align*}
-		D(E(a) \otimes E(b)) = a \textsc{ and } b = ab \bmod 2
-	\end{align*}
-	where $\otimes$ denotes pairwise multiplication,
-	\begin{align*}
-		\sum_{i=1}^n{a_ix^i} \otimes \sum_{i=1}^n{b_ix^i} = \sum_{i=1}^n{a_ib_ix^i}.
-	\end{align*}
-\end{description}
+% \paragraph{Homomorphic Properties of the Dasgupta--Pal Cryptosystem}
+% It has been shown \cite{dasgupta_design_2016} that the following properties hold for all integer messages $m_1, m_2 \in \mathbb{Z}_n$ in the Dasgupta--Pal cryptosystem. These properties arise since each coefficient in a ciphertext polynomial is essentially an independently encrypted bit of the original message.
+% \begin{description}
+% 	\item[\textsc{xor} on ciphertexts]
+% 	A bitwise exclusive or (\textsc{xor}) operation on integer messages can be achieved by adding the coefficients pairwise between two ciphertexts.
+% 	\begin{align*}
+% 		D(E(m_1)+E(m_2)) = m_1 \textsc{ xor } m_2
+% 	\end{align*}
+% 	\item[\textsc{and} on ciphertexts]
+% 	Similarly, pair-wise multiplication corresponds to bitwise \textsc{and} of integer messages.
+% 	\begin{align*}
+% 		D(E(a) \otimes E(b)) = a \textsc{ and } b = ab \bmod 2
+% 	\end{align*}
+% 	where $\otimes$ denotes pairwise multiplication,
+% 	\begin{align*}
+% 		\sum_{i=1}^n{a_ix^i} \otimes \sum_{i=1}^n{b_ix^i} = \sum_{i=1}^n{a_ib_ix^i}.
+% 	\end{align*}
+% \end{description}
 
-Arbitrary computation on data can thus be achived using these bitwise operations. While the Dasgupta--Pal cryptosystem requires significant amounts of memory, as each bit of plaintext is encrypted into an integer, this approach provides a flexible method to perform relatively fast arbitrary computation on encrypted data. Encryption and decryption in the Dasgupta--Pal cryptosystem are accomplished using few arithmetic operations.
+% Arbitrary computation on data can thus be achived using these bitwise operations. While the Dasgupta--Pal cryptosystem requires significant amounts of memory, as each bit of plaintext is encrypted into an integer, this approach provides a flexible method to perform relatively fast arbitrary computation on encrypted data. Encryption and decryption in the Dasgupta--Pal cryptosystem are accomplished using few arithmetic operations.
 
 \subsubsection{HElib and the BGV Cryptosystem}
 The BGV (Brakerski--Gentry--Vaikuntanathan) cryptosystem \cite{cryptoeprint:2011:277} is a fully homomorphic cryptosystem created based on the ring-learning with error problem. The BGV cryptosystem was constructed to surpass the limitations of prior fully homomorphic cryptosystems, which were based on the first fully homomorphic cryptosystem by Gentry \cite{gentry_fully_2009}.
@@ -319,9 +321,9 @@ A brightness control transformation with parameter $v$ is defined as:
 \end{equation}
 The above transformations are linear in terms of the input $r$, and are thus simple to implement under a homomorphic cryptosystem.
 
-In this study we extend the range of intensity transformations to non-linear transformations. Two common non-linear image transformations are the log transformation and power-law transformation~\cite{gonzalez_digital_2008}.
+In this study we extend the range of intensity transformations to non-linear transformations. Two common non-linear image transformations are the logarithm transformation and power-law transformation~\cite{gonzalez_digital_2008}.
 
-The log transformation is used to enhance dark pixels or increase the dark details of an image by mapping low intensity values to a wider range of values~\cite{gonzalez_digital_2008}. This has the general formula
+The logarithm transformation is used to enhance dark pixels or increase the dark details of an image by mapping low intensity values to a wider range of values~\cite{gonzalez_digital_2008}. This has the general formula
 \begin{equation}
     T\left(r\right) = c \log\left(1 + r\right)
 \end{equation}
@@ -332,7 +334,8 @@ The power-law transformation is a family of transformations that have the form
     T\left(r\right) = c r^{\gamma}
 \end{equation}
 where $c>0$ and $\gamma > 0$.
-A power-law transformation defined by the above equation can calibrate the operation of many image capture and output devices such as cameras, printers and displays in a process called \textit{gamma correction}. This ensures reproducibility and accuracy of images being displayed by digital output devices~\cite{gonzalez_digital_2008}.
+A power-law transformation defined by the above equation can calibrate the operation of many image capture and output devices such as cameras, printers and displays in a process called \textit{gamma correction}. 
+% This ensures reproducibility and accuracy of images being displayed by digital output devices~\cite{gonzalez_digital_2008}.
 
 To implement non-linear intensity transformations using addition and multiplication in a homomorphic system, it is necessary to approximate the logarithm and exponential functions, which may result in higher computational overhead. In our software library implementation, we investigate methods required to approximate the logarithm and power functions. Non-linear intensity transformations such as the logarithm transformation have applications in intensity normalization \cite{oravec_illumination_2010}, which is used in some facial recognition algorithms to account for differences in lighting which make facial recognition difficult.
 
