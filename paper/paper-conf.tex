@@ -1,6 +1,7 @@
 \section{Introduction}
 \subsection{Context of the Study}
-Digital data privacy and security is a growing concern in various fields, such as cloud computing~\cite{potey_homomorphic_2016}, health information systems~\cite{kester_cryptographic_2015}, and video surveillance~\cite{upmanyu_efficient_2009}. To meet these needs, various cryptosystems have been developed. A cryptosystem is a system which operates on plaintexts, ciphertexts and keys using an encryption algorithm, which maps a plaintext to a ciphertext, together with a decryption algorithm, which maps a ciphertext to a plaintext, given an appropriate key~\cite{bauer_cryptosystem_2005}. The encryption and decryption algorithms are chosen such that the plaintext cannot easily be recovered from the ciphertext without knowledge of the key. This allows data to be securely transmitted over an insecure channel. 
+Digital data privacy and security is a growing concern in various fields, such as cloud computing~\cite{potey_homomorphic_2016}, health information systems~\cite{kester_cryptographic_2015}, and video surveillance~\cite{upmanyu_efficient_2009}. To meet these needs, various cryptosystems have been developed. 
+% A cryptosystem is a system which operates on plaintexts, ciphertexts and keys using an encryption algorithm, which maps a plaintext to a ciphertext, together with a decryption algorithm, which maps a ciphertext to a plaintext, given an appropriate key~\cite{bauer_cryptosystem_2005}. The encryption and decryption algorithms are chosen such that the plaintext cannot easily be recovered from the ciphertext without knowledge of the key. This allows data to be securely transmitted over an insecure channel. 
 
 One particular application of cryptography is image encryption. While cryptosystems used to encrypt digital data in general, such as the Advanced Encryption Standard (AES) or elliptic curve cryptography, can also be used to encrypt images~\cite{jain_image_2016, singh_image_2015} other algorithms created specifically for image encryption have also been developed~\cite{murugan_survey_2018}.
 
@@ -56,10 +57,12 @@ We will adopt the benchmark for evaluating image quality of image encryption sch
 \end{enumerate}
 A detailed overview of the above will be provided in the methodology. Grayscale images will be used in the study.
 A client-server model for secure computation will be assumed to allow operations such as secure comparison and exponentiation.
-Training and test data are taken from the publicly available \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex. 
+% Training and test data are taken from the publicly available \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex. 
 
 \subsection{Significance of the Study}
-This study aims to directly address one of the current problems in the research of homomorphic cryptosystems: the practicality of homomorphic encryption~\cite{sen_homomorphic_2013}. The literature shows existing homomorphic cryptosystems and how they support primitive operations (usually addition and multiplication) on encrypted data, however, for homomorphic cryptosystems to be useful for practical use, efficient support for more complicated image processing operation must be demonstrated as well. While implementations of image processing operations in a homomorphic cryptosystem exist in the literature~\cite{ziad_cryptoimg:_2016, garay_algorithms_2014}, our study targets the more computationally intensive task of facial detection.
+This study aims to directly address one of the current problems in the research of homomorphic cryptosystems: the practicality of homomorphic encryption~\cite{sen_homomorphic_2013}. The literature shows existing homomorphic cryptosystems and how they support primitive operations (usually addition and multiplication) on encrypted data, however, for homomorphic cryptosystems to be useful for practical use, efficient support for more complicated image processing operation must be demonstrated as well. While implementations of image processing operations in a homomorphic cryptosystem exist in the literature~\cite{ziad_cryptoimg:_2016, garay_algorithms_2014}, our study targets the more computationally intensive task of facial recognition and detection.
+
+In the Philippine setting, preservation of data privacy is of utmost importance when it comes to outsourcing work involving sensitive data to local companies with the ratification of the Data Privacy Act of 2012. Thus recent developments in applications of homomorphic encryption on non-text-based data (such as images) are becoming relevant today.
 
 We wish to contribute to existing models for the secure transmission and modification of image data by developing a software library which allows the use and comparison of various homomorphic encryption algorithms. Our software library would allow service providers to perform image manipulation for clients without compromising data privacy.
 
@@ -174,9 +177,9 @@ As the multiplicative homomorphism was not presented in the original paper, we p
     (g^m \cdot h^r \bmod{n})^k \bmod n
     &= (g^m \cdot h^r)^k \bmod{n}\\
     &= (g^m)^k \cdot (h^r)^k \bmod{n}\\
-    &= g^{km} \cdot (h^kr) \bmod{n}
+    &= g^{km} \cdot (h^{kr}) \bmod{n}
   \end{align*}
-  Since $r$ is a random integer, $kr$ is also a random integer, Therefore, $g^{km} \cdot (h^kr) \bmod{n} = D(E(m_1)^k)$ is a valid encryption of the message $km$.
+  Since $r$ is a random integer, $kr$ is also a random integer, Therefore, $g^{km} \cdot (h^{kr}) \bmod{n} = D(E(m)^k)$ is a valid encryption of the message $km$.
 \end{proof}
 
 
@@ -276,7 +279,7 @@ While generally being more flexible, fully homomorphic cryptosytems are known to
 % \subsubsection{HElib and the BGV Cryptosystem}
 The BGV (Brakerski--Gentry--Vaikuntanathan) cryptosystem \cite{cryptoeprint:2011:277} is a fully homomorphic cryptosystem created based on the ring-learning with error problem. The BGV cryptosystem was constructed to surpass the limitations of prior fully homomorphic cryptosystems, which were based on the first fully homomorphic cryptosystem by Gentry \cite{gentry_fully_2009}.
 
-The details regarding the construction of the BGV cryptosystem are beyond the scope of this paper. For this study, we will be using \textit{HElib} \cite{garay_algorithms_2014}, an open-source library which implements the BGV cryptosystem with optimizations to improve efficiency. Evaluation of operations on 120 inputs in HELib was performed in around 4 minutes, with an average of 2 seconds to process a single input \cite{hutchison_fully_2010,cryptoeprint:2011:566}.
+The details regarding the construction of the BGV cryptosystem are beyond the scope of this paper. For this study, we will be using \textit{HElib} \cite{garay_algorithms_2014}, an open-source library which implements the BGV cryptosystem with optimizations to improve efficiency. Evaluation of operations on 120 inputs in \textit{HELib} was performed in around 4 minutes, with an average of 2 seconds to process a single input \cite{hutchison_fully_2010,cryptoeprint:2011:566}.
 
 The \textit{HElib} library has been adapted to Python using the Pyfhel library \cite{pyfhel_2018} maintained by Ibarrondo, Laurent (SAP) and Onen (EURECOM), and licensed under the GNU GPL v3 license. The Pyfhel library is a Python API for the \textit{HElib} library, which supports the following operations on vectors/scalars of integers or binary ciphertexts:
 \begin{itemize}
@@ -285,7 +288,7 @@ The \textit{HElib} library has been adapted to Python using the Pyfhel library \
 \end{itemize}
 
 \subsection{CryptoImg}
-A paper published in 2009 by Ziad, et al. attempts to implement privacy-preserving image processing using \textit{CryptoImg}, a library for the Open Source Computer Vision Library (OpenCV)~\cite{bradski_opencv_2000} which implements various homomorphic encryption and image processing routines using the Paillier homomorphic cryptosystem~\cite{ziad_cryptoimg:_2016}. The CryptoImg library assumed a client-server model wherein a client requests image processing operations from a server. A client first encrypts a digital image and sends the image securely to a server, which then operates on the encrypted image without revealing its contents. Then the resulting image is sent back to the client, which decrypts the image to recover the desired output.
+A paper published in 2009 by Ziad, et al. attempts to implement privacy-preserving image processing using \textit{CryptoImg}, a library for the Open Source Computer Vision Library (OpenCV)~\cite{bradski_opencv_2000} which implements various homomorphic encryption and image processing routines using the Paillier homomorphic cryptosystem~\cite{ziad_cryptoimg:_2016}. The \textit{CryptoImg} library assumed a client-server model wherein a client requests image processing operations from a server. A client first encrypts a digital image and sends the image securely to a server, which then operates on the encrypted image without revealing its contents. Then the resulting image is sent back to the client, which decrypts the image to recover the desired output.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.4\textwidth]{figures/ClientServerModel.png}
@@ -387,12 +390,11 @@ Proposed by Matthew Turk and Alex Pentland, the eigenfaces method uses principal
 \subsection{Previous Implementations of Secure Facial Recognition}
 Erkin, et al. \cite{hutchison_privacy-preserving_2009} devised a method to incorporate the use of homomorphic cryptosystems into the eigenfaces method. In their study, they proposed a two-party system where Alice holds an encrypted image $\left[\Gamma\right]$, while Bob maintains a database of $K$ eigenfaces $\mathbf{u}_1, \ldots, \mathbf{u}_K$, and feature vectors $\Omega_1, \ldots, \Omega_M$ in the clear.
 
-\begin{figure}[!h]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.4\textwidth]{figures/secure_eigenfaces.png}
     \caption{Diagram of the privacy-preserving facial recognition process \cite{hutchison_privacy-preserving_2009}}
 \end{figure}
-
 
 In order to ensure privacy, the steps in the eigenfaces algorithm, namely: projection, distance computation, and match finding, are done within the encrypted domain, i.e., using the operations in the Paillier cryptosystem.
 
@@ -417,7 +419,7 @@ Before Bob sends $\left[\bar{\omega}_i\right]$ to Alice for squaring, he adds a 
 The protocol for squaring a number as described earlier is a workaround for the limitations of Paillier or any other partially homomorphic cryptosystem that only supports addition and scalar multiplication. 
 % This can be possibly extended so that operations such as pairwise multiplication and exponentiation are also supported, provided that the protocol involves two parties.
 
-The match finding step is done by comparing the distances obtained from the previous step to a specified threshold $T$. If the minimum distance is smaller than $T$, then a match is found, and the encrypted identity of the match is returned to Alice \cite{hutchison_privacy-preserving_2009}. Getting the minimum among the encrypted distances would involve comparing two encrypted numbers, which Paillier does not support. Instead, the DGK cryptosystem \cite{pieprzyk_efficient_2007} is used for the comparison protocol.
+The match-finding step is done by comparing the distances obtained from the previous step to a specified threshold $T$. If the minimum distance is smaller than $T$, then a match is found, and the encrypted identity of the match is returned to Alice \cite{hutchison_privacy-preserving_2009}. Getting the minimum among the encrypted distances would involve comparing two encrypted numbers, which Paillier does not support. Instead, the DGK cryptosystem \cite{pieprzyk_efficient_2007} is used for the comparison protocol.
 
 
 
@@ -451,7 +453,7 @@ Three homomorphic encryption schemes are investigated, and a wrapper library was
 
 \subsubsection{Extension of Partially Homomorphic Cryptosystems}
 \label{sssec:pheextension}
-In order to use Paillier and DGK for secure image processing, we require the two schemes to support the encryption of floating-point (FP)numbers, as well as multiplication and division of arbitrary ciphertexts. We extend the two cryptosystems to FP operations by using an approach shown in~\cite{ziad_cryptoimg:_2016}. This approach represents FP numbers using a pair $(m,e)$, where $m$ represents the mantissa (which is encrypted), and $e$ represents the exponent (which is not encrypted). This approach is also used by the python-paillier library. This represntation allows us to extend the addition and plaintext multiplication homomorphisms of the Paillier and DGK cryptosystems to floating-point numbers.
+In order to use Paillier and DGK for secure image processing, we require the two schemes to support the encryption of floating-point (FP) numbers, as well as multiplication and division of arbitrary ciphertexts. We extend the two cryptosystems to FP operations by using an approach shown in~\cite{ziad_cryptoimg:_2016}. This approach represents FP numbers using a pair $(m,e)$, where $m$ represents the mantissa (which is encrypted), and $e$ represents the exponent (which is not encrypted). This approach is also used by the python-paillier library. This represntation allows us to extend the addition and plaintext multiplication homomorphisms of the Paillier and DGK cryptosystems to floating-point numbers.
 
 Various two-party protocols can be used to facilitate ciphertext multiplication and division. These allow a server armed with only knowledge of the public key, to obtain the product and quotient of ciphertexts, by communicating with the client, who has the private key. For division, we use the protocol defined in~\cite{boukoros_lightweight_2017}: to obtain $E(x/y)$ from $E(x)$ and $E(y)$, the server sends $E(rx)$ and $E(ry)$ to the client, (where $r$ is a random non-zero number), allowing the client to compute $E(rx/ry)$ and give the result back to the server.
 
@@ -481,7 +483,7 @@ For multiplication, we adapt the protocol to calculate Euclidean distances used 
 
 \subsection{Non-Linear Intensity Transformations}
 We will implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}.
-We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Paillier, DGK), if ciphertext multiplication or division is required, the secure protocols in section \ref{sssec:pheextension} will be used.
+We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Paillier and DGK), if ciphertext multiplication or division is required, the secure protocols in section~\ref{sssec:pheextension} will be used.
 
 \subsubsection{Logarithm Transformation}
 The logarithm transformation of a pixel intensity value $x$ is defined as
@@ -545,7 +547,7 @@ For each cryptosystem, three image operations are tested:
 	\item Power-law transformation, with $c = 1$ and $\gamma = 0.4$
 \end{enumerate}
 
-For each plaintext image (PT), we considered each image operation listed above and generate three images: a plaintext domain transformation (PDT), a ciphertext image (CT), and an ciphertext domain transformation (CDT). The PDT was generated by running the image operation on the original image. The CT was generated by encrypting the image, then applying the operation, and the CDT was generated by decrypting the CT. The four images (PT, PDT, CT, CDT) were then compared using various benchmarks to evaluate the quality and security of each homomorphic encryption scheme.
+For each plaintext image (PT), we considered each image operation listed above and generate three images: a plaintext domain transformation (PDT), a ciphertext image (CT), and an ciphertext domain transformation (CDT). The PDT was generated by running the image operation on the original image. The CT was generated by encrypting the image, then applying the operation, and the CDT was generated by decrypting the CT. The three images (PT, PDT, CDT) were then compared using various benchmarks to evaluate the quality and security of each homomorphic encryption scheme.
 
 The benchmarks to be used in the study, adopted from~\cite{ahmed_benchmark_2016, ahmad_efficiency_2012, wu_npcr_2011} are listed below. We let $X_i$ denote a value in an image $X$, where $1 \leq i \leq N$.
 We first perform three tests to ascertain the preservation of image quality after encryption and decryption: MSE, PSNR, and SSIM.
@@ -586,7 +588,7 @@ Computing for MSE, PSNR, and SSIM was done using the corresponding built-in func
 \subsubsection{Facial Recognition Tests}
 The method for secure facial recognition using eigenfaces by Erkin, et al. \cite{hutchison_privacy-preserving_2009} was implemented for this study.
 
-As before, training and test data were also secured from the \texttt{faces94} dataset. The images were first converted to grayscale but it is not downsampled, unlike in the previous test.
+As before, training and test data were also secured from the \texttt{faces94} dataset. The images were first converted to grayscale and then downsampled to $40 \times 36$ pixels.
 
 The facial recognition tests are done using ten-fold cross-validation for each cryptosystem, where the number of principal components used by the algorithm is fixed at $K=5$.
 
@@ -602,7 +604,7 @@ Prior to splitting the dataset, the images within each set are shuffled. Since t
 % \end{itemize}
 
 \section{Preliminary Results and Discussion}
-The results shown in this section are gathered from the tests for intensity transformations under Paillier and Dasgupta--Pal cryptosystems. During testing, initial results obtained from BGV, particularly with image operations involving floating-point numbers like the logarithmic transformation, were unstable (i.e. the results vary drastically every time the same tests were done). This is because the Pyfhel library being used for the BGV cryptosystem is still in alpha development stage \cite{pyfhel_2018}. 
+The results shown in this section are gathered from the tests for intensity transformations under Paillier and DGK cryptosystems. During testing, initial results obtained from BGV, particularly with image operations involving floating-point numbers like the logarithmic transformation, were unstable (i.e. the results vary drastically every time the same tests were done). This is because the Pyfhel library being used for the BGV cryptosystem is still in alpha development stage \cite{pyfhel_2018}. 
 
 % One of the authors has already informed the maintainers of the library about a bug involving exponentiation of two real numbers. 
 
@@ -623,29 +625,42 @@ The results shown in this section are gathered from the tests for intensity tran
 	\end{tabular}
 \end{table*}
 
+% \begin{table*}
+% 	\centering
+% 	\caption{Comparison of intensity transformations under Dasgupta--Pal}
+% 	\label{tbl:it-dp}
+% 	\begin{tabular}{m{1cm}*{7}{>{\centering\arraybackslash}m{1.75cm}}}
+% 		\toprule
+% 		\multirow{2}{*}{Image} & \multirow{2}{*}{Original} & \multicolumn{2}{c}{Image negation} & \multicolumn{2}{c}{Logarithm transformation} & \multicolumn{2}{c}{Power-law transformation} \\
+% 							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\ 
+% 		\midrule
+% 		\xintForpair #1#2 in {(anpage,a), (bplyce,b), (drbost,c), (ksunth,d), (martin,e), (pmives,f), (rnpwil,g), (sbains,h), (swewin,i), (yfhsie,j)} \do {%
+% 		(#2) & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_pwrtransform_#1_decrypted.png} \\ }%
+% 		\bottomrule
+% 	\end{tabular}
+% \end{table*}
+
 \begin{table*}
 	\centering
-	\caption{Comparison of intensity transformations under Dasgupta--Pal}
-	\label{tbl:it-dp}
+	\caption{Comparison of intensity transformations under DGK}
+	\label{tbl:it-dgk}
 	\begin{tabular}{m{1cm}*{7}{>{\centering\arraybackslash}m{1.75cm}}}
 		\toprule
 		\multirow{2}{*}{Image} & \multirow{2}{*}{Original} & \multicolumn{2}{c}{Image negation} & \multicolumn{2}{c}{Logarithm transformation} & \multicolumn{2}{c}{Power-law transformation} \\
 							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\ 
 		\midrule
 		\xintForpair #1#2 in {(anpage,a), (bplyce,b), (drbost,c), (ksunth,d), (martin,e), (pmives,f), (rnpwil,g), (sbains,h), (swewin,i), (yfhsie,j)} \do {%
-		(#2) & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_pwrtransform_#1_decrypted.png} \\ }%
+		(#2) & \includegraphics[width=1.75cm]{out_faces/dgk_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dgk_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dgk_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dgk_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dgk_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dgk_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dgk_pwrtransform_#1_decrypted.png} \\ }%
 		\bottomrule
 	\end{tabular}
 \end{table*}
 
-Table~\ref{tbl:it-pal} shows the images obtained from the intensity transformation tests under the Paillier cryptosystem, while Table~\ref{tbl:it-dp} shows the resulting images from the same tests under the Dasgupta--Pal cryptosystem. Shown for each image is the original unecrypted image, and for each intensity transformation the \textit{plaintext domain transformation} (PDT) is given which is the resulting image after applying the transformation to the unencrypted image and the \textit{ciphertext domain transformation} (CDT) is the decrypted image of the processed encrypted image.
+Table~\ref{tbl:it-pal} shows the images obtained from the intensity transformation tests under the Paillier cryptosystem, while Table~\ref{tbl:it-dgk} shows the resulting images from the same tests under the DGK cryptosystem. Shown for each image is the original unecrypted image, and for each intensity transformation the \textit{plaintext domain transformation} (PDT) is given which is the resulting image after applying the transformation to the unencrypted image and the \textit{ciphertext domain transformation} (CDT) is the decrypted image of the processed encrypted image.
 
-The following tables show the resulting metric scores for mean squared error (MSE), peak signal to noise ratio (PSNR), and structural similarity index (SSIM), as well as time taken (in seconds) for encrypting the input image ($t_\text{enc}$), applying an operation to the encrypted image ($t_\text{apply}$), and decrypting the resulting encrypted image ($t_\text{dec}$), for each image in the test set. Tables~\ref{tbl:neg-pal} and~\ref{tbl:neg-dp} show the results obtained from applying image negation, Tables~\ref{tbl:log-pal} and~\ref{tbl:log-dp} from applying logarithm transformation, and Tables~\ref{tbl:pwr-pal} and~\ref{tbl:pwr-dp} from applying power-law transformation.
+The following tables show the resulting metric scores for mean squared error (MSE), peak signal to noise ratio (PSNR), and structural similarity index (SSIM), as well as time taken (in seconds) for encrypting the input image ($t_\text{enc}$), applying an operation to the encrypted image ($t_\text{apply}$), and decrypting the resulting encrypted image ($t_\text{dec}$), for each image in the test set. Tables~\ref{tbl:neg-pal} and~\ref{tbl:neg-dgk} show the results obtained from applying image negation, Tables~\ref{tbl:log-pal} and~\ref{tbl:log-dgk} from applying logarithm transformation, and Tables~\ref{tbl:pwr-pal} and~\ref{tbl:pwr-dgk} from applying power-law transformation.
 
 \subsubsection{Image Negation}
-Both the Paillier and Dasgupta--Pal cryptosystems were able to perform image negation under the encrypted domain without introducing noise in the resulting image. In other words, the resulting image from doing image negation on an image on the clear and doing image negation under the encrypted domain are identical, as evidenced by the mean squared errors being exactly equal to zero, the PSNR being infinite, and the SSIM being exactly equal to one.
-
-The Paillier cryptosystem performed better in terms of time, only taking about 0.01 seconds to apply image negation. On the other hand, the Dasgupta--Pal cryptosystem took about 22 seconds each to apply the same operation, which is expected since the implementation for Dasgupta--Pal was done in Python without using any external libraries.
+Both the Paillier and DGK cryptosystems were able to perform image negation under the encrypted domain without introducing noise in the resulting image. In other words, the resulting image from doing image negation on an image on the clear and doing image negation under the encrypted domain are identical, as evidenced by the mean squared errors being exactly equal to zero, the PSNR being infinite, and the SSIM being exactly equal to one. While the time taken to apply image negation is comparable to that of DGK, the Paillier cryptosystem performed better in terms of encryption and decryption time.
 
 \begin{table}[h]
 	\centering
@@ -667,31 +682,49 @@ The Paillier cryptosystem performed better in terms of time, only taking about 0
 		\bottomrule
     \end{tabular}
 \end{table}
+% \begin{table}[h]
+% 	\centering
+% 	\caption{Image negation under Dasgupta--Pal}
+% 	\label{tbl:neg-dp}
+%     \begin{tabular}{lcccccc}
+%         \toprule
+%         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
+% 		(a) & 0.000 & $\infty$ & 1.00000 & 0.221 & 30.217 & 0.239 \\
+% 		(b) & 0.000 & $\infty$ & 1.00000 & 0.190 & 30.919 & 0.216 \\
+% 		(c) & 0.000 & $\infty$ & 1.00000 & 0.284 & 31.182 & 0.268 \\
+% 		(d) & 0.000 & $\infty$ & 1.00000 & 0.225 & 32.581 & 0.223 \\
+% 		(e) & 0.000 & $\infty$ & 1.00000 & 0.220 & 32.220 & 0.271 \\
+% 		(f) & 0.000 & $\infty$ & 1.00000 & 0.287 & 31.224 & 0.294 \\
+% 		(g) & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.478 & 0.284 \\
+% 		(h) & 0.000 & $\infty$ & 1.00000 & 0.186 & 29.784 & 0.362 \\
+% 		(i) & 0.000 & $\infty$ & 1.00000 & 0.243 & 38.407 & 0.220 \\
+% 		(j) & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.488 & 0.449 \\		
+% 		\bottomrule
+%         \end{tabular}
+% \end{table}
 \begin{table}[h]
 	\centering
-	\caption{Image negation under Dasgupta--Pal}
-	\label{tbl:neg-dp}
+	\caption{Image negation under DGK}
+	\label{tbl:neg-dgk}
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-		(a) & 0.000 & $\infty$ & 1.00000 & 0.221 & 30.217 & 0.239 \\
-		(b) & 0.000 & $\infty$ & 1.00000 & 0.190 & 30.919 & 0.216 \\
-		(c) & 0.000 & $\infty$ & 1.00000 & 0.284 & 31.182 & 0.268 \\
-		(d) & 0.000 & $\infty$ & 1.00000 & 0.225 & 32.581 & 0.223 \\
-		(e) & 0.000 & $\infty$ & 1.00000 & 0.220 & 32.220 & 0.271 \\
-		(f) & 0.000 & $\infty$ & 1.00000 & 0.287 & 31.224 & 0.294 \\
-		(g) & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.478 & 0.284 \\
-		(h) & 0.000 & $\infty$ & 1.00000 & 0.186 & 29.784 & 0.362 \\
-		(i) & 0.000 & $\infty$ & 1.00000 & 0.243 & 38.407 & 0.220 \\
-		(j) & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.488 & 0.449 \\		
+		(a) & 0.000 & $\infty$ & 1.00000 & 0.509 & 0.011 & 0.450 \\
+		(b) & 0.000 & $\infty$ & 1.00000 & 0.512 & 0.009 & 0.462 \\
+		(c) & 0.000 & $\infty$ & 1.00000 & 0.732 & 0.018 & 0.519 \\
+		(d) & 0.000 & $\infty$ & 1.00000 & 0.593 & 0.017 & 0.677 \\
+		(e) & 0.000 & $\infty$ & 1.00000 & 0.607 & 0.010 & 0.454 \\
+		(f) & 0.000 & $\infty$ & 1.00000 & 0.550 & 0.010 & 0.507 \\
+		(g) & 0.000 & $\infty$ & 1.00000 & 0.532 & 0.010 & 0.471 \\
+		(h) & 0.000 & $\infty$ & 1.00000 & 0.538 & 0.010 & 0.513 \\
+		(i) & 0.000 & $\infty$ & 1.00000 & 0.606 & 0.010 & 0.519 \\
+		(j) & 0.000 & $\infty$ & 1.00000 & 0.608 & 0.012 & 0.496 \\		
 		\bottomrule
         \end{tabular}
 \end{table}
 
 \subsubsection{Logarithm Transformation}
-Unlike image negation, logarithm transformation involves more operations, so the increase in processing time for both cryptosystems are expected. Applying the logarithm transformation under Paillier took about 2 seconds per image, while it took about 13.5 minutes each under Dasgupta--Pal.
-
-The logarithm transformation under Dasgupta--Pal turned out to be more accurate than Paillier, whose mean squared errors approach zero and the SSIM values approach one for every image as shown in Table~\ref{tbl:log-dp}. Although the results from using Paillier show that it is also accurate enough with the mean squared errors being less than 30 and the SSIM values average to 0.99, Dasgupta--Pal has been able to produce an almost identical result to that of the plaintext domain transformation counterparts. This observation is rather unexpected, considering that the implementation used for Paillier is more robust (due to its use of external C/C++ libraries which makes computations faster).
+Unlike image negation, logarithm transformation involves more operations, so the increase in processing times for both cryptosystems are expected. Applying the logarithm transformation under Paillier took about 2 seconds per image, while it took about 25 seconds each under DGK. Applying the logarithm transformation under Paillier results in faster and more accurate output images (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$) than under DGK (with $\text{MSE} \le 300$ and $0.61 \le \text{SSIM} \le 0.87$).
 
 \begin{table}[h]
 	\centering
@@ -713,24 +746,43 @@ The logarithm transformation under Dasgupta--Pal turned out to be more accurate 
 		\bottomrule
         \end{tabular}
 \end{table}
+% \begin{table}[h]
+% 	\caption{Logarithm transformation under Dasgupta--Pal}
+% 	\label{tbl:log-dp}
+%     \begin{tabular}{lcccccc}
+%         \toprule
+%         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
+% 		(a) & 0.004 & 71.624 & 0.99999 & 0.287 & 802.957 & 0.036 \\
+% 		(b) & 0.000 & 82.043 & 1.00000 & 0.190 & 815.384 & 0.048 \\
+% 		(c) & 0.004 & 72.480 & 1.00000 & 0.270 & 813.640 & 0.036 \\
+% 		(d) & 0.000 & 87.372 & 1.00000 & 0.204 & 804.629 & 0.047 \\
+% 		(e) & 0.001 & 77.421 & 1.00000 & 0.245 & 822.940 & 0.036 \\
+% 		(f) & 0.001 & 76.934 & 1.00000 & 0.194 & 814.132 & 0.036 \\
+% 		(g) & 0.000 & 83.135 & 1.00000 & 0.197 & 808.503 & 0.047 \\
+% 		(h) & 0.001 & 77.301 & 1.00000 & 0.270 & 809.406 & 0.047 \\
+% 		(i) & 0.006 & 70.004 & 0.99999 & 0.268 & 813.217 & 0.051 \\
+% 		(j) & 0.001 & 78.576 & 1.00000 & 0.243 & 830.640 & 0.039 \\
+% 		\bottomrule
+%         \end{tabular}
+% \end{table}
 \begin{table}[h]
-	\caption{Logarithm transformation under Dasgupta--Pal}
-	\label{tbl:log-dp}
+	\caption{Logarithm transformation under DGK}
+	\label{tbl:log-dgk}
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-		(a) & 0.004 & 71.624 & 0.99999 & 0.287 & 802.957 & 0.036 \\
-		(b) & 0.000 & 82.043 & 1.00000 & 0.190 & 815.384 & 0.048 \\
-		(c) & 0.004 & 72.480 & 1.00000 & 0.270 & 813.640 & 0.036 \\
-		(d) & 0.000 & 87.372 & 1.00000 & 0.204 & 804.629 & 0.047 \\
-		(e) & 0.001 & 77.421 & 1.00000 & 0.245 & 822.940 & 0.036 \\
-		(f) & 0.001 & 76.934 & 1.00000 & 0.194 & 814.132 & 0.036 \\
-		(g) & 0.000 & 83.135 & 1.00000 & 0.197 & 808.503 & 0.047 \\
-		(h) & 0.001 & 77.301 & 1.00000 & 0.270 & 809.406 & 0.047 \\
-		(i) & 0.006 & 70.004 & 0.99999 & 0.268 & 813.217 & 0.051 \\
-		(j) & 0.001 & 78.576 & 1.00000 & 0.243 & 830.640 & 0.039 \\
+		(a) & 222.196 & 24.663 & 0.83568 & 0.635 & 25.556 & 0.488 \\
+		(b) & 180.941 & 25.555 & 0.75159 & 0.542 & 27.102 & 0.460 \\
+		(c) & 295.227 & 23.429 & 0.61360 & 0.534 & 25.720 & 0.486 \\
+		(d) & 286.799 & 23.555 & 0.76514 & 0.622 & 25.118 & 0.467 \\
+		(e) & 215.389 & 24.799 & 0.66924 & 0.557 & 25.500 & 0.452 \\
+		(f) & 65.621 & 29.960 & 0.83973 & 0.561 & 25.014 & 0.458 \\
+		(g) & 133.007 & 26.892 & 0.74749 & 0.572 & 25.605 & 0.497 \\
+		(h) & 225.269 & 24.604 & 0.70342 & 0.548 & 25.088 & 0.468 \\
+		(i) & 171.073 & 25.799 & 0.83257 & 0.538 & 25.410 & 0.494 \\
+		(j) & 203.214 & 25.051 & 0.86675 & 0.528 & 25.383 & 0.516 \\
 		\bottomrule
-        \end{tabular}
+    \end{tabular}
 \end{table}
 
 \subsubsection{Power-Law Transformation}
@@ -757,49 +809,69 @@ Applying the power-law transformation under both cryptosystems produced less tha
         \end{tabular}
 \end{table}
 
-When Dasgupta--Pal was used in the power-law transformation, it completely failed to produce a discernible image and only resulted in a blank image. The mean squared errors for this case is an order of magnitude higher than the results from using Paillier. Furthermore, doing a power-law transformation under Dasgupta--Pal is not only impractical in terms of accuracy, but also it is impractical in terms of time efficiency because it took about 2 hours and 40 minutes on average to process each image.
+When DGK was used in the power-law transformation, it failed to produce a discernible image and only resulted in an almost black image with a faint shape of a face. The mean squared errors for this case is an order of magnitude higher than the results from using Paillier. Furthermore, doing a power-law transformation under DGK is not only impractical in terms of accuracy, but also it is somewhat impractical in terms of time efficiency because it took at most 4 minutes to process each image.
 
+% \begin{table}[h]
+% 	\centering
+% 	\caption{Power-law transformation under Dasgupta--Pal}
+% 	\label{tbl:pwr-dp}
+%     \begin{tabular}{lcccccc}
+%         \toprule
+%         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
+% 		% \texttt{anpage} & 25115.891 & 4.131 & 0.00000 & 0.016 & 741.872 & 0.031 \\ 10x10
+% 		% \texttt{bplyce} & 22777.187 & 4.556 & 0.00000 & 0.017 & 730.873 & 0.003 \\ 10x10
+% 		% \texttt{drbost} & 18899.906 & 5.366 & 0.00000 & 0.014 & 733.409 & 0.003 \\
+% 		(a) & 25008.723 & 4.150 & 0.000 & 0.376 & 9700.926 & 1.269 \\
+% 		(b) & 22700.522 & 4.570 & 0.000 & 0.230 & 9196.609 & 0.043 \\
+% 		(c) & 18902.214 & 5.366 & 0.000 & 0.277 & 9261.407 & 0.150 \\
+% 		(d) & 12585.729 & 7.132 & 0.000 & 0.257 & 9259.010 & 0.051 \\
+% 		(e) & 17012.423 & 5.823 & 0.000 & 0.279 & 9440.351 & 0.051 \\
+% 		(f) & 31124.615 & 3.200 & 0.000 & 0.285 & 9492.149 & 0.052 \\
+% 		(g) & 22982.917 & 4.517 & 0.000 & 0.289 & 9321.928 & 0.048 \\
+% 		(h) & 13469.155 & 6.837 & 0.000 & 0.257 & 9233.818 & 0.048 \\
+% 		(i) & 37453.834 & 2.396 & 0.000 & 0.262 & 9203.045 & 0.048 \\
+% 		(j) & 23037.762 & 4.506 & 0.000 & 0.258 & 9210.393 & 0.048 \\
+% 		% \texttt{drbost} & 18902.214 & 5.366 & 0.00000 & 0.064 & 2261.407 & 0.110 \\ % 20x18
+% 		% \texttt{ksunth} & 12585.729 & 7.132 & 0.00000 & 0.044 & 2259.010 & 0.011 \\ % 20x18
+% 		% \texttt{martin} & 17012.423 & 5.823 & 0.00000 & 0.066 & 2440.351 & 0.011 \\
+% 		% \texttt{pmives} & 31124.615 & 3.200 & 0.00000 & 0.072 & 2492.149 & 0.012 \\
+% 		% \texttt{rnpwil} & 22982.917 & 4.517 & 0.00000 & 0.076 & 2321.928 & 0.008 \\
+% 		% \texttt{sbains} & 13469.155 & 6.837 & 0.00000 & 0.044 & 2233.818 & 0.008 \\
+% 		% \texttt{swewin} & 37453.834 & 2.396 & 0.00000 & 0.049 & 2203.045 & 0.008 \\
+% 		% \texttt{yfhsie} & 23037.762 & 4.506 & 0.00000 & 0.045 & 2210.393 & 0.008 \\
+% 		\bottomrule
+%         \end{tabular}
+% \end{table}
 \begin{table}[h]
 	\centering
-	\caption{Power-law transformation under Dasgupta--Pal}
-	\label{tbl:pwr-dp}
+	\caption{Power-law transformation under DGK}
+	\label{tbl:pwr-dgk}
     \begin{tabular}{lcccccc}
         \toprule
         Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \midrule
-		% \texttt{anpage} & 25115.891 & 4.131 & 0.00000 & 0.016 & 741.872 & 0.031 \\ 10x10
-		% \texttt{bplyce} & 22777.187 & 4.556 & 0.00000 & 0.017 & 730.873 & 0.003 \\ 10x10
-		% \texttt{drbost} & 18899.906 & 5.366 & 0.00000 & 0.014 & 733.409 & 0.003 \\
-		(a) & 25008.723 & 4.150 & 0.000 & 0.376 & 9700.926 & 1.269 \\
-		(b) & 22700.522 & 4.570 & 0.000 & 0.230 & 9196.609 & 0.043 \\
-		(c) & 18902.214 & 5.366 & 0.000 & 0.277 & 9261.407 & 0.150 \\
-		(d) & 12585.729 & 7.132 & 0.000 & 0.257 & 9259.010 & 0.051 \\
-		(e) & 17012.423 & 5.823 & 0.000 & 0.279 & 9440.351 & 0.051 \\
-		(f) & 31124.615 & 3.200 & 0.000 & 0.285 & 9492.149 & 0.052 \\
-		(g) & 22982.917 & 4.517 & 0.000 & 0.289 & 9321.928 & 0.048 \\
-		(h) & 13469.155 & 6.837 & 0.000 & 0.257 & 9233.818 & 0.048 \\
-		(i) & 37453.834 & 2.396 & 0.000 & 0.262 & 9203.045 & 0.048 \\
-		(j) & 23037.762 & 4.506 & 0.000 & 0.258 & 9210.393 & 0.048 \\
-		% \texttt{drbost} & 18902.214 & 5.366 & 0.00000 & 0.064 & 2261.407 & 0.110 \\ % 20x18
-		% \texttt{ksunth} & 12585.729 & 7.132 & 0.00000 & 0.044 & 2259.010 & 0.011 \\ % 20x18
-		% \texttt{martin} & 17012.423 & 5.823 & 0.00000 & 0.066 & 2440.351 & 0.011 \\
-		% \texttt{pmives} & 31124.615 & 3.200 & 0.00000 & 0.072 & 2492.149 & 0.012 \\
-		% \texttt{rnpwil} & 22982.917 & 4.517 & 0.00000 & 0.076 & 2321.928 & 0.008 \\
-		% \texttt{sbains} & 13469.155 & 6.837 & 0.00000 & 0.044 & 2233.818 & 0.008 \\
-		% \texttt{swewin} & 37453.834 & 2.396 & 0.00000 & 0.049 & 2203.045 & 0.008 \\
-		% \texttt{yfhsie} & 23037.762 & 4.506 & 0.00000 & 0.045 & 2210.393 & 0.008 \\
+		(a) & 14777.466 & 6.435 & 0.12778 & 0.677 & 204.491 & 0.978 \\
+		(b) & 13343.854 & 6.878 & 0.07894 & 0.913 & 232.692 & 0.663 \\
+		(c) & 10885.568 & 7.762 & 0.09146 & 0.696 & 198.959 & 0.590 \\
+		(d) & 7218.081 & 9.547 & 0.10182 & 0.658 & 160.924 & 0.461 \\
+		(e) & 9994.237 & 8.133 & 0.09100 & 0.518 & 166.274 & 0.507 \\
+		(f) & 19141.793 & 5.311 & 0.08388 & 0.531 & 193.571 & 0.606 \\
+		(g) & 13213.915 & 6.920 & 0.09794 & 0.656 & 163.594 & 0.455 \\
+		(h) & 7444.691 & 9.412 & 0.09291 & 0.522 & 160.426 & 0.463 \\
+		(i) & 21349.488 & 4.837 & 0.17239 & 0.526 & 160.191 & 0.446 \\
+		(j) & 13776.770 & 6.739 & 0.10769 & 0.489 & 156.763 & 0.460 \\
 		\bottomrule
-        \end{tabular}
+    \end{tabular}
 \end{table}
 
 
 \section{Conclusion}
-In this paper, we have assessed the feasibility and practicality of various homomorphic cryptosystems with regard to secure processing and manipulation of facial image data through creation of a software library that facilitates image processing operations within the encrypted domain, as well as our own implementation of some homomorphic cryptosystems like Dasgupta--Pal for which existing third-party libraries dedicated for this purpose are not yet available.
+In this paper, we have assessed the feasibility and practicality of various homomorphic cryptosystems with regard to secure processing and manipulation of facial image data through creation of a software library that facilitates image processing operations within the encrypted domain, as well as our own implementation of some homomorphic cryptosystems like DGK.
 
 % This paper also proposes a correction to the Dasgupta--Pal cryptosystem which is further explained in Appendix~\ref{chap:correction}. 
 
 Even though an operation in a partially homomorphic cryptosystem is not theoretically possible, like multiplication of two ciphertexts under Paillier, it has been shown that such operations are indeed possible in a two-party system. Protocols for secure multiplication and exponentiation have been proposed and also applied to more complex image operations such as facial recognition. Thus, a partially homomorphic cryptosystem can be modified to admit more image processing operations by assuming a two-party system.
 
-Preliminary results have shown that both Paillier and Dasgupta--Pal apply image negation accurately and efficiently, as evidenced by the perfect zero MSE and infinite PSNR. For the logarithm transformation, Paillier was faster and accurate enough (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$), but Dasgupta--Pal was slower but more accurate (with $\text{MSE} \le 0.01$ and $\text{SSIM} \approx 0.99999$) which was rather unexpected. However both Paillier and Dasgupta--Pal fail to produce accurate results in applying the power-law transformation, with the latter completely failing to produce discernible results. Based from these results, the Paillier cryptosystem is consistent enough to produce reasonable to accurate results.
+Preliminary results have shown that both Paillier and DGK apply image negation accurately and efficiently, as evidenced by the perfect zero MSE and infinite PSNR. For the logarithm transformation, Paillier was faster and accurate enough (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$) which was rather unexpected. However both Paillier and DGK fail to produce accurate results in applying the power-law transformation, with the latter failing to produce discernible results. Based from these results, the Paillier cryptosystem is consistent enough to produce reasonable to accurate results.
 
 A wrapper library has been made which implements the various functions and methods of the cryptosystems into a single interface. This allowed us to express various image operations with a unified syntax, thus facilitating easier testing.
 
@@ -811,7 +883,10 @@ Efforts are ongoing with regard to the facial recognition tests. Our own impleme
 
 Another promising image operation to consider is \textit{facial detection} under a homomorphic cryptosystem. Work has been started in order to assess the feasibility of using Haar cascades in a privacy-preserving manner.
 
-Future work would involve improving and optimizing our implementation of the Dasgupta--Pal cryptosystem so that it performs faster. A suggestion would be to port the existing implementation to C/C++ and then create a Python library that acts as a wrapper to the C/C++ methods. For future studies, an implementation of a client-server framework or system dealing with secure image processing can be considered.
+Future work would involve improving and optimizing our implementation of non-linear intensity transformations in terms of number of operations, numerical accuracy and stability, and time efficiency.
+% Future work would involve improving and optimizing our implementation of the DGK cryptosystem so that it performs faster. 
+% A suggestion would be to port the existing implementation to C/C++ and then create a Python library that acts as a wrapper to the C/C++ methods. 
+For future studies, an implementation of a client-server framework or system dealing with secure image processing can be considered.
 
 
 
