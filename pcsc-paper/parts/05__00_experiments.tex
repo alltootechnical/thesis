@@ -1,7 +1,7 @@
 \section{Experiments}
 We implemented privacy-preserving floating-point arithmetic using the system described in Section~\ref{sec:fp_arithmetic}, through the \texttt{python-paillier} library (\url{https://github.com/n1analytics/python-paillier}) running on Python~3.6.5.
 
-We first summarize the approximations discussed in sections \ref{sec:logarithm_approximation} and \ref{sec:arctan_approximation}. % in Table \ref{tab:approximation_summary}.
+We first summarize the approximations discussed in Sections \ref{sec:logarithm_approximation} and \ref{sec:arctan_approximation} in Table \ref{tab:approximation_summary}.
 
 \begin{table*}[ht]
 	\caption{Summary of approximations for logarithm and inverse tangent}
@@ -13,7 +13,7 @@ We first summarize the approximations discussed in sections \ref{sec:logarithm_a
 		Approximation & Derivation and formula\\
 		\midrule
             Original quadrature for $\log\left(1+x\right)$ (equation \ref{eq:standard_logarithm_quadrature})
-            & Let $x=1/n$. Perform 5-point Gauss--Legendre quadrature to approximate $\int_{n}^{n+1}{\frac{1}{t}\diff t} = \log\left(1+x\right)$ This yields the approximation:
+            & Let $x=1/n$. Perform five-point Gauss--Legendre quadrature to approximate $\int_{n}^{n+1}{\frac{1}{t}\diff t} = \log\left(1+x\right)$ This yields the approximation:
             \begin{center}
                 $\displaystyle 
             \frac{137x^5 + 2310x^4 + 9870x^3 + 15120x^2 + 7560x}
@@ -22,7 +22,7 @@ We first summarize the approximations discussed in sections \ref{sec:logarithm_a
             \\[10pt]
 
             Scaled quadrature for $\log\left(1+x\right)$ (equation \ref{eq:optimal_log_approximation})
-            & Let $x=1/n$ and $\alpha= 1/16$. Perform 5-point Gauss--Legendre quadrature to approximate $\int_{n}^{\alpha n + \alpha}{\frac{1}{t}\diff t} = \log\left(1+x\right) + \log\alpha$. 
+            & Let $x=1/n$ and $\alpha= 1/16$. Perform five-point Gauss--Legendre quadrature to approximate $\int_{n}^{\alpha n + \alpha}{\frac{1}{t}\diff t} = \log\left(1+x\right) + \log\alpha$. 
             Then subtract $\log\alpha$, which can be computed in the plaintext domain. This yields the approximation:
             \begin{center}
             $\displaystyle 
@@ -52,7 +52,7 @@ We first summarize the approximations discussed in sections \ref{sec:logarithm_a
             \\[10pt]
             
             Quadrature approximation for $\arctan{x}$ (equation \ref{eq:arctan_quadrature})
-            & Perform 5-point Gauss--Legendre quadrature to approximate $\int_0^x{\frac{1}{1+t^2}\diff t} = \arctan{x}$. This yields the approximation:
+            & Perform five-point Gauss--Legendre quadrature to approximate $\int_0^x{\frac{1}{1+t^2}\diff t} = \arctan{x}$. This yields the approximation:
             \begin{center}
                 $\displaystyle
             \frac
