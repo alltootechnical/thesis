@@ -1,4 +1,5 @@
 \section{Logarithmic Function Approximation}
+\label{sec:logarithm_approximation}
 We now present our main contribution in this paper: a general method to improve the general accuracy of the logarithm approximation given by Khattri in~\cite{khattri_new_2009} for use in privacy-preserving calculation, provided that accuracy is only required for a specific range.
 
 For this approximation, we assume we only require accurate results in the input range $x \in [0, 255]$. This reflects some potential applications such as in logarithm intensity transformations in image processing~\cite{gonzalez_digital_2008}.
@@ -12,7 +13,7 @@ Since the approximation by Khattri is accurate for values of $x$ near zero, we c
 	&= \int_{n}^{\alpha n + \alpha}{\frac{1}{t}\diff t} - \log{\alpha}.
 \end{align*}
 
-Applying the five-point Gauss--Legendre quadrature rule to approximate $\int_{n}^{\alpha n + \alpha}{\frac{1}{x}\diff x}$ with $\alpha = 1/16$ using SageMath 8.3, we arrive at the approximation:
+Applying the five-point Gauss--Legendre quadrature rule to approximate $\int_{n}^{\alpha n + \alpha}{\frac{1}{t}\diff t}$ with $\alpha = 1/16$ using SageMath 8.3, we arrive at the approximation:
 \begin{align}\label{eq:optimal_log_approximation}
 	\begin{split}
 		&\log\left(1+x\right) \\

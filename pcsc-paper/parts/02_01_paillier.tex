@@ -2,8 +2,8 @@
 The Paillier cryptosystem~\cite{stern_public-key_1999}, developed by Pascal Paillier, is a probabilistic encryption scheme which is based on the composite residuosity class problem. The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic. We now state the encryption and decryption algorithms of the Paillier cryptosystem and its homomorphic properties.
 
 \subsubsection{Key Generation}
-We first define a function $L\left(x\right)$ as the largest integer $v$ greater than zero such that $x-1 \geq vn$.
 We choose two large primes $p$ and $q$, and set $n = pq, \lambda = \mathrm{lcm}\left(p-1,q-1\right)$.
+We then define $L\left(x\right)$ to be the largest integer $v$ greater than zero such that $x-1 \geq vn$.
 Then we select an integer $g$ such that $\gcd\left(L\left(g^\lambda \bmod n^2\right), n\right) = 1$ and $0\leq g \leq n^2$.
 We denote the public key as $(g,n)$ and the private key $(p,q)$.
 \subsubsection{Encryption and Decryption}

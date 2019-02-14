@@ -1,6 +1,3 @@
-\section{Experiments on Accuracy}
-We implemented privacy-preserving floating-point arithmetic using the system described in Section~\ref{sec:fp_arithmetic}, through the \texttt{python-paillier} library (\url{https://github.com/n1analytics/python-paillier}) running on Python~3.6.5.
-
 \subsection{Logarithm Approximation}
 We then computed $\log\left(1+x\right)$ for various encrypted inputs using both the original quadrature formula by Khattri (Equation~\ref{eq:standard_logarithm_quadrature}) and our scaled approximation (Equation~\ref{eq:optimal_log_approximation}). These were compared with the values returned by the built-in logarithm function in Python. Several data points are shown in Table~\ref{tab:log_approximation}.
 
