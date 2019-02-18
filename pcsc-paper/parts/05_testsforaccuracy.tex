@@ -82,3 +82,66 @@ We also computed $\arctan x$ using for various encrypted inputs using both the f
 	\caption{Comparison of inverse tangent approximation errors under Paillier}
 	\label{fig:comp_arctan}
 \end{figure}
+
+\subsection{Timing Results}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+			% xmin=0, xmax=255,
+			ytick={1,2},
+			yticklabels={Scaled quadrature, Original quadrature},
+			xlabel={Time (seconds)},
+			grid=major,
+			legend pos=north east,
+			legend cell align=left,
+		]
+		\addplot+[boxplot, thick, ACMDarkBlue] table[x=x, y=newt] {plots/comp_log_errs.txt};
+		\addplot+[boxplot, thick, ACMOrange] table[x=x, y=oldt] {plots/comp_log_errs.txt};
+		\end{axis}
+	\end{tikzpicture}%
+	\caption{Comparison of logarithm computation times under Paillier}
+	\label{fig:times_log}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+			% xmin=0, xmax=255,
+			ytick={1,2},
+			yticklabels={Gauss--Legendre quadrature, Euler's series},
+			xlabel={Time (seconds)},
+			grid=major,
+			legend pos=north east,
+			legend cell align=left,
+		]
+		\addplot+[boxplot, thick, ACMDarkBlue] table[x=x, y=newt] {plots/comp_arctan_errs2.txt};
+		\addplot+[boxplot, thick, ACMOrange] table[x=x, y=oldt] {plots/comp_arctan_errs2.txt};
+		\end{axis}
+	\end{tikzpicture}%
+	\caption{Frequency distribution of inverse tangent computation times under Paillier}
+	\label{fig:times_arctan}
+\end{figure}
+
+% \begin{figure}[!ht]
+% 	\centering
+% 	\begin{tikzpicture}
+% 		\begin{axis}[
+% 			xmin=0, xmax=1,
+% 			ymin=1.5, ymax=2.5,
+% 			xlabel={Absolute error}, ylabel={Time (seconds)},
+% 			grid=major,
+% 			legend pos=south east,
+% 			legend cell align=left,
+% 			tick scale binop=\times,
+% 		]
+% 		\addplot+[scatter, only marks, ACMDarkBlue] table[x=newerr, y=newt] {plots/comp_arctan_errs2.txt};
+% 		\addplot+[scatter, only marks, ACMOrange] table[x=olderr, y=oldt] {plots/comp_arctan_errs2.txt};
+% 		\legend{Gauss--Legendre quadrature, Partial sum of Euler's series}
+% 		\end{axis}
+% 	\end{tikzpicture}%
+% 	\caption{Accuracy vs. time in inverse tangent computation under Paillier}
+% 	\label{fig:acc_vs_time_arctan}
+% \end{figure}
