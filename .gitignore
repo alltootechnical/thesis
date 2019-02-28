@@ -1,3 +1,6 @@
+dgk/__pycache__/*.*
+dghv/__pycache__/*.*
+*.bat
 .*
 tags
 
@@ -10,7 +13,7 @@ tags
 # LaTeX temp files
 *.aux
 *.log
-*.synctex.gz
+*.synctex*
 *.toc
 *.out
 *.bbl
