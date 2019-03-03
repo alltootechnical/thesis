@@ -1,7 +1,5 @@
 \section{Homomorphic Cryptosystems}
 
-% Now that we've established the image processing operations we wish to implement, we now discuss the homomorphic cryptosystems we will be using to implement privacy-preserving image processing.
-
 A cryptosystem consists of an encryption function $\mathcal{E}$ and a decryption function $\mathcal{D}$, along with the plaintext space $\mathcal{P}$, ciphertext space $\mathcal{C}$ and the key space $\mathcal{K}$~\cite{bauer_cryptosystem_2005}. A \textit{plaintext} is text that can be commonly understood, while a \textit{ciphertext} results from encrypting the plaintext using an encryption key. The \textit{plaintext space} is the set of all possible plaintexts, the \textit{ciphertext space} is the set of all possible ciphertexts, while the \textit{keyspace} is the set of all possible keys.
 
 There are two kinds of cryptosystems, \textit{symmetric} and \textit{asymmetric}. In symmetric-key cryptosystems, the same key is used for both encryption and decryption. As a consequence, symmetric-key cryptosystems must be implemented with a secure key exchange protocol, so that both the sender and receiver have access to the same key. Prominent examples of symmetric-key cryptosystems are the Data Encryption Standard (DES), and its replacement, the Advanced Encryption Standard (AES).

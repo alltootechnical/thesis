@@ -1,6 +1,6 @@
 \section{Partially Homomorphic Cryptosystems}
 
-In this section, we will present two classical partially homomorphic cryptosystems (PHEs) which we will be testing in the study: the Paillier cryptosystem and the DGK cryptosystem. Both of these cryptosystems encrypt integer plaintexts and are additively homomorphic and allow for the multiplication of a plaintext scalar. We will then show how these PHEs may be adapted for secure floating-point computation. 
+In this section, we will present two classical partially homomorphic encryption (PHE) schemes which we will be testing in the study: the Paillier cryptosystem and the DGK cryptosystem. Both of these cryptosystems encrypt integer plaintexts and are additively homomorphic and allow for the multiplication of a plaintext scalar. We will then show how these PHE schemes may be adapted for secure floating-point computation. 
 
 \subsection{The Paillier Cryptosystem}
 The Paillier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Paillier, is a probabilistic encryption scheme which is based on the composite residuosity class problem.
@@ -83,11 +83,11 @@ As the multiplicative homomorphism was not presented in the original paper, we p
   Since $r$ is a random integer, $kr$ is also a random integer, Therefore, $g^{km} \cdot (h^{kr}) \bmod{n} = D(E(m)^k)$ is a valid encryption of the message $km$.
 \end{proof}
 
-\subsection{Floating-Point Arithmetic using PHEs}
+\subsection{Floating-Point Arithmetic using PHE}
 \label{sec:fp_arithmetic}
-We have discussed the Paillier and DGK cryptosystems, which encrypt and allow similar operations on encrypted integers. We will now show how these PHEs may be extended to a system which allows for secure floating-point computation.
+We have discussed the Paillier and DGK cryptosystems, which encrypt and allow similar operations on encrypted integers. We will now show how these PHE schemes may be extended to a system which allows for secure floating-point computation.
 
-In this section, we let $\oplus$ and $\otimes$ represent the homomorphic operations which correspond to the addition and multiplication of integers in a PHE, respectively. 
+In this section, we let $\oplus$ and $\otimes$ represent the homomorphic operations which correspond to the addition and multiplication of integers in a PHE scheme, respectively. 
 
 \subsubsection{Extension to Floating-Point Numbers}
 \label{sec:fp_operations}
