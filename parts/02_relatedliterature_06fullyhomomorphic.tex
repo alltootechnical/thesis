@@ -7,7 +7,7 @@ Improving the efficiency of FHis an active area of research \cite{sen_homomorphi
 
 We will present two FHEs, the DGHV cryptosystem and the BGV cryptosystem, which both have open source implementations availble primarily used in homomorphic cryptography research. Since the mathematical details of these fully homomorphic cryptosystems are not relevant to describing their potential uses in secure image operations, we will instead briefly describe important developments and implementations of each cryptosystem.
 
-\subsection{DGHV Cryptosystem}
+\subsection{The DGHV Cryptosystem}
 In 2009, Dijk, Gentry, Halevi, and Vaikuntanathan created a fully homomorphic cryptosystem which operates primarily through elementary modular arithmetic, commonly called the DGHV cryptosystem \cite{cryptoeprint:2009:616}. This was further improved in 2011 by Coron, Naccache, and Tibouchi, \cite{cryptoeprint:2011:277, cryptoeprint:2011:440} to support shorter public keys, reducing the size of secure public keys from 12.5 GB to 2.5 MB. 
 
 The DGHV cryptosystem encrypts single bits as integer ciphertexts. XOR and AND binary operations on encrypted bits are achieved by modular addition and modular multiplication on the integer ciphertexts. When operations are performed on ciphertexts, noise accumulates in the ciphertexts, which may prevent successful decryption. To eliminate this noise, a \textit{refresh} or \textit{recrypt} procedure is used to reduce noise in a ciphertext. The refresh procedure for DGHV involves operating on a ciphertext with a \textit{recryption matrix}, which is more time-intensive than key generation, encryption, decryption, addition, and multiplication procedures.
