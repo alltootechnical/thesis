@@ -1,6 +1,6 @@
 \section{Partially Homomorphic Cryptosystems}
 
-In this section, we will present two classical partially homomorphic encryption (PHE) schemes which we will be testing in the study: the Paillier cryptosystem and the DGK cryptosystem. Both of these cryptosystems encrypt integer plaintexts and are additively homomorphic and allow for the multiplication of a plaintext scalar. We will then show how these PHE schemes may be adapted for secure floating-point computation. 
+In this section, we will present two classical partially homomorphic encryption (PHE) schemes which we will be testing in the study: the Paillier cryptosystem and the DGK cryptosystem. Both of these cryptosystems encrypt integer plaintexts, are additively homomorphic, and allow for the multiplication of a plaintext scalar. We will then show how these PHE schemes may be adapted for secure floating-point computation using two-party protocols. 
 
 \subsection{The Paillier Cryptosystem}
 The Paillier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Paillier, is a probabilistic encryption scheme which is based on the composite residuosity class problem.
@@ -70,7 +70,7 @@ For all $m_1,m_2 \in \mathbb{Z}_u$ and $k\in \mathbb{N}$, the following homomorp
     D(E(m_1)^k)= km_1\bmod u & \text{ (multiply a plaintext constant)}
 \end{align*}
 
-As the multiplicative homomorphism was not presented in the original paper, we provide a short proof here.
+As the multiplicative homomorphism was not presented in the original paper \cite{pieprzyk_efficient_2007, cryptoeprint:2008:321}, we provide a short proof here.
 \begin{proof}
   Let $m \in \mathbb{Z}_u$ and $k\in \mathbb{N}$.
   We consider $E(m)^k = (g^m \cdot h^r \bmod{n})^k\bmod n$.
@@ -80,18 +80,16 @@ As the multiplicative homomorphism was not presented in the original paper, we p
     &= (g^m)^k \cdot (h^r)^k \bmod{n}\\
     &= g^{km} \cdot (h^{kr}) \bmod{n}
   \end{align*}
-  Since $r$ is a random integer, $kr$ is also a random integer, Therefore, $g^{km} \cdot (h^{kr}) \bmod{n} = D(E(m)^k)$ is a valid encryption of the message $km$.
+  Since $r$ is a random integer, $kr$ is also a random integer, Therefore, $g^{km} \cdot (h^{kr}) \bmod{n} = E(m)^k$ is a valid encryption of the message $km$.
 \end{proof}
 
 \subsection{Floating-Point Arithmetic using PHE}
 \label{sec:fp_arithmetic}
-We have discussed the Paillier and DGK cryptosystems, which encrypt and allow similar operations on encrypted integers. We will now show how these PHE schemes may be extended to a system which allows for secure floating-point computation.
-
-In this section, we let $\oplus$ and $\otimes$ represent the homomorphic operations which correspond to the addition and multiplication of integers in a PHE scheme, respectively. 
+We have discussed the Paillier and DGK cryptosystems, which encrypt and allow similar operations on encrypted integers. We will now show how these PHE schemes may be extended to a system which allows for secure floating-point computation. In this section, we let $\oplus$ and $\otimes$ represent the homomorphic operations corresponding to the addition and multiplication of integers in a PHE scheme, respectively. 
 
 \subsubsection{Extension to Floating-Point Numbers}
 \label{sec:fp_number_extension}
-We can use the following protocol described in~\cite{ziad_cryptoimg:_2016} in order to extend Paillier and DGK to floating-point numbers.
+We can use the following protocol, described in~\cite{ziad_cryptoimg:_2016}, in order to extend Paillier and DGK to floating-point numbers.
 
 We represent a floating-point (FP) number as a pair of two integers $(m,e)$ representing the mantissa and exponent of the FP number with respect to a base $b$. The mantissa $m$ is encrypted, while the exponent $e$ is unencrypted.
 Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c)$ respectively. We define the corresponding FP number operations as follows:
@@ -158,4 +156,4 @@ Suppose Alice encrypts integers $x$ and $y$, and Bob has $E\left(x\right), E\lef
 	\end{align*}
 \end{itemize}
 
-By applying these extensions to the Paillier and DGK cryptosystems, privacy-preserving floating-point arithmetic can be acheived. 
+By applying these extensions to the Paillier and DGK cryptosystems, privacy-preserving floating-point arithmetic can be acheived with PHE schemes. 
