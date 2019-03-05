@@ -1,4 +1,5 @@
-\chapter{Logarithm Approximation}
+\chapter{LOGARITHM APPROXIMATION}
+\label{chap:logarithm_approximation}
 Many methods to compute transcendental functions implemented in computer hardware and software libraries rely on direct knowledge of the function arguments. Several such approaches include CORDIC (coordinate rotation digital computer), pseudo-division and pseudo-multiplication algorithms~\cite{walther_cordic_2000}, as well as minimax polynomials, which are determined numerically using the Remez algorithm~\cite{harrison_computation_1999}. These algorithms, while efficient, rely on table lookups, which cannot be done in a privacy-preserving system where the function arguments cannot be directly determined.
 
 We must therefore rely on other methods, such as using the Taylor series expansions of these functions. While also in common use, not all Taylor series expansions have a convenient radius of convergence. To circumvent this, we can rely on an approach presented by Khattri in~\cite{khattri_new_2009} to obtain closed-form approximations to functions by approximating related integrals.
