@@ -5,7 +5,7 @@ The results shown in this section are gathered from the tests for intensity tran
 
 \section{Intensity Transformations}
 
-\begin{table*}
+\begin{table}
 	\centering
 	\caption{Comparison of intensity transformations under Paillier}
 	\label{tbl:it-pal}
@@ -18,9 +18,9 @@ The results shown in this section are gathered from the tests for intensity tran
 		(#2) & \includegraphics[width=1.5cm]{out_faces/paillier_negate_#1_original.png} & \includegraphics[width=1.5cm]{out_faces/paillier_negate_#1_reference.png} & \includegraphics[width=1.5cm]{out_faces/paillier_negate_#1_decrypted.png} & \includegraphics[width=1.5cm]{out_faces/paillier_logtransform_#1_reference.png} & \includegraphics[width=1.5cm]{out_faces/paillier_logtransform_#1_decrypted.png} & \includegraphics[width=1.5cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.5cm]{out_faces/paillier_pwrtransform_#1_decrypted.png} \\ }%
 		\hline
 	\end{tabular}
-\end{table*}
+\end{table}
 
-\begin{table*}
+\begin{table}
 	\centering
 	\caption{Comparison of intensity transformations under DGK}
 	\label{tbl:it-dgk}
@@ -33,7 +33,7 @@ The results shown in this section are gathered from the tests for intensity tran
 		(#2) & \includegraphics[width=1.5cm]{out_faces/dgk_negate_#1_original.png} & \includegraphics[width=1.5cm]{out_faces/dgk_negate_#1_reference.png} & \includegraphics[width=1.5cm]{out_faces/dgk_negate_#1_decrypted.png} & \includegraphics[width=1.5cm]{out_faces/dgk_logtransform_#1_reference.png} & \includegraphics[width=1.5cm]{out_faces/dgk_logtransform_#1_decrypted.png} & \includegraphics[width=1.5cm]{out_faces/dgk_pwrtransform_#1_reference.png} & \includegraphics[width=1.5cm]{out_faces/dgk_pwrtransform_#1_decrypted.png} \\ }%
 		\hline
 	\end{tabular}
-\end{table*}
+\end{table}
 
 Table~\ref{tbl:it-pal} shows the images obtained from the intensity transformation tests under the Paillier cryptosystem, while Table~\ref{tbl:it-dgk} shows the resulting images from the same tests under the DGK cryptosystem. Shown for each image is the original unecrypted image, and for each intensity transformation the \textit{plaintext domain transformation} (PDT) is given which is the resulting image after applying the transformation to the unencrypted image and the \textit{ciphertext domain transformation} (CDT) is the decrypted image of the processed encrypted image.
 

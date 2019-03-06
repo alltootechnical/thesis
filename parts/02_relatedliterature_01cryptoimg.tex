@@ -1,15 +1,11 @@
 \section{CryptoImg}
 A paper published in 2009 by Ziad, et al. attempts to implement privacy-preserving image processing using \textit{CryptoImg}, a library for the Open Source Computer Vision Library (OpenCV)~\cite{bradski_opencv_2000} which implements various homomorphic encryption and image processing routines using the Paillier homomorphic cryptosystem~\cite{ziad_cryptoimg:_2016}. The CryptoImg library assumed a client-server model wherein a client requests image processing operations from a server. A client first encrypts a digital image and sends the image securely to a server, which then operates on the encrypted image without revealing its contents. Then the resulting image is sent back to the client, which decrypts the image to recover the desired output.
-\begin{figure*}[!ht]
+\begin{figure}[!ht]
     \centering
-<<<<<<< HEAD
-    \includegraphics[width=\textwidth,\keepaspectratio]{figures/ClientServerModel.png}
-=======
     \includegraphics[width=\textwidth,keepaspectratio=true]{Figures/ClientServerModel.png}
->>>>>>> 21e97430400d95bf5a42495d659f103ee6363cdc
     \caption{Client-server architecture used by \textit{CryptoImg} \cite{ziad_cryptoimg:_2016}}
     \label{fig:clientserver}
-\end{figure*}
+\end{figure}
 The \textit{CryptoImg} library implemented the following:
 \begin{enumerate}
 	\item Extending the Paillier homomorphic cryptosystem which operate on integer plaintexts so that they can operate on real number plaintexts;

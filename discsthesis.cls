@@ -156,6 +156,7 @@
                 enumerate,latexsym,ifthen}
 % packages declared in the tex file should be here
 %\RequirePackage{graphicx,multirow,fancyvrb,tabularx,subcaption,lscape,adjustbox,longtable,url}
+% \RequirePackage{pgfplots}
 %\RequirePackage[titletoc]{appendix}
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newif\if@thdraft{}
@@ -420,20 +421,20 @@
 %%% Command to generate title page.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newcommand{\ThesisTitlePage}{
-         
+
    \pagestyle{empty}
   \begin{center}
-  
+
 %  ATENEO DE MANILA UNIVERSITY
-  
+
 %  \vspace{1cm}
-  
+
   \textbf{\@ThesisTitle}
 %  \vspace{1cm}
   \vfill
-  
+
 %     A THESIS
-%     
+%
 %   PRESENTED TO  THE
 
 %   DEPARTMENT OF INFORMATION SYSTEMS AND COMPUTER SCIENCE
@@ -452,9 +453,9 @@
 
 %\vspace{1cm}
 \vfill
-In Partial Fulfillment 
+In Partial Fulfillment
 
-of the Requirements for the Degree% of 
+of the Requirements for the Degree% of
 
 Bachelor of Science in Computer Science
 
@@ -465,12 +466,12 @@ Bachelor of Science in Computer Science
 %[Full Names of Authors, Format: <FirstName> <M.I.> <LastName>]
 
 %[e.g. Chiara Maria Angelique S. Ledesma
-% 
+%
 % Maria Mikaela E. Jazmines
-% 
+%
 % Leo Isaiah P. Yap III ]
  \@ThesisAuthor
- 
+
  %\vspace{1cm}
 
 % QUEZON CITY, PHILIPPINES
@@ -553,7 +554,7 @@ Bachelor of Science in Computer Science
   \noindent submitted by \@ThesisAuthor{} in partial fulfillment of the requirements for the Degree of
   \@ThesisDegree{} in \@ThesisArea.
 
-  \vfill  
+  \vfill
   \begin{center}
   \begin{tabular}{lll}
    \@FirstColumnAdjust\shortstack{
@@ -635,7 +636,7 @@ Bachelor of Science in Computer Science
    Member
    }
    &
-     \quad 
+     \quad
    &
    \@SecondColumnAdjust\shortstack{
    \underline{\phantom{\@FourthPanelMember}}\\[0pt]
@@ -834,7 +835,7 @@ Bachelor of Science in Computer Science
 %%% Redefining the chapter command
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \renewcommand{\thechapter}{\arabic{chapter}}
-  
+
  \newcommand{\@chapteralignment}{\centering}
  \renewcommand{\chapter}{
    \setlength{\topmargin}{0.0in}
@@ -992,7 +993,7 @@ Bachelor of Science in Computer Science
         {\MakeUppercase\bibname}
         \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}}%
       \setlength{\baselineskip}{30pt}
-      
+
       \addcontentsline{toc}{chapter}{\MakeUppercase\bibname}
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
