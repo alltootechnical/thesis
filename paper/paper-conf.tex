@@ -1,7 +1,7 @@
 \section{Introduction}
 \subsection{Context of the Study}
-Digital data privacy and security is a growing concern in various fields, such as cloud computing~\cite{potey_homomorphic_2016}, health information systems~\cite{kester_cryptographic_2015}, and video surveillance~\cite{upmanyu_efficient_2009}. To meet these needs, various cryptosystems have been developed. 
-% A cryptosystem is a system which operates on plaintexts, ciphertexts and keys using an encryption algorithm, which maps a plaintext to a ciphertext, together with a decryption algorithm, which maps a ciphertext to a plaintext, given an appropriate key~\cite{bauer_cryptosystem_2005}. The encryption and decryption algorithms are chosen such that the plaintext cannot easily be recovered from the ciphertext without knowledge of the key. This allows data to be securely transmitted over an insecure channel. 
+Digital data privacy and security is a growing concern in various fields, such as cloud computing~\cite{potey_homomorphic_2016}, health information systems~\cite{kester_cryptographic_2015}, and video surveillance~\cite{upmanyu_efficient_2009}. To meet these needs, various cryptosystems have been developed.
+% A cryptosystem is a system which operates on plaintexts, ciphertexts and keys using an encryption algorithm, which maps a plaintext to a ciphertext, together with a decryption algorithm, which maps a ciphertext to a plaintext, given an appropriate key~\cite{bauer_cryptosystem_2005}. The encryption and decryption algorithms are chosen such that the plaintext cannot easily be recovered from the ciphertext without knowledge of the key. This allows data to be securely transmitted over an insecure channel.
 
 One particular application of cryptography is image encryption. While cryptosystems used to encrypt digital data in general, such as the Advanced Encryption Standard (AES) or elliptic curve cryptography, can also be used to encrypt images~\cite{jain_image_2016, singh_image_2015} other algorithms created specifically for image encryption have also been developed~\cite{murugan_survey_2018}.
 
@@ -19,10 +19,10 @@ In a homomorphic cryptosystem, operations such as addition and multiplication ca
 
 
 \subsection{Research Objectives}
-% Previous attempts in the literature to provide image processing tasks such as image manipulation \cite{ziad_cryptoimg:_2016} and  facial recognition \cite{hutchison_privacy-preserving_2009} have primarily used the Paillier and  Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK) cryptosystems to perform linear operations on encrypted data. 
+% Previous attempts in the literature to provide image processing tasks such as image manipulation \cite{ziad_cryptoimg:_2016} and  facial recognition \cite{hutchison_privacy-preserving_2009} have primarily used the Paillier and  Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK) cryptosystems to perform linear operations on encrypted data.
 % In this study, we extend this research to provide an objective comparison of various homomorphic cryptosystems currently in the literature in performing non-linear operations, and facial detection, as opposed to just linear operations and facial recognition.
 
-Our main research objective is to assess the practicality of various homomorphic cryptosystems with regard to image processing on faces. 
+Our main research objective is to assess the practicality of various homomorphic cryptosystems with regard to image processing on faces.
 % Homomorphic cryptosystems are known to be slower in terms of encryption, operation, and decryption time~\cite{sen_homomorphic_2013}. Furthermore, the operations on encrypted data supported by homomorphic cryptosystems are limited, and some schemes require preprocessing to be performed on images, limiting the range of operations which can be performed efficiently~\cite{li_elliptic_2012}.
 
 % In summary, in this study, we wish to
@@ -57,7 +57,7 @@ We will adopt the benchmark for evaluating image quality of image encryption sch
 \end{enumerate}
 A detailed overview of the above will be provided in the methodology. Grayscale images will be used in the study.
 A client-server model for secure computation will be assumed to allow operations such as secure comparison and exponentiation.
-% Training and test data are taken from the publicly available \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex. 
+% Training and test data are taken from the publicly available \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex.
 
 \subsection{Significance of the Study}
 This study aims to directly address one of the current problems in the research of homomorphic cryptosystems: the practicality of homomorphic encryption~\cite{sen_homomorphic_2013}. The literature shows existing homomorphic cryptosystems and how they support primitive operations (usually addition and multiplication) on encrypted data, however, for homomorphic cryptosystems to be useful for practical use, efficient support for more complicated image processing operation must be demonstrated as well. While implementations of image processing operations in a homomorphic cryptosystem exist in the literature~\cite{ziad_cryptoimg:_2016, garay_algorithms_2014}, our study targets the more computationally intensive task of facial recognition and detection.
@@ -84,7 +84,7 @@ A cryptosystem consists of an encryption function $\mathcal{E}$ and a decryption
 %     p_1 \boxplus p_2 = \mathcal{D}_l \left( \mathcal{E}_k \left(p_1\right) \boxdot \mathcal{E}_k \left(p_2\right) \right).
 % \end{equation}
 
-% In other words, 
+% In other words,
 A homomorphic cryptosystem preserves the operations that can be done with the plaintext without requiring an intermediary step of decrypting the ciphertext beforehand. It is important to note that the operations in the plaintext space and ciphertext space need not be the same. A simple operation in the plaintext space may require a computationally intensive operation in the ciphertext space.
 
 % Homomorphic cryptosystems can be classified according to the plaintext and ciphertext operations, $\boxplus$ and $\boxdot$. If the plaintext operation $\boxplus$ is addition, the cryptosystem is said to be \textit{additively homomorphic}, and the cryptosystem is said to be \textit{multiplicatively homomorphic} if the plaintext operation $\boxplus$ is multiplication.
@@ -130,7 +130,7 @@ For all $m_1,m_2 \in \mathbb{Z}_n$ and $k\in \mathbb{N}$, the following homomorp
 These homomorphic properties are used to add a plaintext scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively.
 
 \subsubsection{The DGK Cryptosystem}
-The DGK cryptosystem was published by Damg{\aa}rd, Geisler, and Kr{\o}igaard in 2007 in an effort to create a secure integer comparison scheme \cite{pieprzyk_efficient_2007, cryptoeprint:2008:321} which is widely used in the literature \cite{veugen_improving_2012}. 
+The DGK cryptosystem was published by Damg{\aa}rd, Geisler, and Kr{\o}igaard in 2007 in an effort to create a secure integer comparison scheme \cite{pieprzyk_efficient_2007, cryptoeprint:2008:321} which is widely used in the literature \cite{veugen_improving_2012}.
 The DGK cryptosystem has homomorphic properties similar to the Paillier cryptosystem.
 
 % \paragraph{Key Generation}
@@ -179,7 +179,7 @@ As the multiplicative homomorphism was not presented in the original paper, we p
     &= (g^m)^k \cdot (h^r)^k \bmod{n}\\
     &= g^{km} \cdot (h^{kr}) \bmod{n}
   \end{align*}
-  Since $r$ is a random integer, $kr$ is also a random integer, Therefore, $g^{km} \cdot (h^{kr}) \bmod{n} = D(E(m)^k)$ is a valid encryption of the message $km$.
+  Since $r$ is a random integer, $kr$ is also a random integer, Therefore, $g^{km} \cdot (h^{kr}) \bmod{n} = E(m)^k$ is a valid encryption of the message $km$.
 \end{proof}
 
 
@@ -344,7 +344,7 @@ The power-law transformation is a family of transformations that have the form
     T\left(r\right) = c r^{\gamma}
 \end{equation}
 where $c>0$ and $\gamma > 0$.
-A power-law transformation defined by the above equation can calibrate the operation of many image capture and output devices such as cameras, printers and displays in a process called \textit{gamma correction}. 
+A power-law transformation defined by the above equation can calibrate the operation of many image capture and output devices such as cameras, printers and displays in a process called \textit{gamma correction}.
 % This ensures reproducibility and accuracy of images being displayed by digital output devices~\cite{gonzalez_digital_2008}.
 
 To implement non-linear intensity transformations using addition and multiplication in a homomorphic system, it is necessary to approximate the logarithm and exponential functions, which may result in higher computational overhead. In our software library implementation, we investigate methods required to approximate the logarithm and power functions. Non-linear intensity transformations such as the logarithm transformation have applications in intensity normalization \cite{oravec_illumination_2010}, which is used in some facial recognition algorithms to account for differences in lighting which make facial recognition difficult.
@@ -361,7 +361,7 @@ Proposed by Matthew Turk and Alex Pentland, the eigenfaces method uses principal
 
 % In the enrollment process, $M$ face images $\Theta_1, \ldots, \Theta_M$, each of size $p \times q$, are taken in to comprise the initial training set. The training images can be represented as vectors of length $N = pq$, where each row of an image is concatenated together.
 
-% The average of the training images, denoted as $\Psi$, is 
+% The average of the training images, denoted as $\Psi$, is
 % \begin{equation}
 % 	\Psi = \frac{1}{M} \sum_{i=1}^{M} \Theta_i
 % \end{equation}
@@ -372,7 +372,7 @@ Proposed by Matthew Turk and Alex Pentland, the eigenfaces method uses principal
 % \end{equation}
 % where $\mathbf{A}$ is an $N \times M$ matrix defined by $\left[\Theta_1 \quad \Theta_2 \quad \cdots \quad \Theta_M\right]$, in order to determine the orthonormal eigenvectors \cite{hutchison_privacy-preserving_2009}.
 
-% Directly computing the covariance matrix and then applying PCA will become inefficient for large sizes of $\mathbf{A}$, since computing for $\mathbf{A}\mathbf{A}^\top$ results in an $N \times N$ matrix, which can get drastically large because it is dependent on the size of the image. On the other hand, computing for $\mathbf{A}^\top\mathbf{A}$ only results in an $M \times M$ matrix, which is much smaller than the previous one because it is just dependent on the number of face images in the training set. Now, we can apply PCA to $\mathbf{A}^\top\mathbf{A}$ along with some post-processing to obtain the eigenvectors \cite{hutchison_privacy-preserving_2009}. 
+% Directly computing the covariance matrix and then applying PCA will become inefficient for large sizes of $\mathbf{A}$, since computing for $\mathbf{A}\mathbf{A}^\top$ results in an $N \times N$ matrix, which can get drastically large because it is dependent on the size of the image. On the other hand, computing for $\mathbf{A}^\top\mathbf{A}$ only results in an $M \times M$ matrix, which is much smaller than the previous one because it is just dependent on the number of face images in the training set. Now, we can apply PCA to $\mathbf{A}^\top\mathbf{A}$ along with some post-processing to obtain the eigenvectors \cite{hutchison_privacy-preserving_2009}.
 
 % Instead of getting the eigendecomposition of the covariance matrix by explicitly computing the eigenvalues and eigenvectors of $\mathbf{C}$, we can also apply \textit{singular value decomposition} (SVD) on the matrix $\Phi^\top$. This is because SVD works through a divide-and-conquer method which results in greater numerical stability, while eigendecomposition simply uses the traditional QR factorization \cite{nakatsukasa_stable_2013, gu_divide-and-conquer_1995}. Upon applying SVD, we now get the eigenvectors $\mathbf{u}_1, \ldots, \mathbf{u}_M$ and their corresponding eigenvalues $\lambda_1, \ldots, \lambda_M$.
 
@@ -380,8 +380,8 @@ Proposed by Matthew Turk and Alex Pentland, the eigenfaces method uses principal
 
 % To perform the recognition process, the algorithm projects the input image $\Gamma$ onto the face space, and then comparing the projected image $\bar{\Omega} = \mathbf{u}_i\left(\Gamma - \Psi\right)$ with each eigenface in the face space using a metric such as the Euclidean distance. Thus it is computed as $d_i = \left\lVert \Omega_i -\bar{\Omega} \right\rVert$ for all $i=1,\ldots,K$, where $\left\lVert \cdot \right\rVert$ denotes the Euclidean norm.
 
-% Then, a match can be reported if the smallest possible distance is smaller than the given threshold value $T$. 
-% \newcommand{\argmin}{\mathop{\mathrm{arg\,min}}}  
+% Then, a match can be reported if the smallest possible distance is smaller than the given threshold value $T$.
+% \newcommand{\argmin}{\mathop{\mathrm{arg\,min}}}
 % \begin{equation}
 % 	\text{ID} = \begin{cases}\argmin_i d_i & \text{if } \min_i d_i \le T \\\emptyset & \text {otherwise}\end{cases}
 % \end{equation}
@@ -416,7 +416,7 @@ Before Bob sends $\left[\bar{\omega}_i\right]$ to Alice for squaring, he adds a 
 	\left[\mathcal{S}_3\right] = \left[\mathcal{S}_3^\prime\right] \cdot \prod_{j=1}^{K} \left(\left[\bar{\omega}_j\right]^{-2r_j} \cdot \left[-r_j^2\right]\right)
 \end{equation}
 
-The protocol for squaring a number as described earlier is a workaround for the limitations of Paillier or any other partially homomorphic cryptosystem that only supports addition and scalar multiplication. 
+The protocol for squaring a number as described earlier is a workaround for the limitations of Paillier or any other partially homomorphic cryptosystem that only supports addition and scalar multiplication.
 % This can be possibly extended so that operations such as pairwise multiplication and exponentiation are also supported, provided that the protocol involves two parties.
 
 The match-finding step is done by comparing the distances obtained from the previous step to a specified threshold $T$. If the minimum distance is smaller than $T$, then a match is found, and the encrypted identity of the match is returned to Alice \cite{hutchison_privacy-preserving_2009}. Getting the minimum among the encrypted distances would involve comparing two encrypted numbers, which Paillier does not support. Instead, the DGK cryptosystem \cite{pieprzyk_efficient_2007} is used for the comparison protocol.
@@ -492,7 +492,7 @@ The logarithm transformation of a pixel intensity value $x$ is defined as
 \end{align}
 where $c$ is a constant.
 
-In order to perform this transformation under Paillier and DGK, we provide the following closed-form approximation for $\log\left(1 + x\right)$.
+In order to perform this transformation under Paillier and DGK, we provide the following closed-form approximation for $\log\left(1 + x\right)$ from~\cite{pcsc-paper}.
 % TODO: IDK HOW TO CITE OUR PCSC PAPER
 \begin{align}\label{eq:optimal_log_approximation}
 	\begin{split}
@@ -529,7 +529,7 @@ We can use partial sums of the following series, which relies on the logarithm f
 \begin{align}
 	x^\gamma &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
 \end{align}
-% Partial sums of the above infinite series can be calculated based on the closed form approximation for the logarithm in Equation \ref{eq:scaledquadraturech3}. 
+% Partial sums of the above infinite series can be calculated based on the closed form approximation for the logarithm in Equation \ref{eq:scaledquadraturech3}.
 For the implementation of the power-law transformation for this paper, a partial sum consisting of the first five terms of the infinite series were used.
 
 \subsection{Assessment of Homomorphic Encryption Schemes}
@@ -592,7 +592,7 @@ As before, training and test data were also secured from the \texttt{faces94} da
 
 The facial recognition tests are done using ten-fold cross-validation for each cryptosystem, where the number of principal components used by the algorithm is fixed at $K=5$.
 
-Prior to splitting the dataset, the images within each set are shuffled. Since there are twenty (20) images per set, two images are taken at a time for each round of cross-validation. The first round would take the first two images from each set as part of the test set, and the rest of the images will be part of the training set. Then, the succeeding round would take the next two images from each set as part of the test set, and so on until ten rounds have been done. After every round of cross-validation, the accuracy score, confusion matrix, and total processing time are obtained. 
+Prior to splitting the dataset, the images within each set are shuffled. Since there are twenty (20) images per set, two images are taken at a time for each round of cross-validation. The first round would take the first two images from each set as part of the test set, and the rest of the images will be part of the training set. Then, the succeeding round would take the next two images from each set as part of the test set, and so on until ten rounds have been done. After every round of cross-validation, the accuracy score, confusion matrix, and total processing time are obtained.
 
 %% Summary not needed, this was only important for the thesis proposal - Aldrich
 % \subsection{Summary}
@@ -604,9 +604,9 @@ Prior to splitting the dataset, the images within each set are shuffled. Since t
 % \end{itemize}
 
 \section{Preliminary Results and Discussion}
-The results shown in this section are gathered from the tests for intensity transformations under Paillier and DGK cryptosystems. During testing, initial results obtained from BGV, particularly with image operations involving floating-point numbers like the logarithmic transformation, were unstable (i.e. the results vary drastically every time the same tests were done). This is because the Pyfhel library being used for the BGV cryptosystem is still in alpha development stage \cite{pyfhel_2018}. 
+The results shown in this section are gathered from the tests for intensity transformations under Paillier and DGK cryptosystems. During testing, initial results obtained from BGV, particularly with image operations involving floating-point numbers like the logarithmic transformation, were unstable (i.e. the results vary drastically every time the same tests were done). This is because the Pyfhel library being used for the BGV cryptosystem is still in alpha development stage \cite{pyfhel_2018}.
 
-% One of the authors has already informed the maintainers of the library about a bug involving exponentiation of two real numbers. 
+% One of the authors has already informed the maintainers of the library about a bug involving exponentiation of two real numbers.
 
 \subsection{Intensity Transformations}
 
@@ -617,11 +617,11 @@ The results shown in this section are gathered from the tests for intensity tran
 	\begin{tabular}{m{1cm}*{7}{>{\centering\arraybackslash}m{1.75cm}}}
 		\toprule
 		\multirow{2}{*}{Image} & \multirow{2}{*}{Original} & \multicolumn{2}{c}{Image negation} & \multicolumn{2}{c}{Logarithm transformation} & \multicolumn{2}{c}{Power-law transformation} \\
-							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\ 
+							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\
 		\midrule
 		\xintForpair #1#2 in {(anpage,a), (bplyce,b), (drbost,c), (ksunth,d), (martin,e), (pmives,f), (rnpwil,g), (sbains,h), (swewin,i), (yfhsie,j)} \do {%
 		(#2) & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_decrypted.png} \\ }%
-		\bottomrule         
+		\bottomrule
 	\end{tabular}
 \end{table*}
 
@@ -632,7 +632,7 @@ The results shown in this section are gathered from the tests for intensity tran
 % 	\begin{tabular}{m{1cm}*{7}{>{\centering\arraybackslash}m{1.75cm}}}
 % 		\toprule
 % 		\multirow{2}{*}{Image} & \multirow{2}{*}{Original} & \multicolumn{2}{c}{Image negation} & \multicolumn{2}{c}{Logarithm transformation} & \multicolumn{2}{c}{Power-law transformation} \\
-% 							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\ 
+% 							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\
 % 		\midrule
 % 		\xintForpair #1#2 in {(anpage,a), (bplyce,b), (drbost,c), (ksunth,d), (martin,e), (pmives,f), (rnpwil,g), (sbains,h), (swewin,i), (yfhsie,j)} \do {%
 % 		(#2) & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dp_pwrtransform_#1_decrypted.png} \\ }%
@@ -647,7 +647,7 @@ The results shown in this section are gathered from the tests for intensity tran
 	\begin{tabular}{m{1cm}*{7}{>{\centering\arraybackslash}m{1.75cm}}}
 		\toprule
 		\multirow{2}{*}{Image} & \multirow{2}{*}{Original} & \multicolumn{2}{c}{Image negation} & \multicolumn{2}{c}{Logarithm transformation} & \multicolumn{2}{c}{Power-law transformation} \\
-							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\ 
+							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\
 		\midrule
 		\xintForpair #1#2 in {(anpage,a), (bplyce,b), (drbost,c), (ksunth,d), (martin,e), (pmives,f), (rnpwil,g), (sbains,h), (swewin,i), (yfhsie,j)} \do {%
 		(#2) & \includegraphics[width=1.75cm]{out_faces/dgk_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dgk_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dgk_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dgk_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dgk_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dgk_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dgk_pwrtransform_#1_decrypted.png} \\ }%
@@ -698,7 +698,7 @@ Both the Paillier and DGK cryptosystems were able to perform image negation unde
 % 		(g) & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.478 & 0.284 \\
 % 		(h) & 0.000 & $\infty$ & 1.00000 & 0.186 & 29.784 & 0.362 \\
 % 		(i) & 0.000 & $\infty$ & 1.00000 & 0.243 & 38.407 & 0.220 \\
-% 		(j) & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.488 & 0.449 \\		
+% 		(j) & 0.000 & $\infty$ & 1.00000 & 0.285 & 29.488 & 0.449 \\
 % 		\bottomrule
 %         \end{tabular}
 % \end{table}
@@ -718,7 +718,7 @@ Both the Paillier and DGK cryptosystems were able to perform image negation unde
 		(g) & 0.000 & $\infty$ & 1.00000 & 0.532 & 0.010 & 0.471 \\
 		(h) & 0.000 & $\infty$ & 1.00000 & 0.538 & 0.010 & 0.513 \\
 		(i) & 0.000 & $\infty$ & 1.00000 & 0.606 & 0.010 & 0.519 \\
-		(j) & 0.000 & $\infty$ & 1.00000 & 0.608 & 0.012 & 0.496 \\		
+		(j) & 0.000 & $\infty$ & 1.00000 & 0.608 & 0.012 & 0.496 \\
 		\bottomrule
         \end{tabular}
 \end{table}
@@ -867,7 +867,7 @@ When DGK was used in the power-law transformation, it failed to produce a discer
 \section{Conclusion}
 In this paper, we have assessed the feasibility and practicality of various homomorphic cryptosystems with regard to secure processing and manipulation of facial image data through creation of a software library that facilitates image processing operations within the encrypted domain, as well as our own implementation of some homomorphic cryptosystems like DGK.
 
-% This paper also proposes a correction to the Dasgupta--Pal cryptosystem which is further explained in Appendix~\ref{chap:correction}. 
+% This paper also proposes a correction to the Dasgupta--Pal cryptosystem which is further explained in Appendix~\ref{chap:correction}.
 
 Even though an operation in a partially homomorphic cryptosystem is not theoretically possible, like multiplication of two ciphertexts under Paillier, it has been shown that such operations are indeed possible in a two-party system. Protocols for secure multiplication and exponentiation have been proposed and also applied to more complex image operations such as facial recognition. Thus, a partially homomorphic cryptosystem can be modified to admit more image processing operations by assuming a two-party system.
 
@@ -876,17 +876,14 @@ Preliminary results have shown that both Paillier and DGK apply image negation a
 A wrapper library has been made which implements the various functions and methods of the cryptosystems into a single interface. This allowed us to express various image operations with a unified syntax, thus facilitating easier testing.
 
 \subsection{Ongoing and Future Work}
-Testing intensity transformations under the BGV cryptosystem will be started once the Pyfhel library is deemed stable enough to use, or another Python library that implements BGV becomes available. 
-One of the authors of this paper has already informed the developers of the Pyfhel library about a bug involving exponentiation of two real numbers. 
+Testing intensity transformations under the BGV cryptosystem will be started once the Pyfhel library is deemed stable enough to use, or another Python library that implements BGV becomes available.
+One of the authors of this paper has already informed the developers of the Pyfhel library about a bug involving exponentiation of two real numbers.
 
-Efforts are ongoing with regard to the facial recognition tests. Our own implementation of the privacy-preserving  eigenfaces by Erkin, et al. does not yet use the DGK cryptosystem for secure integer comparison in the match finding step, thus we are working on implementing DGK from scratch. 
+Efforts are ongoing with regard to the facial recognition tests. Our own implementation of the privacy-preserving  eigenfaces by Erkin, et al. does not yet use the DGK cryptosystem for secure integer comparison in the match finding step, thus we are working on implementing DGK from scratch.
 
 Another promising image operation to consider is \textit{facial detection} under a homomorphic cryptosystem. Work has been started in order to assess the feasibility of using Haar cascades in a privacy-preserving manner.
 
 Future work would involve improving and optimizing our implementation of non-linear intensity transformations in terms of number of operations, numerical accuracy and stability, and time efficiency.
-% Future work would involve improving and optimizing our implementation of the DGK cryptosystem so that it performs faster. 
-% A suggestion would be to port the existing implementation to C/C++ and then create a Python library that acts as a wrapper to the C/C++ methods. 
+% Future work would involve improving and optimizing our implementation of the DGK cryptosystem so that it performs faster.
+% A suggestion would be to port the existing implementation to C/C++ and then create a Python library that acts as a wrapper to the C/C++ methods.
 For future studies, an implementation of a client-server framework or system dealing with secure image processing can be considered.
-
-
-
