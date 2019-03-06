@@ -11,10 +11,11 @@
 %\usepackage{lscape}
 %\usepackage{adjustbox}
 %\usepackage{longtable}
+% \usepackage{booktabs}
 \usepackage{url}
 \usepackage{verbatim}
-\usepackage{pgf, tikz}
-\usepackage{pgfplots}
+% \usepackage{pgf}
+% \usepackage{pgfplots}
 
 % commands
 \newcommand*\diff{\mathop{}\!\mathrm{d}}
@@ -45,18 +46,18 @@
 %% Choices for the 1st argument: MS, PhD
 %% Choices for the 2nd argument: Final, FinalWithCorner, Draft
 
-%\FrontMatter
-% \input{parts/00_abstract}
+\FrontMatter
+\input{parts/00_abstract}
 % \input{parts/00_acknowledgements}
 \tableofcontents
 \listoffigures
-% \listoftables
+\listoftables
 
 \MainMatter
 \input{parts/01_introduction_00}
 \input{parts/02_relatedliterature}
 \input{parts/03_methodology}
-% \input{parts/04_results}
+\input{parts/04_results}
 %\input{parts/04_results_pub}
 %\input{parts/04_results_unpub}
 % \input{parts/05_conclusions}
@@ -66,14 +67,14 @@
 %\bibliographystyle{abbrv}
 %\bibliography{sigproc}
 %\input{parts/09_references}
-%\BackMatter
+% \BackMatter
 \bibliographystyle{acm}
 \bibliography{thesis_refs}
 
 \addappheadtotoc
 \begin{appendices}
 % \input{parts/08_appendices_a_cryptosystems}
-\input{parts/08_appendices_b_numericalapproximations_updated}
+% \input{parts/08_appendices_b_numericalapproximations_updated}
 \end{appendices}
 
 

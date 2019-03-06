@@ -1,56 +1,176 @@
 \chapter{RESULTS AND DISCUSSION}
-% After implementing your methodology and gathering all pertinent data, in this section, you will now present the gathered data to your reader. By the end of this section, your reader should have an idea of what exactlty happened during the experiment. 
-% A good way to organize your results is to group them is to present them in the same order which your methodology was presented. For instance, if your methodology included the analysis of user logs, the implementation of an application, and the testing of this application, your results should flow in the same way. In addition, more often than not, you will be presenting a large volume of data, so utilize figures and tables whenever appropriate. Table 5.1 below presents one way of how to go about presenting your data. Note the table caption and headers, as mentioned in our framework.
+The results shown in this section are gathered from the tests for intensity transformations under Paillier and DGK cryptosystems. During testing, initial results obtained from BGV, particularly with image operations involving floating-point numbers like the logarithmic transformation, were unstable (i.e. the results vary drastically every time the same tests were done). This is because the Pyfhel library being used for the BGV cryptosystem is still in alpha development stage \cite{pyfhel_2018}.
 
-% \begin{table}[t]
-% \centering
-% \caption {Preliminary Test Result, organized by Problem Type}
-% \label{tab:acc_lit} 
-% \begin{tabular}{ c  c  c  c  c  c  c  c  c  c  c }
-% \hline
-% Problem	&Average 	&Standard 	&Average 		&Standard		&Dominant\\
-% Type  &Steps   &Deviation   &Duration   &Deviation   &Affective\\
-%   &   &(Steps)   &(s)   &(Duration)   &State\\ \hline
+% One of the authors has already informed the maintainers of the library about a bug involving exponentiation of two real numbers.
 
-% A1  &14   &2.30   &23.04   &3.50   &CONF\\
-% A2  &2   &5.36   &32.10   &2.01   &FLOW\\
-% A3  &31   &1.01   &28.55   &4.03   &FLOW\\
-% B1  &24   &4.40   &45.30   &3.30   &BOR\\
-% B2  &33   &2.12   &20.56   &2.21   &FLOW\\
-% B3  &36   &1.05   &LOSE   &1.15   &CONF\\
-% C1  &22   &1.33   &LOSE   &1.40   &FLOW\\
-% C2  &23   &3.03   &LOSE   &1.30   &FLOW\\
-% D1  &30   &1.79   &LOSE   &1.45   &FLOW\\
-% D2  &15   &1.30   &LOSE   &1.05   &FLOW\\ \hline
-% \end{tabular}
-% \end{table}
+\section{Intensity Transformations}
 
+% \begin{table*}
+% 	\centering
+% 	\caption{Comparison of intensity transformations under Paillier}
+% 	\label{tbl:it-pal}
+% 	\begin{tabular}{m{1cm}*{7}{>{\centering\arraybackslash}m{1.75cm}}}
+% 		\hline
+% 		\multirow{2}{*}{Image} & \multirow{2}{*}{Original} & \multicolumn{2}{c}{Image negation} & \multicolumn{2}{c}{Logarithm transformation} & \multicolumn{2}{c}{Power-law transformation} \\
+% 							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\
+% 		\hline
+% 		\xintForpair #1#2 in {(anpage,a), (bplyce,b), (drbost,c), (ksunth,d), (martin,e), (pmives,f), (rnpwil,g), (sbains,h), (swewin,i), (yfhsie,j)} \do {%
+% 		(#2) & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/paillier_pwrtransform_#1_decrypted.png} \\ }%
+% 		\hline
+% 	\end{tabular}
+% \end{table*}
+%
+% \begin{table*}
+% 	\centering
+% 	\caption{Comparison of intensity transformations under DGK}
+% 	\label{tbl:it-dgk}
+% 	\begin{tabular}{m{1cm}*{7}{>{\centering\arraybackslash}m{1.75cm}}}
+% 		\hline
+% 		\multirow{2}{*}{Image} & \multirow{2}{*}{Original} & \multicolumn{2}{c}{Image negation} & \multicolumn{2}{c}{Logarithm transformation} & \multicolumn{2}{c}{Power-law transformation} \\
+% 							   &                           & PDT           & CDT          & PDT            & CDT           & PDT               & CDT           \\
+% 		\hline
+% 		\xintForpair #1#2 in {(anpage,a), (bplyce,b), (drbost,c), (ksunth,d), (martin,e), (pmives,f), (rnpwil,g), (sbains,h), (swewin,i), (yfhsie,j)} \do {%
+% 		(#2) & \includegraphics[width=1.75cm]{out_faces/dgk_negate_#1_original.png} & \includegraphics[width=1.75cm]{out_faces/dgk_negate_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dgk_negate_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dgk_logtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dgk_logtransform_#1_decrypted.png} & \includegraphics[width=1.75cm]{out_faces/dgk_pwrtransform_#1_reference.png} & \includegraphics[width=1.75cm]{out_faces/dgk_pwrtransform_#1_decrypted.png} \\ }%
+% 		\hline
+% 	\end{tabular}
+% \end{table*}
 
-% There are, however, some additional notes that must be clarified. First, given that you will be gathering a huge volume of data, you must be able to classify which of these were critical in determining the outcome of your study, and which ones need not be presented. The critical data must be presented in this section, while the minor ones may be placed in the Appendices of your paper, which will be described later in this template.
+Table~\ref{tbl:it-pal} shows the images obtained from the intensity transformation tests under the Paillier cryptosystem, while Table~\ref{tbl:it-dgk} shows the resulting images from the same tests under the DGK cryptosystem. Shown for each image is the original unecrypted image, and for each intensity transformation the \textit{plaintext domain transformation} (PDT) is given which is the resulting image after applying the transformation to the unencrypted image and the \textit{ciphertext domain transformation} (CDT) is the decrypted image of the processed encrypted image.
 
-% Another clarification to be noted is that the presentation of results in this section must be objective, or `as-is'. This means that you must describe your results in a way understandable to your reader without putting any form of interpretation. In effect, this section’s intent is to provide answers to ``what happened'' questions, not ``what does it mean'' questions. The interpretation of results is the subject of a later section.
+The following tables show the resulting metric scores for mean squared error (MSE), peak signal to noise ratio (PSNR), and structural similarity index (SSIM), as well as time taken (in seconds) for encrypting the input image ($t_\text{enc}$), applying an operation to the encrypted image ($t_\text{apply}$), and decrypting the resulting encrypted image ($t_\text{dec}$), for each image in the test set. Tables~\ref{tbl:neg-pal} and~\ref{tbl:neg-dgk} show the results obtained from applying image negation, Tables~\ref{tbl:log-pal} and~\ref{tbl:log-dgk} from applying logarithm transformation, and Tables~\ref{tbl:pwr-pal} and~\ref{tbl:pwr-dgk} from applying power-law transformation.
 
-% Finally, because this is a presentation of what happened in the past, all tenses used in this section must be in the past form, be it active or passive. This will also be true for the preceeding sections after the study’s implementation, especially when stating the methodology.
+\subsection{Image Negation}
+Both the Paillier and DGK cryptosystems were able to perform image negation under the encrypted domain without introducing noise in the resulting image. In other words, the resulting image from doing image negation on an image on the clear and doing image negation under the encrypted domain are identical, as evidenced by the mean squared errors being exactly equal to zero, the PSNR being infinite, and the SSIM being exactly equal to one. While the time taken to apply image negation is comparable to that of DGK, the Paillier cryptosystem performed better in terms of encryption and decryption time.
 
 \begin{table}[t]
-\centering
-\caption {Preliminary Test Result, organized by Problem Type}
-\label{tab:acc_lit} 
-\begin{tabular}{ c  c  c  c  c  c  c  c  c  c  c }
-\hline
-Problem	&Average 	&Standard 	&Average 		&Standard		&Dominant\\
-Type  &Steps   &Deviation   &Duration   &Deviation   &Affective\\
-  &   &(Steps)   &(s)   &(Duration)   &State\\ \hline
+	\centering
+	\caption{Image negation under Paillier}
+	\label{tbl:neg-pal}
+    \begin{tabular}{lcccccc}
+        \hline
+        Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \hline
+        (a) & 0.000 & $\infty$ & 1.00000 & 0.128 & 0.013 & 0.041 \\
+		(b) & 0.000 & $\infty$ & 1.00000 & 0.084 & 0.013 & 0.024 \\
+		(c) & 0.000 & $\infty$ & 1.00000 & 0.099 & 0.012 & 0.031 \\
+		(d) & 0.000 & $\infty$ & 1.00000 & 0.109 & 0.012 & 0.048 \\
+		(e) & 0.000 & $\infty$ & 1.00000 & 0.117 & 0.015 & 0.043 \\
+		(f) & 0.000 & $\infty$ & 1.00000 & 0.111 & 0.012 & 0.025 \\
+		(g) & 0.000 & $\infty$ & 1.00000 & 0.099 & 0.012 & 0.023 \\
+		(h) & 0.000 & $\infty$ & 1.00000 & 0.084 & 0.012 & 0.024 \\
+		(i) & 0.000 & $\infty$ & 1.00000 & 0.089 & 0.012 & 0.023 \\
+		(j) & 0.000 & $\infty$ & 1.00000 & 0.081 & 0.012 & 0.029 \\
+		\hline
+    \end{tabular}
+\end{table}
 
-A1  &14   &2.30   &23.04   &3.50   &CONF\\
-A2  &2   &5.36   &32.10   &2.01   &FLOW\\
-A3  &31   &1.01   &28.55   &4.03   &FLOW\\
-B1  &24   &4.40   &45.30   &3.30   &BOR\\
-B2  &33   &2.12   &20.56   &2.21   &FLOW\\
-B3  &36   &1.05   &LOSE   &1.15   &CONF\\
-C1  &22   &1.33   &LOSE   &1.40   &FLOW\\
-C2  &23   &3.03   &LOSE   &1.30   &FLOW\\
-D1  &30   &1.79   &LOSE   &1.45   &FLOW\\
-D2  &15   &1.30   &LOSE   &1.05   &FLOW\\ \hline
-\end{tabular}
+\begin{table}[t]
+	\centering
+	\caption{Image negation under DGK}
+	\label{tbl:neg-dgk}
+    \begin{tabular}{lcccccc}
+        \hline
+        Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \hline
+		(a) & 0.000 & $\infty$ & 1.00000 & 0.509 & 0.011 & 0.450 \\
+		(b) & 0.000 & $\infty$ & 1.00000 & 0.512 & 0.009 & 0.462 \\
+		(c) & 0.000 & $\infty$ & 1.00000 & 0.732 & 0.018 & 0.519 \\
+		(d) & 0.000 & $\infty$ & 1.00000 & 0.593 & 0.017 & 0.677 \\
+		(e) & 0.000 & $\infty$ & 1.00000 & 0.607 & 0.010 & 0.454 \\
+		(f) & 0.000 & $\infty$ & 1.00000 & 0.550 & 0.010 & 0.507 \\
+		(g) & 0.000 & $\infty$ & 1.00000 & 0.532 & 0.010 & 0.471 \\
+		(h) & 0.000 & $\infty$ & 1.00000 & 0.538 & 0.010 & 0.513 \\
+		(i) & 0.000 & $\infty$ & 1.00000 & 0.606 & 0.010 & 0.519 \\
+		(j) & 0.000 & $\infty$ & 1.00000 & 0.608 & 0.012 & 0.496 \\
+		\hline
+        \end{tabular}
+\end{table}
+
+\subsection{Logarithm Transformation}
+Unlike image negation, logarithm transformation involves more operations, so the increase in processing times for both cryptosystems are expected. Applying the logarithm transformation under Paillier took about 2 seconds per image, while it took about 25 seconds each under DGK. Applying the logarithm transformation under Paillier results in faster and more accurate output images (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$) than under DGK (with $\text{MSE} \le 300$ and $0.61 \le \text{SSIM} \le 0.87$).
+
+\begin{table}[t]
+	\centering
+	\caption{Logarithm transformation under Paillier}
+	\label{tbl:log-pal}
+    \begin{tabular}{lcccccc}
+        \hline
+        Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \hline
+		(a) & 13.369 & 36.870 & 0.99263 & 0.085 & 1.813 & 0.023 \\
+		(b) & 7.072 & 39.635 & 0.99017 & 0.089 & 2.073 & 0.023 \\
+		(c) & 8.151 & 39.019 & 0.98688 & 0.091 & 1.913 & 0.023 \\
+		(d) & 25.253 & 34.108 & 0.98927 & 0.089 & 1.919 & 0.023 \\
+		(e) & 10.374 & 37.971 & 0.98695 & 0.106 & 1.829 & 0.023 \\
+		(f) & 2.426 & 44.283 & 0.99401 & 0.127 & 1.900 & 0.023 \\
+		(g) & 5.184 & 40.985 & 0.98971 & 0.096 & 1.853 & 0.023 \\
+		(h) & 16.772 & 35.885 & 0.98492 & 0.081 & 1.746 & 0.024 \\
+		(i) & 5.803 & 40.494 & 0.99241 & 0.091 & 1.827 & 0.027 \\
+		(j) & 12.192 & 37.270 & 0.99354 & 0.081 & 1.815 & 0.023 \\
+		\hline
+        \end{tabular}
+\end{table}
+
+\begin{table}[t]
+	\caption{Logarithm transformation under DGK}
+	\label{tbl:log-dgk}
+    \begin{tabular}{lcccccc}
+        \hline
+        Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \hline
+		(a) & 222.196 & 24.663 & 0.83568 & 0.635 & 25.556 & 0.488 \\
+		(b) & 180.941 & 25.555 & 0.75159 & 0.542 & 27.102 & 0.460 \\
+		(c) & 295.227 & 23.429 & 0.61360 & 0.534 & 25.720 & 0.486 \\
+		(d) & 286.799 & 23.555 & 0.76514 & 0.622 & 25.118 & 0.467 \\
+		(e) & 215.389 & 24.799 & 0.66924 & 0.557 & 25.500 & 0.452 \\
+		(f) & 65.621 & 29.960 & 0.83973 & 0.561 & 25.014 & 0.458 \\
+		(g) & 133.007 & 26.892 & 0.74749 & 0.572 & 25.605 & 0.497 \\
+		(h) & 225.269 & 24.604 & 0.70342 & 0.548 & 25.088 & 0.468 \\
+		(i) & 171.073 & 25.799 & 0.83257 & 0.538 & 25.410 & 0.494 \\
+		(j) & 203.214 & 25.051 & 0.86675 & 0.528 & 25.383 & 0.516 \\
+		\hline
+    \end{tabular}
+\end{table}
+
+\subsection{Power-Law Transformation}
+Applying the power-law transformation under both cryptosystems produced less than accurate images. The accuracy varies greatly across all the images as in the case of Paillier, with mean squared errors as high as 8270.696 and as low as 616.419, and SSIM scores ranging from 0.43185 to 0.92334, as seen in Table~\ref{tbl:pwr-pal}. As expected, the total processing time now takes about 15 to 20 seconds per image since the power-law transformation is more computationally intensive due to its approximation of an infinite series consisting of terms using the logarithm function, which is also approximated using a combination of addition and multiplication operations.
+
+\begin{table}[t]
+	\centering
+	\caption{Power-law transformation under Paillier}
+	\label{tbl:pwr-pal}
+    \begin{tabular}{lcccccc}
+        \hline
+        Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \hline
+        (a) & 3910.678 & 12.208 & 0.46712 & 0.099 & 14.695 & 0.024 \\
+		(b) & 873.064 & 18.720 & 0.84379 & 0.139 & 16.190 & 0.023 \\
+		(c) & 1261.059 & 17.123 & 0.77229 & 0.082 & 13.866 & 0.023 \\
+		(d) & 653.049 & 19.981 & 0.90673 & 0.083 & 15.507 & 0.023 \\
+		(e) & 646.310 & 20.026 & 0.88157 & 0.108 & 15.727 & 0.045 \\
+		(f) & 2047.933 & 15.018 & 0.69408 & 0.113 & 14.728 & 0.034 \\
+		(g) & 806.473 & 19.065 & 0.85346 & 0.082 & 14.253 & 0.024 \\
+		(h) & 616.419 & 20.232 & 0.92334 & 0.121 & 14.415 & 0.023 \\
+		(i) & 8270.696 & 8.955 & 0.43185 & 0.112 & 14.362 & 0.065 \\
+		(j) & 1715.478 & 15.787 & 0.73857 & 0.145 & 20.239 & 0.023 \\
+		\hline
+        \end{tabular}
+\end{table}
+
+When DGK was used in the power-law transformation, it failed to produce a discernible image and only resulted in an almost black image with a faint shape of a face. The mean squared errors for this case is an order of magnitude higher than the results from using Paillier. Furthermore, doing a power-law transformation under DGK is not only impractical in terms of accuracy, but also it is somewhat impractical in terms of time efficiency because it took at most 4 minutes to process each image.
+
+\begin{table}[t]
+	\centering
+	\caption{Power-law transformation under DGK}
+	\label{tbl:pwr-dgk}
+    \begin{tabular}{lcccccc}
+        \hline
+        Image & MSE  & PSNR & SSIM & $t_\text{enc}$ & $t_\text{apply}$ & $t_\text{dec}$ \\ \hline
+		(a) & 14777.466 & 6.435 & 0.12778 & 0.677 & 204.491 & 0.978 \\
+		(b) & 13343.854 & 6.878 & 0.07894 & 0.913 & 232.692 & 0.663 \\
+		(c) & 10885.568 & 7.762 & 0.09146 & 0.696 & 198.959 & 0.590 \\
+		(d) & 7218.081 & 9.547 & 0.10182 & 0.658 & 160.924 & 0.461 \\
+		(e) & 9994.237 & 8.133 & 0.09100 & 0.518 & 166.274 & 0.507 \\
+		(f) & 19141.793 & 5.311 & 0.08388 & 0.531 & 193.571 & 0.606 \\
+		(g) & 13213.915 & 6.920 & 0.09794 & 0.656 & 163.594 & 0.455 \\
+		(h) & 7444.691 & 9.412 & 0.09291 & 0.522 & 160.426 & 0.463 \\
+		(i) & 21349.488 & 4.837 & 0.17239 & 0.526 & 160.191 & 0.446 \\
+		(j) & 13776.770 & 6.739 & 0.10769 & 0.489 & 156.763 & 0.460 \\
+		\hline
+    \end{tabular}
 \end{table}
