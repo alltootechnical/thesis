@@ -1,72 +1,33 @@
 \section{Fully Homomorphic Cryptosystems}
 
-We will also be testing fully homomorphic cryptosytems, which allow aribitrary computation on encrypted data.
-While generally being more flexible, fully homomorphic cryptosytems are known to be significantly slower than partially homomorphic cryptosytems; improving the efficiency of fully homomorphic cryptosytems is an active area of research \cite{sen_homomorphic_2013}.
+We will also be testing fully homomorphic encryption (FHEs), which allow aribitrary computation on encrypted data.
 
-We will present two such cryptosystems, the Dasgupta--Pal cryptosystem, which we present in full to explain a correction we propose to it, and the BGV cryptosystem, which has open source implementations availble primarily used in homomorphic cryptography research.
+The first ever fully homomorphic cryptosystem was invented by Gentry \cite{gentry_fully_2009}, which operates over ideal lattices. Gentry's original construction showed that FHE are possible, although they are known to be significantly slower than PHE. 
+Improving the efficiency of FHis an active area of research \cite{sen_homomorphic_2013}. 
 
-\subsection{The Dasgupta--Pal Cryptosystem}
-The Dasgupta--Pal cryptosystem is a fully homomorphic cryptosystem proposed in 2016 by Smaranika Dasgupta and S. K. Pal \cite{dasgupta_design_2016}, which encrypts integer plaintexts in $\mathbb{Z}_n$ to polynomial ciphertexts. We begin our presentation of the Dasgupta--Pal cryptosystem with the following definition.
+We will present two FHEs, the DGHV cryptosystem and the BGV cryptosystem, which both have open source implementations availble primarily used in homomorphic cryptography research. Since the mathematical details of these fully homomorphic cryptosystems are not relevant to describing their potential uses in secure image operations, we will instead briefly describe important developments and implementations of each cryptosystem.
 
+<<<<<<< HEAD
 Given a message $m \in \mathbb{Z}$, we denote
 \begin{align*}
 		m_p(x) = a_0 + a_1x + a_2x^2 + \cdots + a_kx^k
 \end{align*}
 where $a_k a_{k-1}\cdots a_2a_1_0$ is the binary representation of $m$.
+=======
+\subsection{The DGHV Cryptosystem}
+In 2009, Dijk, Gentry, Halevi, and Vaikuntanathan created a fully homomorphic cryptosystem which operates primarily through elementary modular arithmetic, commonly called the DGHV cryptosystem \cite{cryptoeprint:2009:616}. This was further improved in 2011 by Coron, Naccache, and Tibouchi, \cite{cryptoeprint:2011:277, cryptoeprint:2011:440} to support shorter public keys, reducing the size of secure public keys from 12.5 GB to 2.5 MB. 
+>>>>>>> 21e97430400d95bf5a42495d659f103ee6363cdc
 
-In the original scheme presented in \cite{dasgupta_design_2016}, the secret key $S_k$ is set to be a large prime. In Appendix \ref{chap:correction}, we present a case where the Dasgupta--Pal cryptosystem fails and prove that setting the secret key $S_k = 2p$, where $p$ is a large prime, corrects errors in the Dasgupta--Pal cryptosystem.
-We now decribe the correct cryptosystem.
-\subsubsection{Corrected Dasgupta--Pal Cryptosystem Description}
-Let $\ell$ denote the security parameter of the cryptosystem.
-Let $S_k = 2p$, where $p$ is a prime number with $\ell - 1$ bits.
-Choose a random even integer $z$ of length $\log_2{\ell}$.
+The DGHV cryptosystem encrypts single bits as integer ciphertexts. XOR and AND binary operations on encrypted bits are achieved by modular addition and modular multiplication on the integer ciphertexts. When operations are performed on ciphertexts, noise accumulates in the ciphertexts, which may prevent successful decryption. To eliminate this noise, a \textit{refresh} or \textit{recrypt} procedure is used to reduce noise in a ciphertext. The refresh procedure for DGHV involves operating on a ciphertext with a \textit{recryption matrix}, which is more time-intensive than key generation, encryption, decryption, addition, and multiplication procedures.
 
-Let the secret key be $S_k$, and let the refresh key be $R_k = z \cdot S_k$. The secret key is kept private to the encrypting/decrypting parties, while the refresh key is made publicly available.
+A Sage 4.7.2 implementation of the improved DGHV cryptosystem by Coron, et al. \cite{cryptoeprint:2011:440} may be found at \texttt{https://github.com/coron/fhe}. For small security parameters,  initial experiments using this implementation have shown it takes 0.06 seconds for key generation, 0.05 seconds for encryption, and 0.41 seconds for the recrypt procedure. For large security parameters, key generation takes 10 minutes, encryption takes 7 minutes and 15 seconds, and the recrypt procedure takes 11 minutes and 34 seconds \cite{cryptoeprint:2011:440}. Since the DGHV cryptosystem encrypts single plaintext bits, we can expect that operations on 32-bit floating point numbers are time-intensive, even under small security parameters.
 
-The scheme defines the encryption algorithm for a message $m$ as follows:
-\begin{align*}
-	E(m) = y(x) + S_k\times d(x)
-\end{align*}
-where
-$y(x)$ is a polynomial of degree $n$ such that $m_p(x) \equiv y(x) \bmod S_k$ and $d(x)$ is a randomly chosen polynomial of degree $n$. This encrypts each coefficient of of $m_p(x)$ by adding some multiple of $S_k$ to it. Through this process, each bit of the message is encrypted separately.
-
-Furthermore, the decryption algorithm to recover $m_p(x)$ from a ciphertext polynomial $c(x)$ as
-\begin{align*}
-	m_p(x) = c(x) \bmod S_k \bmod 2.
-\end{align*}
-Thus $D(c(x))$ is defined as the integer recovered from the coefficients of the polynomial $c(x) \bmod S_k \bmod 2$.
-
-Dasgupta and Pal note that homomorphic operations on ciphertext introduce noise which may interfere with decryption, due to the potential increase in ciphertext values.
-To eliminate noise from a polynomial ciphertext, the following refresh function is used:
-\begin{align*}
-	R(c(x)) = c(x) \bmod R_k.
-\end{align*}
-
-\subsubsection{Homomorphic Properties of the Dasgupta--Pal Cryptosystem}
-It has been shown \cite{dasgupta_design_2016} that the following properties hold for all integer messages $m_1, m_2 \in \mathbb{Z}_n$ in the Dasgupta--Pal cryptosystem. These properties arise since each coefficient in a ciphertext polynomial is essentially an independently encrypted bit of the original message.
-\begin{description}
-	\item[XOR on ciphertexts]
-	A bitwise exclusive or (XOR) operation on integer messages can be achieved by adding the coefficients pairwise between two ciphertexts.
-	\begin{align*}
-		D(E(m_1)+E(m_2)) = m_1 \text{ XOR } m_2
-	\end{align*}
-	\item[AND on ciphertexts]
-	Similarly, pair-wise multiplication corresponds to bitwise AND of integer messages.
-	\begin{align*}
-		D(E(a) \otimes E(b)) = a \text{ AND } b = ab \bmod 2
-	\end{align*}
-	where $\otimes$ denotes pairwise multiplication,
-	\begin{align*}
-		\sum_{i=1}^n{a_ix^i} \otimes \sum_{i=1}^n{b_ix^i} = \sum_{i=1}^n{a_ib_ix^i}.
-	\end{align*}
-\end{description}
-
-Arbitrary computation on data can thus be achived using these bitwise operations. While the Dasgupta--Pal cryptosystem requires significant amounts of memory, as each bit of plaintext is encrypted into an integer, this approach provides a flexible method to perform relatively fast arbitrary computation on encrypted data. Encryption and decryption in the Dasgupta--Pal cryptosystem are accomplished using few arithmetic operations.
+A more recent C++ implementation of the improved DGHV cryptosystem \cite{cryptoeprint:2011:440} using the GNU Multiple Precision Arithmetic Library may be found at \texttt{https://github.com/deevashwer/Fully-Homomorphic-DGHV-and-Variants}. This implementation is more accessible than the original Sage 4.7.2 implementation, since the original code has compatibility issues with current versions of SageMath.
 
 \subsection{HElib and the BGV Cryptosystem}
 The BGV (Brakerski--Gentry--Vaikuntanathan) cryptosystem \cite{cryptoeprint:2011:277} is a fully homomorphic cryptosystem created based on the ring-learning with error problem. The BGV cryptosystem was constructed to surpass the limitations of prior fully homomorphic cryptosystems, which were based on the first fully homomorphic cryptosystem by Gentry \cite{gentry_fully_2009}.
 
-The details regarding the construction of the BGV cryptosystem are beyond the scope of this paper. For this study, we will be using \textit{HElib} \cite{garay_algorithms_2014}, an open-source library which implements the BGV cryptosystem with optimizations to improve efficiency. Evaluation of operations on 120 inputs in HELib was performed in around 4 minutes, with an average of 2 seconds to process a single input \cite{hutchison_fully_2010,cryptoeprint:2011:566}.
+One prominent implementation is \textit{HElib} (\texttt{https://github.com/shaih/HElib}) \cite{garay_algorithms_2014}, an open-source library which implements the BGV cryptosystem C++ using the NTL mathematical library, with optimizations to improve efficiency. Evaluation of operations on 120 inputs in HELib was performed in around 4 minutes, with an average of 2 seconds to process a single input \cite{hutchison_fully_2010,cryptoeprint:2011:566}.
 
 The \textit{HElib} library has been adapted to Python using the Pyfhel library \cite{pyfhel_2018} maintained by Ibarrondo, Laurent (SAP) and Onen (EURECOM), and licensed under the GNU GPL v3 license. The Pyfhel library is a Python API for the HElib library, which supports the following operations on vectors/scalars of integers or binary ciphertexts:
 \begin{itemize}
