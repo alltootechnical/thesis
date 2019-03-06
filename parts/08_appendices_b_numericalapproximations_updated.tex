@@ -65,6 +65,7 @@ While the closed-form approximation presented by Khattri (Equation~\ref{eq:stand
 	% 	\legend{5-point quadrature approximation, Actual value of $\log(1+x)$}
 	% 	\end{axis}
 	% \end{tikzpicture}%
+    \includegraphics[width=12cm]{figures/graph_log_a2.png}
 	\caption{Graph of $\log{\left(1+x\right)}$ and the approximation in Equation~\ref{eq:standard_logarithm_quadrature}}
 	\label{fig:standard_logarithm_quadrature}
 \end{figure}
@@ -120,6 +121,7 @@ Figure~\ref{fig:log_error_comparison} is a graph comparing the absolute error of
 	% 	\legend{Scaled quadrature ($\alpha = 1/16$), Original quadrature ($\alpha = 1$)}
 	% \end{semilogyaxis}
 	% \end{tikzpicture}%
+    \includegraphics[width=12cm]{figures/comp_errs.png}
 	\caption{Comparison of the absolute error between the original approximation in Equation~\ref{eq:standard_logarithm_quadrature} and the scaled approximation in Equation~\ref{eq:optimal_log_approximation}}
 	\label{fig:log_error_comparison}
 \end{figure}
@@ -157,6 +159,7 @@ We consider the functions $A\left(0,\alpha\right)$ and $A\left(255,\alpha\right)
 	% 	% \legend{$A\left(0,\alpha \right)$, $A\left(255,\alpha \right)$}
 	% \end{semilogyaxis}
 	% \end{tikzpicture}%
+    \includegraphics[width=12cm]{figures/graph_0_255.png}
 	\caption{Graphs of $A\left(x,\alpha\right)$ at $x=0$ and $x=255$}
 	\label{fig:endpoint_plot}
 \end{figure}
@@ -181,6 +184,7 @@ It was determined numerically that the local maxima of $A\left(x,1/16\right)$ on
 	% 	\addplot[thick, ACMDarkBlue] table[x=x, y=error] {plots/abs_err_scaledlog.txt};
 	% \end{semilogyaxis}
 	% \end{tikzpicture}%
+    \includegraphics[width=12cm]{figures/graph_approx_16.png}
 	\caption{Graph of $A\left(x,1/16\right)$, the absolute error of the approximation in Equation~\ref{eq:optimal_log_approximation} given a scaling factor of $\alpha=1/16$}
 	\label{fig:single_alpha_plot}
 \end{figure}
