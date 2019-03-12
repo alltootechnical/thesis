@@ -1,0 +1,175 @@
+\section{Methodology}
+In this study we apply three homomorphic encryption schemes~\cite{ziad_cryptoimg:_2016, pieprzyk_efficient_2007, garay_algorithms_2014} for use in image processing and facial recognition applications. In particular, the study consists of the following:
+\begin{itemize}
+	\item Creating a wrapper library that acts as a unified interface which implements the Paillier, DGK, and BGV homomorphic cryptosystems.
+	\item An implementation of image processing operations (intensity transformations, facial recognition) under the above cryptosystems.
+	\item Conducting tests for image quality, processing time, using images from the \texttt{faces94} dataset.
+\end{itemize}
+
+% While the Paillier and DGK cryptosystems have been implemented for use in image processing in~\cite{ziad_cryptoimg:_2016, hutchison_privacy-preserving_2009}, the other cryptosystems have to be adapted for this study.
+% Two experiments are conducted in this study:
+% \begin{enumerate}
+% 	\item Assessment of non-linear image intensity transformations under each of the three cryptosystems.
+% 	\item Assessment of efficiency of each of the four cryptosystems when applied for use in privacy-preserving facial recognition and detection using eigenfaces.
+% \end{enumerate}
+% The results of the image intensity transformations are tested for image quality using benchmarks in~\cite{ahmed_benchmark_2016}.
+
+\subsection{Cryptosystem Implementation}
+Three homomorphic encryption schemes are investigated, and a wrapper library was created in Python that integrates these cryptosystems into a unified interface.
+\begin{itemize}
+	\item The Paillier cryptosystem is incorporated using the python-paillier library at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
+	\item The DGK cryptosystem is ported from the C++ implementation at \url{https://github.com/encryptogroup/ENCRYPTO_utils}, developed by Daniel Demmler from EC-SPRIDE.
+	\item The BGV cryptosystem is implemented using the Pyfhel library (\url{https://github.com/ibarrond/Pyfhel}) using a HElib backend from (\url{https://github.com/shaih/HElib}).
+\end{itemize}
+
+\subsubsection{Extension of Partially Homomorphic Cryptosystems}
+\label{sssec:pheextension}
+In order to use Paillier and DGK for secure image processing, we require the two schemes to support the encryption of floating-point (FP) numbers, as well as multiplication and division of arbitrary ciphertexts. We extend the two cryptosystems to FP operations by using an approach shown in~\cite{ziad_cryptoimg:_2016}. This approach represents FP numbers using a pair $(m,e)$, where $m$ represents the mantissa (which is encrypted), and $e$ represents the exponent (which is not encrypted). This approach is also used by the python-paillier library. This represntation allows us to extend the addition and plaintext multiplication homomorphisms of the Paillier and DGK cryptosystems to floating-point numbers.
+
+Various two-party protocols can be used to facilitate ciphertext multiplication and division. These allow a server armed with only knowledge of the public key, to obtain the product and quotient of ciphertexts, by communicating with the client, who has the private key. For division, we use the protocol defined in~\cite{boukoros_lightweight_2017}: to obtain $E(x/y)$ from $E(x)$ and $E(y)$, the server sends $E(rx)$ and $E(ry)$ to the client, (where $r$ is a random non-zero number), allowing the client to compute $E(rx/ry)$ and give the result back to the server.
+
+For multiplication, we adapt the protocol to calculate Euclidean distances used in \cite{hutchison_privacy-preserving_2009}, which provides a two-party protocol which yields $E(x^2)$ given $E(x)$. We use this protocol together with the additive homomorphism of the partially homomorphic cryptosystems to instead compute $E((x + y)^2 - x^2 - y^2) = E(2xy)$, from which we can easily obtain $E(xy)$ through plaintext multiplication.
+
+% [TO-DO: This is further explained in another paper.]
+% We will briefly discuss a protocol to enable cryptosystems built for integer inputs to handle real number inputs.
+% The following protocol was also used by \textit{CryptoImg} for image processing \cite{ziad_cryptoimg:_2016}.
+% This is also used for our own implementation of the Dasgupta--Pal cryptosystem in order to handle real numbers.
+
+% We represent a floating-point (FP) number as a pair of two integers $(m,e)$ representing the mantissa and exponent of the FP number with respect to a base $b$. The mantissa $m$ is encrypted, while the exponent $e$ is unencrypted.
+% Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c)$ respectively. Let $\oplus,\otimes$ represent the homomorphic operations which correspond to the addition and multiplication, respectively. We define the secure real number operations as follows:
+% \begin{description}
+%   \item[Addition.]
+%     To compute $E(c)=E(a+b)$ we compute
+%     \begin{align*}
+%       E(m_c) &= E(m_1) \oplus (b^{e_b-e_a} \otimes E(m_b)), e_c = e_a & \text{ if } e_a \leq e_b \\
+%       E(m_c) &= E(m_b) \oplus (b^{e_a-e_b} \otimes E(m_a)), e_c = e_b & \text{ if } e_a > e_b
+%     \end{align*}
+%   \item[Scalar multiplication.]
+%     To compute $E(c) = E(ab)$, where $a$ and $E(b)$ are known (i.e. $m_a$ is not encrypted), we compute
+%     \begin{align*}
+%       E(m_c) &= m_a \otimes E(m_b)\\
+%       e_c &= e_a + e_b
+%     \end{align*}
+% \end{description}
+
+\subsection{Non-Linear Intensity Transformations}
+We will implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}.
+We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Paillier and DGK), if ciphertext multiplication or division is required, the secure protocols in section~\ref{sssec:pheextension} will be used.
+
+\subsubsection{Logarithm Transformation}
+The logarithm transformation of a pixel intensity value $x$ is defined as
+\begin{align}
+	T\left(x\right) = c \log\left(1 + x\right)
+\end{align}
+where $c$ is a constant.
+
+In order to perform this transformation under Paillier and DGK, we provide the following closed-form approximation for $\log\left(1 + x\right)$ from~\cite{pcsc-paper}.
+% TODO: IDK HOW TO CITE OUR PCSC PAPER
+\begin{align}\label{eq:optimal_log_approximation}
+	\begin{split}
+		&\log\left(1+x\right) \approx \frac{a(x)}{b(x)} + \log{16}
+	\end{split}
+\end{align}
+where
+\begin{align*}
+	\begin{split}
+	a(x) &= 137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 \\
+	&- 121239315x - 257804775\\
+	b(x) &= 30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x \\
+	&+ 3122577).
+	\end{split}
+\end{align*}
+% \begin{align}\label{eq:optimal_log_approximation}
+% 	\begin{split}
+% 		&\log\left(1+x\right) \\
+% 		&\approx \frac{137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 - 121239315x - 257804775}
+% 		{30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x + 3122577)}\\
+% 		&+ \log{16}.
+% 	\end{split}
+% \end{align}
+
+\subsubsection{Power-Law Transformation}
+The power-law transformation of a pixel intensity value $x$ is defined as
+\begin{equation}
+    T\left(x\right) = cx^{\gamma}
+\end{equation}
+where $c>0$ and $\gamma > 0$.
+
+Similar to the logarithm transformation, to apply this transformation using Paillier and DGK, we must provide an approximation for $x^\gamma$.
+We can use partial sums of the following series, which relies on the logarithm function.
+\begin{align}
+	x^\gamma &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
+\end{align}
+% Partial sums of the above infinite series can be calculated based on the closed form approximation for the logarithm in Equation \ref{eq:scaledquadraturech3}.
+For the implementation of the power-law transformation for this paper, a partial sum consisting of the first five terms of the infinite series were used.
+
+\subsection{Assessment of Homomorphic Encryption Schemes}
+A laptop computer with a 2.5 GHz Intel Core i7 quad-core processor and 8 GB of RAM is used to perform the computations, and processing time was tracked using built-in timing functions. The processing time for all cases were recorded. All of the tests are done using Python 3.7.1 running on Linux.
+
+\subsubsection{Image Quality of Intensity Transformations}
+In this section, we discuss the image quality metrics we used for assessing the performance of non-linear intensity transformations.
+
+We first obtained test images from the \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex. However, only ten distinct facial images from the dataset were selected for the purposes of this test. Since only grayscale images are used in the study, the images were converted to grayscale and then downsampled to $40 \times 36$ pixels.
+
+For each cryptosystem, three image operations are tested:
+\begin{enumerate}
+	\item Image negation
+	\item Logarithm transformation, with $c = 30$
+	\item Power-law transformation, with $c = 1$ and $\gamma = 0.4$
+\end{enumerate}
+
+For each plaintext image (PT), we considered each image operation listed above and generate three images: a plaintext domain transformation (PDT), a ciphertext image (CT), and an ciphertext domain transformation (CDT). The PDT was generated by running the image operation on the original image. The CT was generated by encrypting the image, then applying the operation, and the CDT was generated by decrypting the CT. The three images (PT, PDT, CDT) were then compared using various benchmarks to evaluate the quality and security of each homomorphic encryption scheme.
+
+The benchmarks to be used in the study, adopted from~\cite{ahmed_benchmark_2016, ahmad_efficiency_2012, wu_npcr_2011} are listed below. We let $X_i$ denote a value in an image $X$, where $1 \leq i \leq N$.
+We first perform three tests to ascertain the preservation of image quality after encryption and decryption: MSE, PSNR, and SSIM.
+\begin{description}
+	\item [Mean Squared Error (MSE).] The MSE is defined in~\cite{ahmed_benchmark_2016} as
+	\begin{align}
+        \mathrm{MSE} = \frac{1}{N}\sum_{i=1}^{N}{(\mathrm{CDT}_i - \mathrm{PDT}_i)^2}.
+	\end{align}
+	The MSE provides a measure of how much data is recovered if an image operation is applied on the encrypted image, which is then decrypted. Lower values of MSE indicate higher preservation of image quality~\cite{ahmed_benchmark_2016, ahmad_efficiency_2012}.
+	\item [Peak Signal to Noise Ratio (PSNR).]
+	According to Ahmed, et al.~\cite{ahmed_benchmark_2016}, PSNR is ``an estimator for human visual perception of reconstruction quality.'' It has been used to ascertain image quality in various studies and is a known metric for image and video quality~\cite{upmanyu_efficient_2009, jain_image_2016, akramullah_video_2014}. Although it may produce results which do not correlate with human visual perception~\cite{huynh-thu_accuracy_2012, ahmed_benchmark_2016}, it is a valid indicator of image quality when media containing the same visual content is compared~\cite{huynh-thu_accuracy_2012}.
+	PSNR is defined by
+	\begin{align}
+        \mathrm{PSNR} = 10\log_{10}{\left( \frac{L^2}{\mathrm{MSE}} \right)}
+	\end{align}
+	where $L$ is the maximum pixel intensity value of an image.
+	Despite the known limitations of PSNR, since we are going to compare the effect of each encryption scheme on recovered image quality, given a fixed library of images, it is a valid measure of image quality for the study. A higher PSNR indicates higher image quality preservation.
+	\item [Structural Similarity Index (SSIM).]
+	The SSIM for two random variables $X$ and $Y$ is defined in~\cite{ahmed_benchmark_2016, akramullah_video_2014} as
+	\begin{align}
+        \mathrm{SSIM}(X,Y) = \frac{(2\mu_X\mu_Y+c_1)(2\sigma_{XY}+c_2)}{(\mu_X^2+\mu_Y^2+c_1)(\mu_X^2+\mu_Y^2+c_2)}
+	\end{align}
+	where
+	\begin{itemize}
+		\item $\mu_X, \mu_Y$ are the averages of $X$ and $Y$, respectively;
+		\item $\sigma_X, \sigma_Y$ are the variances of $X$ and $Y$, respectively;
+		\item $\sigma_{XY}$ is the covariance of $X$ and $Y$;
+		\item $c_1 = (k_1L)^2, c_2 = (k_2L)^2$ are two variables used to stabilize the measure when $\mu_X^2+\mu_Y^2$ is close to zero~\cite{akramullah_video_2014};
+		\item $L$ is the the maximum pixel intensity value of an image;
+		\item $k_1 = 0.01, k_2 = 0.03$ by default, given in~\cite{ahmed_benchmark_2016}.
+	\end{itemize}
+	The SSIM is applied to the luminance value of two images to gauge structural similarity between neighboring pixels.
+	For the study, we computed $\mathrm{SSIM}(\mathrm{PDT}, \mathrm{CDT})$ for every image operation, under each homomorphic cryptosystem. Higher values of SSIM indicate higher structural similarity, and an SSIM of $1$ indicates that the two images are identical~\cite{ahmed_benchmark_2016}.
+\end{description}
+
+Computing for MSE, PSNR, and SSIM was done using the corresponding built-in functions from the scikit-image Python library \cite{scikit-image}.
+
+\subsubsection{Facial Recognition Tests}
+The method for secure facial recognition using eigenfaces by Erkin, et al. \cite{hutchison_privacy-preserving_2009} was implemented for this study.
+
+As before, training and test data were also secured from the \texttt{faces94} dataset. The images were first converted to grayscale and then downsampled to $40 \times 36$ pixels.
+
+The facial recognition tests are done using ten-fold cross-validation for each cryptosystem, where the number of principal components used by the algorithm is fixed at $K=5$.
+
+Prior to splitting the dataset, the images within each set are shuffled. Since there are twenty (20) images per set, two images are taken at a time for each round of cross-validation. The first round would take the first two images from each set as part of the test set, and the rest of the images will be part of the training set. Then, the succeeding round would take the next two images from each set as part of the test set, and so on until ten rounds have been done. After every round of cross-validation, the accuracy score, confusion matrix, and total processing time are obtained.
+
+%% Summary not needed, this was only important for the thesis proposal - Aldrich
+% \subsection{Summary}
+% In summary, the study consists of:
+% \begin{itemize}
+% 	\item Creating a wrapper library that acts as a unified interface which implements the Paillier, DGK, Dasgupta--Pal, and BGV homomorphic cryptosystems.
+% 	\item An implementation of image processing operations (intensity transformations, facial recognition) under the above cryptosystems.
+% 	\item Conducting tests for image quality, processing time, using images from the \texttt{faces94} dataset.
+% \end{itemize}
