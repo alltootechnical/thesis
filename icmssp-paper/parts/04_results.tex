@@ -57,7 +57,7 @@ The following tables show the resulting metric scores for mean squared error (MS
 \subsubsection{Image Negation}
 Both the Paillier and DGK cryptosystems were able to perform image negation under the encrypted domain without introducing noise in the resulting image. In other words, the resulting image from doing image negation on an image on the clear and doing image negation under the encrypted domain are identical, as evidenced by the mean squared errors being exactly equal to zero, the PSNR being infinite, and the SSIM being exactly equal to one. While the time taken to apply image negation is comparable to that of DGK, the Paillier cryptosystem performed better in terms of encryption and decryption time.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\caption{Image negation under Paillier}
 	\label{tbl:neg-pal}
@@ -97,7 +97,7 @@ Both the Paillier and DGK cryptosystems were able to perform image negation unde
 % 		\bottomrule
 %         \end{tabular}
 % \end{table}
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\caption{Image negation under DGK}
 	\label{tbl:neg-dgk}
@@ -121,7 +121,7 @@ Both the Paillier and DGK cryptosystems were able to perform image negation unde
 \subsubsection{Logarithm Transformation}
 Unlike image negation, logarithm transformation involves more operations, so the increase in processing times for both cryptosystems are expected. Applying the logarithm transformation under Paillier took about 2 seconds per image, while it took about 25 seconds each under DGK. Applying the logarithm transformation under Paillier results in faster and more accurate output images (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$) than under DGK (with $\text{MSE} \le 300$ and $0.61 \le \text{SSIM} \le 0.87$).
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\caption{Logarithm transformation under Paillier}
 	\label{tbl:log-pal}
@@ -160,7 +160,7 @@ Unlike image negation, logarithm transformation involves more operations, so the
 % 		\bottomrule
 %         \end{tabular}
 % \end{table}
-\begin{table}[h]
+\begin{table}[ht]
 	\caption{Logarithm transformation under DGK}
 	\label{tbl:log-dgk}
     \begin{tabular}{lcccccc}
@@ -183,7 +183,7 @@ Unlike image negation, logarithm transformation involves more operations, so the
 \subsubsection{Power-Law Transformation}
 Applying the power-law transformation under both cryptosystems produced less than accurate images. The accuracy varies greatly across all the images as in the case of Paillier, with mean squared errors as high as 8270.696 and as low as 616.419, and SSIM scores ranging from 0.43185 to 0.92334, as seen in Table~\ref{tbl:pwr-pal}. As expected, the total processing time now takes about 15 to 20 seconds per image since the power-law transformation is more computationally intensive due to its approximation of an infinite series consisting of terms using the logarithm function, which is also approximated using a combination of addition and multiplication operations.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\caption{Power-law transformation under Paillier}
 	\label{tbl:pwr-pal}
@@ -237,7 +237,7 @@ When DGK was used in the power-law transformation, it failed to produce a discer
 % 		\bottomrule
 %         \end{tabular}
 % \end{table}
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\caption{Power-law transformation under DGK}
 	\label{tbl:pwr-dgk}
