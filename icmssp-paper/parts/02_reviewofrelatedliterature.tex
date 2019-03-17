@@ -213,7 +213,7 @@ Ziad, et al. also showed experimental results establishing the relatively slow p
 % Convert to single table
 \subsection{Image Intensity Transformations}
 We represent a digital image $R$ as an $M \times N$ matrix of pixel intensity values, each value in the range $\left[0, L-1\right]$, for some positive integer $L$. We denote with $R(x,y)$ the entry at the $x$th row and $y$th column of a matrix $R$.
-An intensity transformation on an image $R$ can be defined as a function $T$ which maps a pixel value $r$ to a new value $r^\prime$, which we can write as $r^\prime = T\left(r\right)$. This function is then applied to every pixel in $R$.
+An intensity transformation on an image $R$ can be defined as a function $T$ which is applied to every pixel $r$ in $R$.
 The \textit{CryptoImg} library implemented two types of linear intensity transformations: image negation and brightness control. An image negation transformation is defined as
 \begin{equation}
     T\left(r\right) = L-1-r,
