@@ -1,4 +1,5 @@
 \section{Review of Related Literature}
+\label{sec:chapter_2}
 \subsection{Homomorphic Cryptosystems}
 A cryptosystem consists of an encryption function $\mathcal{E}$ and a decryption function $\mathcal{D}$, along with the plaintext space $\mathcal{P}$, ciphertext space $\mathcal{C}$ and the key space $\mathcal{K}$~\cite{bauer_cryptosystem_2005}. A \textit{plaintext} is text that can be commonly understood, while a \textit{ciphertext} results from encrypting the plaintext using an encryption key. The \textit{plaintext space} is the set of all possible plaintexts, the \textit{ciphertext space} is the set of all possible ciphertexts, while the \textit{keyspace} is the set of all possible keys.
 
@@ -250,15 +251,15 @@ We represent a digital image $R$ as an $M \times N$ matrix of pixel intensity va
 An intensity transformation on an image $R$ can be defined as a function $T$ which maps a pixel value $r$ to a new value $r^\prime$, which we can write as $r^\prime = T\left(r\right)$. This function is then applied to every pixel in $R$.
 The \textit{CryptoImg} library implemented two types of linear intensity transformations: image negation and brightness control.
 
-An image negation transformation is defined as:
+An image negation transformation is defined as
 \begin{equation}
-    T\left(r\right) = L-1-r
+    T\left(r\right) = L-1-r.
 \end{equation}
 After applying image negation, the resulting image would be similar to a photographic negative~\cite{gonzalez_digital_2008}.
 
-A brightness control transformation with parameter $v$ is defined as:
+A brightness control transformation with parameter $v$ is defined as
 \begin{equation}
-    T\left(r,v\right) = r+v
+    T\left(r,v\right) = r+v.
 \end{equation}
 The above transformations are linear in terms of the input $r$, and are thus simple to implement under a homomorphic cryptosystem.
 
