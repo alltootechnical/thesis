@@ -15,7 +15,7 @@
 % \end{enumerate}
 % The results of the image intensity transformations are tested for image quality using benchmarks in~\cite{ahmed_benchmark_2016}.
 
-\subsection{Cryptosystem Implementation}
+\subsection{System Implementation}
 A wrapper library was created in Python that integrates the Paillier, DGK, and BGV cryptosystems into a unified interface.
 \begin{itemize}
 	\item The Paillier cryptosystem is incorporated using the python-paillier library at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
@@ -23,83 +23,22 @@ A wrapper library was created in Python that integrates the Paillier, DGK, and B
 	\item The BGV cryptosystem is implemented using the Pyfhel library (\url{https://github.com/ibarrond/Pyfhel}) using a HElib backend from (\url{https://github.com/shaih/HElib}).
 \end{itemize}
 
-
-% [TO-DO: This is further explained in another paper.]
-% We will briefly discuss a protocol to enable cryptosystems built for integer inputs to handle real number inputs.
-% The following protocol was also used by \textit{CryptoImg} for image processing \cite{ziad_cryptoimg:_2016}.
-% This is also used for our own implementation of the Dasgupta--Pal cryptosystem in order to handle real numbers.
-
-% We represent a floating-point (FP) number as a pair of two integers $(m,e)$ representing the mantissa and exponent of the FP number with respect to a base $b$. The mantissa $m$ is encrypted, while the exponent $e$ is unencrypted.
-% Let $a,b,c$ be FP numbers represented by the pairs $(m_a,e_a),(m_b,e_b),(m_c,e_c)$ respectively. Let $\oplus,\otimes$ represent the homomorphic operations which correspond to the addition and multiplication, respectively. We define the secure real number operations as follows:
-% \begin{description}
-%   \item[Addition.]
-%     To compute $E(c)=E(a+b)$ we compute
-%     \begin{align*}
-%       E(m_c) &= E(m_1) \oplus (b^{e_b-e_a} \otimes E(m_b)), e_c = e_a & \text{ if } e_a \leq e_b \\
-%       E(m_c) &= E(m_b) \oplus (b^{e_a-e_b} \otimes E(m_a)), e_c = e_b & \text{ if } e_a > e_b
-%     \end{align*}
-%   \item[Scalar multiplication.]
-%     To compute $E(c) = E(ab)$, where $a$ and $E(b)$ are known (i.e. $m_a$ is not encrypted), we compute
-%     \begin{align*}
-%       E(m_c) &= m_a \otimes E(m_b)\\
-%       e_c &= e_a + e_b
-%     \end{align*}
-% \end{description}
-
-\subsection{Non-Linear Intensity Transformations}
-We will implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}.
-% \subsubsection{Logarithm Transformation}
-In order to perform the logarithm transformation under Paillier and DGK, we use the following closed-form approximation for $\log\left(1 + x\right)$ from~\cite{pcsc-paper}.
-% TODO: HOW ABOUT BGV
-\begin{align}\label{eq:optimal_log_approximation}
-	\begin{split}
-		&\log\left(1+x\right) \approx \frac{a(x)}{b(x)} + \log{16}
-	\end{split}
-\end{align}
-where
-\begin{align*}
-	\begin{split}
-	a(x) &= 137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 \\
-	&- 121239315x - 257804775\\
-	b(x) &= 30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x \\
-	&+ 3122577).
-	\end{split}
-\end{align*}
-% \begin{align}\label{eq:optimal_log_approximation}
-% 	\begin{split}
-% 		&\log\left(1+x\right) \\
-% 		&\approx \frac{137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 - 121239315x - 257804775}
-% 		{30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x + 3122577)}\\
-% 		&+ \log{16}.
-% 	\end{split}
-% \end{align}
-
-% \subsubsection{Power-Law Transformation}
-To apply the power-law transformation using Paillier and DGK, we must provide an approximation for $x^\gamma$.
-We use partial sums of the following series, which relies on the logarithm function.
-\begin{align}
-	x^\gamma &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
-\end{align}
-For the implementation of the power-law transformation for this paper, a partial sum consisting of the first five terms of the infinite series were used.
-
 \subsection{Assessment of Homomorphic Encryption Schemes}
-A laptop computer with a 2.5 GHz Intel Core i7 quad-core processor and 8 GB of RAM is used to perform the computations, and processing time was tracked using built-in timing functions. The processing time for all cases were recorded. All of the tests are done using Python 3.7.1 running on Linux.
-
 \subsubsection{Image Quality of Intensity Transformations}
-In this section, we discuss the image quality metrics we used for assessing the performance of non-linear intensity transformations.
-
-We first obtained test images from the \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex. However, only ten distinct facial images from the dataset were selected for the purposes of this test. Since only grayscale images are used in the study, the images were converted to grayscale and then downsampled to $40 \times 36$ pixels.
-
-For each cryptosystem, three image operations are tested:
+We  obtained ten test images from the \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex. The images were converted to grayscale and then downsampled to $40 \times 36$ pixels.
+For each cryptosystem, three image operations are tested, as they are defined in Table \ref{tab:imageoperation_summary}:
 \begin{enumerate}
 	\item Image negation
 	\item Logarithm transformation, with $c = 30$
 	\item Power-law transformation, with $c = 1$ and $\gamma = 0.4$
 \end{enumerate}
+The logarithm transformation was implemented using the approximation in Equation \ref{eq:optimal_log_approximation}, while the exponentiation in the power-law transformation was implemented by evaluating the sum of the first five terms of the infinite series in Equation \ref{eq:power_approximation}.
+
+A laptop computer with a 2.5 GHz Intel Core i7 quad-core processor and 8 GB of RAM is used to perform the computations, and processing time was tracked using built-in timing functions. The processing time for all cases were recorded. All of the tests are done using Python 3.7.1 running on Linux.
 
 For each plaintext image (PT), we considered each image operation listed above and generate three images: a plaintext domain transformation (PDT), a ciphertext image (CT), and an ciphertext domain transformation (CDT). The PDT was generated by running the image operation on the original image. The CT was generated by encrypting the image, then applying the operation, and the CDT was generated by decrypting the CT. The three images (PT, PDT, CDT) were then compared using various benchmarks to evaluate the quality and security of each homomorphic encryption scheme.
 
-We perform three tests to ascertain the preservation of image quality after encryption and decryption: MSE, PSNR, and SSIM, adopted from~\cite{ahmed_benchmark_2016, ahmad_efficiency_2012, wu_npcr_2011}. In describing each test, we let $X_i$ denote a value in an image $X$, where $1 \leq i \leq N$.
+We perform three tests to ascertain the preservation of image quality after encryption and decryption: MSE, PSNR, and SSIM, adopted from~\cite{ahmed_benchmark_2016, ahmad_efficiency_2012, wu_npcr_2011}. In describing each test, we let $R_i$ denote a value in an image $R$, where $1 \leq i \leq N$.
 \begin{description}
 	\item [Mean Squared Error (MSE).] The MSE is defined in~\cite{ahmed_benchmark_2016} as
 	\begin{align}
