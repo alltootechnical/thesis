@@ -3,14 +3,16 @@ A paper published in 2009 by Ziad, et al. implements privacy-preserving image pr
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.4\textwidth]{figures/ClientServerModel.png}
-    \caption{Client-server architecture used by \textit{CryptoImg} \cite{ziad_cryptoimg:_2016}}
+    \caption{Architecture used by \textit{CryptoImg}, from \cite{ziad_cryptoimg:_2016}}
     \label{fig:clientserver}
 \end{figure}
 
-An intensity transformation on a digital image $R$ can be defined as a function $T$ which is applied to every pixel $r$ in $R$. Table \ref{tab:imageoperation_summary} shows common image intensity transformations~\cite{gonzalez_digital_2008}.
+An intensity transformation on a digital image $R$ can be defined as a function $T$ which is applied to every pixel $r$ in $R$. Table \ref{tab:imageoperation_summary} shows common image intensity transformations~\cite{gonzalez_digital_2008}. 
+The \textit{CryptoImg} library implemented two types of intensity transformations: image negation and brightness control, which are both linear transformations. 
+In this study, we consider two common non-linear transformations. the logarithm transformation and power-law transformation~\cite{gonzalez_digital_2008}, seen in Table \ref{tab:imageoperation_summary}.
 
 % The \textit{CryptoImg} library implemented the following image processing operations: image negation, brightness adjustment, spatial filters (for noise reduction, edge detection and sharpening), morphological operations, and histogram equalization. 
-The \textit{CryptoImg} library implemented two types of intensity transformations: image negation and brightness control, which are both linear transformations. In this study,we consider two common non-linear transformations. the logarithm transformation and power-law transformation~\cite{gonzalez_digital_2008}, seen in Table \ref{tab:imageoperation_summary}.
+
 
 % For image negation and spatial filters, the protocols specified by \textit{CryptoImg} allow all image processing operations to be performed on the server. However, due to limitations in the Paillier cryptosystem, the protocols presented for morphological operations and histogram equalization require both the client and the server to perform image processing calculations, although the server performs a significant portion of the processing.
 
