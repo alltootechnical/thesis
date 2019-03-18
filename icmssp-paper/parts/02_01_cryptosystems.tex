@@ -1,0 +1,187 @@
+\subsection{Homomorphic Cryptosystems}
+A cryptosystem~\cite{bauer_cryptosystem_2005} consists of an encryption function and a decryption function, which operate on plaintexts, ciphertexts and keys. A \textit{plaintext} is text that can be commonly understood within a larger group. Given a \textit{key}, the encryption function maps a plaintext to some \textit{ciphertext}, which can only be understood by authorized parties. The decryption function similarly maps a ciphertext back to its corresponding plaintext, given an appropiate key. By sending data as ciphertext and only exposing the corresponding plaintexts to authorized parties who have access to the appropiate keys, secure data transmission can be achieved.
+
+A \textit{homomorphic cryptosystem} allows operations to be performed on recovered plaintexts by performing corresponding operations on ciphertexts. This allows for secure computation by performing operations in the ciphertext domain. It is important to note that a simple operation in the plaintext space may require a computationally intensive operation in the ciphertext space.
+
+% big table to summarize Paillier and DGK
+% \begin{table*}[ht]
+% 	\caption{Summary of partially homomorphic cryptosystems}
+% 	\label{tab:phe_summary}
+%     \begin{tabular}{
+%         p{\dimexpr 0.2\linewidth-2\tabcolsep}
+%         p{\dimexpr 0.4\linewidth-2\tabcolsep}
+%         p{\dimexpr 0.4\linewidth-2\tabcolsep}}
+% 		\toprule
+% 		 & Paillier & DGK\\
+%         \midrule
+%             Plaintext space &
+%             $\mathbb{Z}_n$ &
+%             $\mathbb{Z}_u$ 
+%             \\
+%             Ciphertext space &
+%             $\mathbb{Z}_{n^2}$ &
+%             $\mathbb{Z}^*_n$
+%             \\
+%             Key generation &
+%             Define a function $L(x)$ as the largest integer $v$ greater than zero such that $x-1 \geq vn$.\newline
+%             Choose two large primes $p$ and $q$, and set $n = pq, \lambda = \mathrm{lcm}(p-1,q-1)$.\newline
+%             Select an integer $g$, $0\leq g \leq n^2$ such that $\mathrm{gcd}(L(g^\lambda \bmod n^2), n) = 1$\newline
+%             The public key as $(g,n)$ and the private key $(p,q)$
+%             &
+%             Let $p,q$ be primes such that we can choose two primes $v_p$ and $v_q$ such that $v_p | (p-1)$ and $v_q | (q-1)$, and a small prime $u$ such that $u | (p-1)$ and $u | (q-1)$. \newline
+%             Denote $n = pq$. \newline
+%             Choose $g$ to be an integer of order $uv_pv_q$ and $h$ to be of order $v_pv_q$.\newline
+%             The public key is $(n,g,h,u)$ and the private key is $(p,q,v_p,v_q)$.
+%             \\
+%             Encryption function &
+%             $E(m) = g^m \cdot r^n \mod{n^2}$ &
+%             $E(m) = g^m \cdot h^r \mod{n}$
+%             \\
+%             Decryption function &
+%             $D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n$ &
+%             Compute $c^{v_pv_q} \bmod n$. There is a one-to-one correspondence between this quantity and the plaintexts.
+%             \\
+% 	    \bottomrule
+%     \end{tabular}
+% \end{table*}
+\subsection{The Paillier and DGK Cryptosystems}
+The Paillier cryptosystem \cite{stern_public-key_1999}, developed by Pascal Paillier, is a probabilistic encryption scheme which is based on the composite residuosity class problem.
+Table \ref{tab:paillier_summary} shows the key generation, encryption, and decryption procedures of the Paillier cryptosystem.
+\begin{table}[ht]
+	\caption{The Paillier cryptosystem}
+	\label{tab:paillier_summary}
+    \begin{tabular}{
+        p{\dimexpr 0.20\linewidth-2\tabcolsep}
+        p{\dimexpr 0.80\linewidth-2\tabcolsep}}
+		\toprule
+		Step & Description\\
+        \midrule
+            Generate\newline Keys &
+            Let $L(x)$ be the largest integer $v$ greater than zero such that $x-1 \geq vn$.\newline
+            Choose two large primes $p$ and $q$, and set $n = pq$, and $ \lambda = \mathrm{lcm}(p-1,q-1)$.\newline
+            Select an integer $g$, $0\leq g \leq n^2$ such that $\mathrm{gcd}(L(g^\lambda \bmod n^2), n) = 1$\newline
+            The public key as $(g,n)$ and the private key is $(p,q)$.
+            \\
+            Encrypt &
+            The encryption of a plaintext $m \in  \mathbb{Z}_n$ given the public key is  $E(m) = g^m \cdot r^n \mod{n^2}$, where $r$ is a random integer in $\mathbb{Z}_{n^2}$.
+            \\
+            Decrypt &
+            The decryption of a plaintext $c \in  \mathbb{Z}_{n^2}$ given the private key is $D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n$. 
+            \\
+	    \bottomrule
+    \end{tabular}
+\end{table}
+% The scheme allows for the encryption and decryption of integer messages, and is known to be additively homomorphic.
+% We now state the encryption and decryption algorithms of the Paillier cryptosystem and its homomorphic properties.
+
+% \paragraph{Key Generation}
+% We first define a function $L(x)$ as the largest integer $v$ greater than zero such that $x-1 \geq vn$.
+% We choose two large primes $p$ and $q$, and set $n = pq, \lambda = \mathrm{lcm}(p-1,q-1)$.
+% Then we select an integer $g$, $0\leq g \leq n^2$ such that $\mathrm{gcd}(L(g^\lambda \bmod n^2), n) = 1$.
+% We denote the public key as $(g,n)$ and the private key $(p,q)$.
+
+% \paragraph{Encryption and Decryption}
+% The encryption function to encrypt a plaintext $m \in \mathbb{Z}_n$ given a public key $(g,n)$ is defined as
+% \begin{align*}
+%   E(m) = g^m \cdot r^n \mod{n^2},
+% \end{align*}
+% where $r$ is a random non-negative integer less than $n^2$.
+
+% The decryption function to decrypt a ciphertext $c \in \mathbb{Z}^\ast_{n^2}$ given a private key $(p,q)$ is defined as:
+% \begin{align*}
+%   D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n
+% \end{align*}
+
+For all plaintexts $m_1,m_2 \in \mathbb{Z}_n$, the following properties hold for the Paillier cryptosystem:
+\begin{align}
+  D(E(m_1)g^{m_2}\bmod n^2) &=(m_1+m_2)\bmod n \label{eq:paillier_ctpluspt} \\ 
+  D(E(m_1)E(m_2)\bmod n^2) &=(m_1+m_2)\bmod n \label{eq:paillier_ctplusct} \\ 
+  D(E(m_1)^{m_2}\bmod n^2) &= m_1m_2\bmod n. \label{eq:paillier_cttimespt}
+\end{align}
+These identities allow for the addition of a ciphertext with a plaintext (Equation \ref{eq:paillier_ctpluspt}), the addition of two ciphertexts (Equation \ref{eq:paillier_ctplusct}), and the multiplication of a ciphertext by a plaintext (Equation \ref{eq:paillier_cttimespt}) under the Paillier cryptosystem.
+
+The DGK cryptosystem was published by Damg{\aa}rd, Geisler, and Kr{\o}igaard in 2007 in an effort to create a secure integer comparison scheme \cite{pieprzyk_efficient_2007, cryptoeprint:2008:321} which is widely used in the literature \cite{veugen_improving_2012}.
+Table \ref{tab:dgk_summary} shows the key generation, encryption, and decryption procedures of the DGK cryptosystem. 
+
+Similar to the Paillier cryptosystem, for all $m_1,m_2 \in \mathbb{Z}_u$, the following homomorphic properties hold for the DGK cryptosystem:
+\begin{align}
+    D(E(m_1)g^{m_2}) &=(m_1+m_2)\bmod u \label{eq:dgk_ctpluspt}\\
+    D(E(m_1)E(m_2)) &=(m_1+m_2)\bmod u \label{eq:dgk_ctplusct}\\
+    D(E(m_1)^{m_2}) &= m_1m_2\bmod u. \label{eq:dgk_cttimespt},
+\end{align}
+which allow for homomorphic operations similar to to that of the Paillier cryptosystem.
+As the multiplicative homomorphism (Equation \ref{eq:dgk_cttimespt}) was not presented in the original paper, we provide a short proof here.
+\begin{table}[ht]
+	\caption{The DGK cryptosystem}
+	\label{tab:dgk_summary}
+    \begin{tabular}{
+        p{\dimexpr 0.2\linewidth-2\tabcolsep}
+        p{\dimexpr 0.8\linewidth-2\tabcolsep}}
+		\toprule
+		Step & Description\\
+        \midrule
+            Generate \newline Keys &
+            Let $p,q$ be primes such that we can choose two primes $v_p$ and $v_q$ such that $v_p | (p-1)$ and $v_q | (q-1)$, and a small prime $u$ such that $u | (p-1)$ and $u | (q-1)$. \newline
+            Denote $n = pq$. \newline
+            Choose $g$ to be an integer of order $uv_pv_q$ and $h$ to be of order $v_pv_q$.\newline
+            The public key is $(n,g,h,u)$ and the private key is $(p,q,v_p,v_q)$.
+            \\
+            Encrypt &
+            The encryption of a plaintext $m \in \mathbb{Z}_u$ given the public key is $E(m) = g^m \cdot h^r \mod{n}$, where $r$ is a random integer in $\mathbb{Z}_n$.
+            \\
+            Decrypt &
+            To decrypt a ciphertext $c \in \mathbb{Z}_n^\ast$, we compute $c^{v_pv_q} \bmod n$. There is a one-to-one correspondence between this quantity and the plaintexts, so the plaintext can be recovered using a lookup table.
+            \\
+	    \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\begin{theorem}
+    In the DGK cryptosystem with public key $(n,g,h,u)$ and private key $(p,q,v_p,v_q)$, it holds that $D(E(m_1)^{m_2}) = m_1m_2\bmod u$ for all plaintexts $m_1,m_2 \in \mathbb{Z}_u$.
+\end{theorem}
+\begin{proof}
+  Let $m_1,m_2 \in \mathbb{Z}_u$.
+  We note that
+  \begin{align*}
+    E(m_1)^{m_2} 
+    &= (g^{m_1} \cdot h^r \bmod{n})^{m_2} \bmod n \\
+    &= (g^{m_1} \cdot h^r)^{m_2} \bmod{n}\\
+    &= g^{m_1m_2} \cdot (h^{m_2r}) \bmod{n}.
+  \end{align*}
+  Since $r$ is a random integer, $m_2r$ is also a random integer, Therefore, $g^{m_1m_2} \cdot (h^{m_2r}) \bmod{n} = E(m_1)^{m_2}$ is a valid encryption of the message $m_1m_2$.
+\end{proof}
+
+We have shown how the Paillier and DGK cryptosystems have similar homomorphic properties,allowing the addition of integers and multiplication of ciphertexts by plaintexts.
+In order to use these cryptosystems in secure non-linear image processing, we require the two schemes to support the encryption and manipulation of floating-point numbers. To do this, we represent floating-point numbers using an encrypted mantissa and an unencrypted exponent, an approach seen in~\cite{ziad_cryptoimg:_2016}. 
+
+Table \ref{tab:flop_summary} describes two-party protocols which allow a server to perform division~\cite{boukoros_lightweight_2017}, squaring~\cite{hutchison_privacy-preserving_2009}, and multiplication on messages $x$ and $y$ encrypted by a client. These protocols, used in conjunction with the floating-point extension, allow for secure floating-point arithmetic~\cite{pcsc-paper}.
+
+\begin{table}[ht]
+	\caption{Two-party FP protocols}
+	\label{tab:flop_summary}
+    \begin{tabular}{
+        p{\dimexpr 0.25\linewidth-2\tabcolsep}
+        p{\dimexpr 0.75\linewidth-2\tabcolsep}}
+		\toprule
+		Operation & Protocol\\
+        \midrule
+            Division &
+            The server selects a random number $r$ and sends $E(rx)$ and $E(ry)$ to the client, who can decrypt to obtain $rx$ and $ry$. The client then computes and encrypts the quotient and sends $E(rx/ry) = E(x/y)$ to the server. 
+            \\
+            Squaring &
+            The server selects a random number $r$ and computes $E\left(x+r\right)$. The server sends $E(x+r)$  to the client, who can decrypt to obtain $x+r$. The client then encrypts and sends $E((x+r)^2)$ to the server. The server then computes $E\left(\left(x+r\right)^2\right)E\left(-2rx + r^2\right) = E\left(x^2\right)$.
+            \\
+            Multiplication &
+            The server obtains $E(x^2)$, $E(y^2)$, and $E((x+y)^2)$ using the exponentiation protocol. It can then compute $\frac{1}{2}E\left(\left(x+y\right)^2\right)E\left(x^2\right)^{-1}E\left(y^2\right)^{-1} = E\left(xy\right)$.\\
+	    \bottomrule
+    \end{tabular}
+\end{table}
+\subsection{The BGV Cryptosystem}
+The BGV (Brakerski--Gentry--Vaikuntanathan) cryptosystem \cite{cryptoeprint:2011:277} is a fully homomorphic cryptosystem created based on the ring-learning with error problem. A \textit{fully homomorphic cryptosytem} allows aribitrary computation on encrypted data.
+However, they are known to be significantly slower than partially homomorphic cryptosytems; improving the efficiency of fully homomorphic cryptosytems is an active area of research \cite{sen_homomorphic_2013}. 
+The details regarding the construction of the BGV cryptosystem are beyond the scope of this paper. 
+
+For this study, we will be using \textit{HELib}~\cite{garay_algorithms_2014}, an open-source library which implements the BGV cryptosystem with optimizations. \textit{HELib} supports arithmetic operations on integer ciphertexts and logical operations on binary ciphertexts. 
+% Evaluation of operations on 120 inputs in \textit{HELib} was performed in around 4 minutes, with an average of 2 seconds to process a single input~\cite{hutchison_fully_2010,cryptoeprint:2011:566}. 
+It has also been adapted to Python using the Pyfhel library \cite{pyfhel_2018} maintained by Ibarrondo, Laurent (SAP) and Onen (EURECOM), and licensed under the GNU GPL v3 license.  
