@@ -14,14 +14,26 @@ Since the approximation by Khattri is accurate for values of $x$ near zero, we c
 \end{align*}
 
 Applying the five-point Gauss--Legendre quadrature rule to approximate $\int_{n}^{\alpha n + \alpha}{\frac{1}{t}\diff t}$ with $\alpha = 1/16$ using SageMath 8.3, we arrive at the approximation:
+% \begin{align}\label{eq:optimal_log_approximation}
+% 	\begin{split}
+% 		&\log\left(1+x\right) \\
+% 		&\approx \frac{137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 - 121239315x - 257804775}
+% 		{30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x + 3122577)}\\
+% 		&+ \log{16}.
+% 	\end{split}
+% \end{align}
 \begin{align}\label{eq:optimal_log_approximation}
-	\begin{split}
-		&\log\left(1+x\right) \\
-		&\approx \frac{137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 - 121239315x - 257804775}
-		{30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x + 3122577)}\\
-		&+ \log{16}.
-	\end{split}
+		\log\left(1+x\right) \approx \frac{a(x)}{b(x)} + \log{16},
 \end{align}
+where
+\begin{align*}
+	\begin{split}
+	a(x) &= 137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 - 121239315x \\
+		&- 257804775\\
+	b(x) &= 30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x\\
+		&+ 3122577).
+	\end{split}
+\end{align*}
 
 We note that the approximation in Equation~\ref{eq:optimal_log_approximation} requires the value of $\log{16}$. This can be computed in the plaintext domain and added to an encrypted value using the properties of the Paillier cryptosystem. The remaining arithmetic operations in the approximation can be computed in the encrypted domain, using the protocols described in Section~\ref{sec:fp_arithmetic}. Therefore, this approximation can be calculated in a privacy-preserving manner.
 

@@ -12,10 +12,11 @@ The encryption function to encrypt a plaintext $m \in \mathbb{Z}_n$ given a publ
 	E\left(m\right) = g^m \cdot r^n \mod{n^2},
 \end{equation*}
 where $r$ is a random non-negative integer less than $n^2$.
-The decryption function to decrypt a ciphertext $c \in \mathbb{Z}^*_{n^2}$ given a private key $(p,q)$ is defined as:
+The decryption function to decrypt a ciphertext $c \in \mathbb{Z}^*_{n^2}$ given a private key $(p,q)$ is defined as
 \begin{equation*}
-	D\left(c\right) = L\left(c^\lambda \bmod n^2\right) \cdot \left(L\left(g^\lambda \bmod n^2\right)\right)^{-1} \mod n.
+	D\left(c\right) = L\left(c^\lambda \bmod n^2\right) \cdot \left(L\left(g^\lambda \bmod n^2\right)\right)^{-1} \mod n,
 \end{equation*}
+where the function $L(x)$ is the largest integer $v$ greater than zero such that $x-1 \geq vn$.
 \subsubsection{Homomorphic Properties of the Paillier Cryptosystem}
 The Paillier cryptosystem supports additive homomorphism as well as the multiplication of a plaintext scalar to an encrypted message. These homomorphic properties are used to add a plaintext scalar to a ciphertext, add two ciphertexts, and multiply a ciphertext by a plaintext scalar, respectively. They are defined as follows.
 
@@ -76,17 +77,14 @@ Suppose Bob has $E\left(x\right)$ and $E\left(y\right)$ and wants to obtain $E\l
 
 \subsubsection{Secure Exponentiation}
 \label{ssec:exponentiationprotocol}
- We can use the following two-party scheme, adapted from the protocol to calculate Euclidean distances used in \cite{hutchison_privacy-preserving_2009}, in order to perform secure exponentiation.
+ We can use the following two-party scheme, adapted from the protocol to calculate Euclidean distances used in \cite{hutchison_privacy-preserving_2009}, in order to perform secure exponentiation. 
 
 Suppose Alice encrypts an integer $x$ and sends it so Bob has $E\left(x\right)$, and wants to obtain $E\left(x^2\right)$ without exposing the value of $x$.
 \begin{itemize}
 	\item Bob first selects a random integer $r$ and computes $E\left(x+r\right)$. Bob can do this since $r$ is a plaintext constant.
 	\item Bob sends $E\left(x+r\right)$ to Alice, who decrypts the ciphertext to obtain $x+r$.
-	\item Alice squares $x+r$ and encrypts the result. She sends $E\left(\left(x+r\right)^2\right)$ to Bob.
-	\item Bob computes $E\left(-2rx + r^2\right)$. He then computes
-	\begin{align*}
-		E\left(\left(x+r\right)^2\right)E\left(-2rx + r^2\right) = E\left(x^2\right).
-	\end{align*}
+	\item Alice squares $x+r$ and encrypts, sending $E\left(\left(x+r\right)^2\right)$ to Bob.
+	\item Bob then computes $E\left( \left(x+r\right)^2 + (-2rx + r^2)\right) = E\left(x^2\right)$.
 \end{itemize}
 
 \subsubsection{Secure Multiplication}
@@ -96,12 +94,7 @@ Suppose Alice encrypts integers $x$ and $y$, and Bob has $E\left(x\right), E\lef
 	\item Bob acquires $E\left(x^2\right)$ and $E\left(y^2\right)$ using the secure squaring protocol.
 	\item Bob sends $E\left(x+y\right)$ to Alice, who decrypts the ciphertext to obtain $x+y$.
 	\item Alice sends $E\left(\left(x+y\right)^2\right)$ to Bob.
-	\item Bob then computes
-	\begin{align*}
-		\frac{1}{2}E\left(\left(x+y\right)^2\right)E\left(x^2\right)^{-1}E\left(y^2\right)^{-1} &= \frac{1}{2}E\left(\left(x+y\right)^2 - x^2 - y^2\right)\\
-		&= \frac{1}{2}E\left(2xy\right)\\
-		&= E\left(xy\right).
-	\end{align*}
+	\item Bob then computes $ E\left(\frac{1}{2} \left( \left(x+y\right)^2 - x^2 - y^2\right)\right) = E\left(xy\right)$.
 \end{itemize}
 
 By applying these extensions to the Paillier cryptosystem, privacy-preserving floating-point arithmetic can be acheived.
