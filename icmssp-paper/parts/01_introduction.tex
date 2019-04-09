@@ -1,67 +1,22 @@
 \section{Introduction}
-\subsection{Context of the Study}
-Digital data privacy and security is a growing concern in various fields, such as cloud computing~\cite{potey_homomorphic_2016}, health information systems~\cite{kester_cryptographic_2015}, and video surveillance~\cite{upmanyu_efficient_2009}. To meet these needs, various cryptosystems have been developed.
-% A cryptosystem is a system which operates on plaintexts, ciphertexts and keys using an encryption algorithm, which maps a plaintext to a ciphertext, together with a decryption algorithm, which maps a ciphertext to a plaintext, given an appropriate key~\cite{bauer_cryptosystem_2005}. The encryption and decryption algorithms are chosen such that the plaintext cannot easily be recovered from the ciphertext without knowledge of the key. This allows data to be securely transmitted over an insecure channel.
-
-One particular application of cryptography is image encryption. While cryptosystems used to encrypt digital data in general, such as the Advanced Encryption Standard (AES) or elliptic curve cryptography, can also be used to encrypt images~\cite{jain_image_2016, singh_image_2015} other algorithms created specifically for image encryption have also been developed~\cite{murugan_survey_2018}.
-
-In a homomorphic cryptosystem, operations such as addition and multiplication can be performed on encrypted data. These operations are then preserved when the data is decrypted. In this manner, data is manipulated without compromising data privacy, as the encrypted data being operated on remains secure~\cite{fontaine_survey_2007, sen_homomorphic_2013}. In the area of homomorphic image encryption, there is interest in being able to perform image manipulation operations on the encrypted data such as image adjustment, filtering, and morphological/feature extraction operations~\cite{ziad_cryptoimg:_2016, gonzalez_digital_2008}. More advanced operations have also been implemented using homomorphic cryptosystems, such as facial recognition \cite{hutchison_privacy-preserving_2009} and neural networks \cite{hesamifard_cryptodl:_2017}. This study in particular focuses on facial recognition.
-
-% \subsection{Research Questions}
-% By implementing homomorphic cryptosystems and creating a library so they can be easily used, we aim to address our main research question: What is the best method for facial image data to be encrypted and manipulated for practical applications?
-
-% More specifically, our research will address the following sub-questions:
-% \begin{enumerate}
-% 	\item Which homomorphic cryptosystems admit more image processing operations? How can existing homomorphic cryptosystems be modified to admit more image processing operations?
-% 	\item Which homomorphic cryptosystems are the most time-efficient and the most accurate in applying image processing operations?
-% 	\item Which homomorphic cryptosystems best preserve image quality in applying image processing operations?
-% \end{enumerate}
-
-
-\subsection{Research Objectives}
-% Previous attempts in the literature to provide image processing tasks such as image manipulation \cite{ziad_cryptoimg:_2016} and  facial recognition \cite{hutchison_privacy-preserving_2009} have primarily used the Paillier and  Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK) cryptosystems to perform linear operations on encrypted data.
-% In this study, we extend this research to provide an objective comparison of various homomorphic cryptosystems currently in the literature in performing non-linear operations, and facial detection, as opposed to just linear operations and facial recognition.
-
-Our main research objective is to assess the practicality of various homomorphic cryptosystems with regard to image processing on faces.
-% Homomorphic cryptosystems are known to be slower in terms of encryption, operation, and decryption time~\cite{sen_homomorphic_2013}. Furthermore, the operations on encrypted data supported by homomorphic cryptosystems are limited, and some schemes require preprocessing to be performed on images, limiting the range of operations which can be performed efficiently~\cite{li_elliptic_2012}.
-
-% In summary, in this study, we wish to
-More specifically, we wish to do the following:
-\begin{enumerate}
-    \item Implement common linear and non-linear image processing operations using known homomorphic encryption schemes, then determine which schemes admit more image processing operations and extend known cryptosystems to support more operations, if possible;
-    \item Compare the time efficiency and accuracy of common image processing operations under known homomorphic encryption schemes, and of common image processing operations without using homomorphic encryption;
-    \item Create a library to allow for convenient use and comparison of these homomorphic encryption schemes for image processing and facial recognition.
-\end{enumerate}
-
-\subsection{Scope and Limitations}
-% Our study will be limited in terms of the cryptosystems to be tested, the image processing operations we will implement, and the statistical tests we will use to gauge the security of the cryptosystems. Below is a listing of the scope of the study.
-
-% We will implement and test the following algorithms:
-In this study, we will implement and test the following cryptosystems:
-\begin{enumerate}
-	\item A variant of the Paillier cryptosystem~\cite{stern_public-key_1999} which supports floating-point operations, used in \textit{CryptoImg}~\cite{ziad_cryptoimg:_2016}.
-    \item The Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK) cryptosystem~\cite{pieprzyk_efficient_2007, cryptoeprint:2008:321} which is primarily used for secure integer comparison.
-	% \item A fully homomorphic encryption scheme by Dasgupta and Pal, which uses polynomial rings~\cite{dasgupta_design_2016}.
-	\item The Brakerski--Gentry--Vaikuntanathan (BGV) cryptosystem \cite{cryptoeprint:2011:277}, an improvement on the lattice-based cryptosystem by Gentry~\cite{gentry_fully_2009}, with optimizations from Smart, Vercauteren, and Halevi \cite{hutchison_fully_2010, cryptoeprint:2011:566}.
-\end{enumerate}
-We will implement and test the following categories of image manipulation operations:
-\begin{enumerate}
-	\item Non-linear image intensity adjustment (logarithm and power-log transformations)
-	\item Facial detection and recognition using the eigenface approach \cite{turk_eigenfaces_1991}.
-\end{enumerate}
-We will adopt the benchmark for evaluating image quality of image encryption schemes presented by Ahmed, et. al~\cite{ahmed_benchmark_2016}. The presented benchmark reflects many tests used in other literature~\cite{ahmad_efficiency_2012, wu_npcr_2011}.
-\begin{enumerate}
-    \item Mean Squared Error (MSE)
-    \item Peak Signal to Noise Ratio (PSNR)
-    \item Structural Similarity Index (SSIM)
-\end{enumerate}
-A detailed overview of the above will be provided in the methodology. Grayscale images will be used in the study.
-A client-server model for secure computation will be assumed to allow operations such as secure comparison and exponentiation.
-% Training and test data are taken from the publicly available \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex.
-
-\subsection{Significance of the Study}
-This study aims to directly address one of the current problems in the research of homomorphic cryptosystems: the practicality of homomorphic encryption~\cite{sen_homomorphic_2013}. The literature shows existing homomorphic cryptosystems and how they support primitive operations (usually addition and multiplication) on encrypted data, however, for homomorphic cryptosystems to be useful for practical use, efficient support for more complicated image processing operation must be demonstrated as well. While implementations of image processing operations in a homomorphic cryptosystem exist in the literature~\cite{ziad_cryptoimg:_2016, garay_algorithms_2014}, our study targets the more computationally intensive task of facial recognition and detection.
+Digital image security is a growing concern, and various image encryption schemes have been developed and analyzed in the literature~\cite{murugan_survey_2018, jain_image_2016, khoirom_cryptanalysis_2018}. Cryptosystems allow for the secure transmission of data by way of encryption and decryption schemes. 
+Of particular interest is homomorphic image encryption, which allows operations to be performed on encrypted images. These operations are then preserved when the images is decrypted. In this manner, images are manipulated without compromising data privacy, as the image being operated on remains secure~\cite{fontaine_survey_2007, sen_homomorphic_2013}. 
 
 In the Philippine setting, preservation of data privacy is of utmost importance when it comes to outsourcing work involving sensitive data to local companies with the ratification of the Data Privacy Act of 2012. Thus recent developments in applications of homomorphic encryption on non-text-based data (such as images) are becoming relevant today.
 
-We wish to contribute to existing models for the secure transmission and modification of image data by developing a software library which allows the use and comparison of various homomorphic encryption algorithms. Our software library would allow service providers to perform image manipulation for clients without compromising data privacy.
+In the area of homomorphic image encryption, there is interest in being able to perform image manipulation operations such as image adjustment, image filtering, and morphological extraction operations~\cite{ziad_cryptoimg:_2016, gonzalez_digital_2008}. There is also work on facial recognition on encrypted images~\cite{turk_eigenfaces_1991, hutchison_privacy-preserving_2009}. While secure linear image operations have been implemented~\cite{ziad_cryptoimg:_2016}, preprocessing which requires non-linear operations, such as those in~\cite{oravec_illumination_2010}, has yet to be performed in the encrypted domain.
+
+Homomorphic encryption schemes have two main limitations: first, they are limited in the operations that can be performed on encrypted data efficiently~\cite{li_elliptic_2012}, and second, they are slower than non-homomorphic schemes~\cite{sen_homomorphic_2013}. This paper presents implementations of non-linear image operations under a homomorphic encryption scheme, and evaluates their applicability and performance.
+
+To investigate the applicability of homomorphic image manipulation, in Section \ref{sec:chapter_2}, we introduce three homomorphic cryptosystems prominent in the literature: the Paillier, Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK), and Brakerski--Gentry--Vaikuntanathan (BGV) cryptosystems, as well as relevant past implementations. In Section \ref{sec:chapter_3}, we implement a software library allowing for common linear and non-linear image processing operations using each of the three cryptosystems, assuming a client-server model for secure computation.
+
+To evaluate the performance of homomorphic image manipulation, in Section \ref{sec:chapter_4}, we test the time efficiency and accuracy of common image processing operations under homomorphic encryption. We test for image quality of the resulting images using mean squared error (MSE), peak signal to noise ratio (PSNR), and structural similarity index (SSIM), which are measures of image quality used for assessing image encryption schemes~\cite{ahmed_benchmark_2016}.
+
+% Training and test data are taken from the publicly available \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex.
+
+% \subsection{Significance of the Study}
+% This study aims to directly address one of the current problems in the research of homomorphic cryptosystems: the practicality of homomorphic encryption~\cite{sen_homomorphic_2013}. The literature shows existing homomorphic cryptosystems and how they support primitive operations (usually addition and multiplication) on encrypted data, however, for homomorphic cryptosystems to be useful for practical use, efficient support for more complicated image processing operation must be demonstrated as well. While implementations of image processing operations in a homomorphic cryptosystem exist in the literature~\cite{ziad_cryptoimg:_2016, garay_algorithms_2014}, our study targets the more computationally intensive task of facial recognition and detection.
+
+
+
+% We wish to contribute to existing models for the secure transmission and modification of image data by developing a software library which allows the use and comparison of various homomorphic encryption algorithms. Our software library would allow service providers to perform image manipulation for clients without compromising data privacy.
