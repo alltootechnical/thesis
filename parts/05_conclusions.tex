@@ -1,4 +1,21 @@
 \chapter{CONCLUSIONS}
-Upon presenting your results, the conclusion is where you will now tie up these results with the original intent of the study, as indicated by the research questions given in the Introduction. It is in this section where you will also discuss any difficulties or issues encountered during the study, as well as your recommended method for addressing these problems.
+In this study, we have assessed the feasibility and practicality of various homomorphic cryptosystems with regard to secure processing and manipulation of facial image data through creation of a software library that facilitates image processing operations within the encrypted domain.
 
-The general way to organize your conclusion is to present each research sub-question as a subsection, and thoroughly answer each of them by interpreting your results with respect to the question. With these answered, you may then tie up all of your findings in each subsection to answer your main research question, providing any needed additional information or explanation. Last on the list would be your unsolved issues and difficulties, presenting them as avenues to motivate continued work on your chosen topic.
+Even though an operation in a partially homomorphic cryptosystem is not theoretically possible, like multiplication of two ciphertexts under Paillier, it has been shown that such operations are indeed possible in a two-party system. Protocols for secure multiplication and exponentiation have been proposed and also applied to more complex image operations such as facial recognition. Thus, a partially homomorphic cryptosystem can be modified to admit more image processing operations by assuming a two-party system.
+
+Preliminary results have shown that both Paillier and DGK apply image negation accurately and efficiently, as evidenced by the perfect zero MSE and infinite PSNR. For the logarithm transformation, Paillier was faster and accurate enough (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$) which was rather unexpected. However both Paillier and DGK fail to produce accurate results in applying the power-law transformation, with the latter failing to produce discernible results. Based from these results, the Paillier cryptosystem is consistent enough to produce reasonable to accurate results.
+
+A wrapper library has been made which implements the various functions and methods of the cryptosystems into a single interface. This allowed us to express various image operations with a unified syntax, thus facilitating easier testing.
+
+\section{Ongoing and Future Work}
+Testing intensity transformations under the BGV cryptosystem will be started once the Pyfhel library is deemed stable enough to use, or another Python library that implements BGV becomes available.
+One of the authors of this paper has already informed the developers of the Pyfhel library about a bug involving exponentiation of two real numbers.
+
+Efforts are ongoing with regard to the facial recognition tests. Our own implementation of the privacy-preserving eigenfaces by Erkin, et al. does not yet use the DGK cryptosystem for secure integer comparison in the match finding step.
+
+Another promising image operation to consider is \textit{facial detection} under a homomorphic cryptosystem. Work has been started in order to assess the feasibility of using Haar cascades in a privacy-preserving manner.
+
+Future work would involve improving and optimizing our implementation of non-linear intensity transformations in terms of number of operations, numerical accuracy and stability, and time efficiency.
+% Future work would involve improving and optimizing our implementation of the DGK cryptosystem so that it performs faster.
+% A suggestion would be to port the existing implementation to C/C++ and then create a Python library that acts as a wrapper to the C/C++ methods.
+For future studies, an implementation of a client-server framework or system dealing with secure image processing can be considered.

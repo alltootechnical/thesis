@@ -1,6 +1,6 @@
 \chapter{REVIEW OF RELATED LITERATURE}
 
-We will now provide an overview of the \textit{CryptoImg} project, which our study is primarily based on. Then, we define the specific image processing operations we are interested in implementing in this study. Then we will introduce concepts in cryptography and define the four homomorphic cryptosystems we will be testing in the study.
+We will now describe homomorphic cryptosystems in detail to provide a concrete description of their current capabilities and limitations. Then, we will describe our target applications in image processing and facial recognition.
 
 \input{parts/02_relatedliterature_04homomorphiccryptosystems}
 \input{parts/02_relatedliterature_05partiallyhomomorphic}
@@ -19,5 +19,5 @@ We have presented as well several areas in which our study will expand on the re
 \begin{enumerate}
   \item We have shown two fully homomorphic cryptosystems, the Dasgupta-Pal cryptosystem and the BGV cryptosystem. While these cryptosystems are generally less efficient than partially homomorphic cryptosystems, they do not require additional protocols for exponentiation.
   \item Due to the general limitations of partially homomorphic systems, attempts at applying homomorphic cryptography to applications such as image processing and facial recognition have mainly been restricted to linear operations on ciphertext. We have shown that there are basic image processing operations which are non-linear, which we can implement.
-  \item While privacy-preserving facial recognition has been accomplished by Erkin, et al., privacy-preserving facial detection is an area of research which has yet to explored.
+  \item While privacy-preserving facial recognition has been accomplished by Erkin, et al., privacy-preserving facial detection has yet to explored.
 \end{enumerate}

@@ -1,19 +1,18 @@
 \section{Scope and Limitations of the Study}
-Our study will be limited in terms of the cryptosystems to be tested, the image processing operations we will implement, and the statistical tests we will use to gauge the security of the cryptosystems. Below is a listing of the scope of the study.
-
+Our study will test a fixed set of cryptosystems and image processing operations. 
 We will implement and test the following algorithms:
 \begin{enumerate}
 	\item A variant of the Paillier cryptosystem~\cite{stern_public-key_1999} which supports floating-point operations, used in \textit{CryptoImg}~\cite{ziad_cryptoimg:_2016}.
-    \item The Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK) cryptosystem~\cite{pieprzyk_efficient_2007, cryptoeprint:2008:321} which is primarily used for secure integer comparison.
-	\item A fully homomorphic encryption scheme by Dasgupta and Pal, which uses polynomial rings~\cite{dasgupta_design_2016}.
+  \item The Damg{\aa}rd--Geisler--Kr{\o}igaard (DGK) cryptosystem~\cite{pieprzyk_efficient_2007, cryptoeprint:2008:321}.
+	\item The DGHV cryptosystem by Dijk, Gentry, Halevi, and Vaikuntanathan \cite{cryptoeprint:2009:616}, with optimizations from Coron, Naccache, and Tibouchi, \cite{cryptoeprint:2011:277, cryptoeprint:2011:440} to support shorter public keys.
 	\item The Brakerski--Gentry--Vaikuntanathan (BGV) cryptosystem \cite{cryptoeprint:2011:277}, an improvement on the lattice-based cryptosystem by Gentry~\cite{gentry_fully_2009}, with optimizations from Smart, Vercauteren and Halevi \cite{hutchison_fully_2010, cryptoeprint:2011:566}.
 \end{enumerate}
 We will implement and test the following categories of image manipulation operations:
 \begin{enumerate}
-	\item Non-linear image intensity adjustment (logarithm and power-log transformations)
+	\item Non-linear intensity adjustment (logarithm, power-log transformations)
 	\item Facial detection and recognition using the eigenface approach \cite{turk_eigenfaces_1991}.
 \end{enumerate}
-We will adopt the benchmark for evaluating image quality of image encryption schemes presented by Ahmed, et. al~\cite{ahmed_benchmark_2016}. The presented benchmark reflects many tests used in other literature~\cite{ahmad_efficiency_2012, wu_npcr_2011}.
+To test for image quality, we will adopt the benchmark for evaluating image quality of image encryption schemes presented by Ahmed, et. al~\cite{ahmed_benchmark_2016}. The presented benchmark uses many tests used in other literature~\cite{ahmad_efficiency_2012, wu_npcr_2011}.
 \begin{enumerate}
 	%\item Tests for preservation of image quality after encryption and decryption
 	%\begin{enumerate}

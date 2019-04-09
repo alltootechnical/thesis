@@ -34,67 +34,66 @@ A power-law transformation defined by the above equation can calibrate the opera
 
 To implement non-linear intensity transformations using addition and multiplication in a homomorphic system, it is necessary to approximate the logarithm and exponential functions, which may result in higher computational overhead. In our software library implementation, we investigate methods required to approximate the logarithm and power functions. Non-linear intensity transformations such as the logarithm transformation have applications in intensity normalization \cite{oravec_illumination_2010}, which is used in some facial recognition algorithms to account for differences in lighting which make facial recognition difficult.
 
-\begin{comment}
-\subsection{Spatial Filtering}
-The \textit{CryptoImg} library also implemented \textit{spatial filters}. Spatial filters are operators which determine output pixels using information from neighboring input pixels. To apply a spatial filter to obtain a resulting image $R^\prime$, a convolution is performed between an $m \times n$ matrix $k$, called a kernel, and the original $M\times N$ image $R$.
-A convolution between a kernel $k$ and image $R$ which yields a resulting image $R^\prime$, denoted as $R^\prime = k \ast R$, is defined by
-\begin{align} \label{eq:spatialfilter}
-	R^\prime(x,y) = \sum_{s=1}^m{\sum_{t=1}^n{k(s,t)R(x+s,y+t)}}, \text{ for all } 0\leq x \leq M, 0 \leq y \leq N,
-\end{align}
 
-\begin{figure*}[!ht]
-    \centering
-    \includegraphics[width=\textwidth,\keepaspectratio]{Figures/SpatialFilter.png}
-    \caption{A sample image $R$ and sample kernel $k$.}
-    \label{fig:spatialfilter}
-\end{figure*}
-For example, using the image and $3 \times 3$ kernel given in Figure \ref{fig:spatialfilter}, we can calculate the value in the third row and fourth column of the resulting image $R^\prime$ by adding the products of entries in $k$ with the corresponding entries in $R$, found in an $3 \times 3$ region around $R(3,4)$.
-\begin{align*}
-	R^\prime(3,4) &= \sum_{s=1}^m{\sum_{t=1}^n{k(s,t)R(3+s,4+t)}}\\
-	&= (0.0625\times 200) + (0.1250\times 249) + (0.0625\times 255) \\
-	&+ (0.1250\times 143) + (0.2500\times 223) + (0.1250\times 255) \\
-	&+ (0.0625\times 196) + (0.1250\times 236) + (0.0625\times 255)\\
-	&= 223.
-\end{align*}
-Since spatial filters take values from a contiguous region of pixels, this presents a difficulty in homomorphic cryptosystems: in order for spatial filters to be performed, the location of each pixel relative to neighboring pixels has to be preserved. This was performed in the implementation of spatial filters in the \textit{CryptoImg} library~\cite{ziad_cryptoimg:_2016}. We wish to implement spatial filters using a similar approach, and assess how preserving spatial correlation between pixels can impact the security of the encrypted image.
+% \subsection{Spatial Filtering}
+% The \textit{CryptoImg} library also implemented \textit{spatial filters}. Spatial filters are operators which determine output pixels using information from neighboring input pixels. To apply a spatial filter to obtain a resulting image $R^\prime$, a convolution is performed between an $m \times n$ matrix $k$, called a kernel, and the original $M\times N$ image $R$.
+% A convolution between a kernel $k$ and image $R$ which yields a resulting image $R^\prime$, denoted as $R^\prime = k \ast R$, is defined by
+% \begin{align} \label{eq:spatialfilter}
+% 	R^\prime(x,y) = \sum_{s=1}^m{\sum_{t=1}^n{k(s,t)R(x+s,y+t)}}, \text{ for all } 0\leq x \leq M, 0 \leq y \leq N,
+% \end{align}
 
-\subsection{Common Spatial Filtering Kernels}
-Edge detection is used to find and determine the boundaries in an image, commonly used in applications such as image segmentation and feature extraction. This works by detecting so-called \textit{edges}, areas that have abrupt changes in intensity.
-One common method of performing edge detection is the Sobel operator, which uses two spatial filters to approximate the gradient of an image. Given an image $R$, and the kernels
-\begin{equation}
-    g_x =
-    \begin{bmatrix}
-        -1 & 0 & 1 \\
-        -2 & 0 & 2 \\
-        -1 & 0 & 1
-    \end{bmatrix}
-    \qquad\text{and}\qquad
-    g_y =
-    \begin{bmatrix}
-        1 & 2 & 1 \\
-        0 & 0 & 0 \\
-        -1 & -2 & -1
-    \end{bmatrix},
-\end{equation}
-$g_x \ast R$ yields the horizontal component of the gradient, while $g_y \ast R$ yields the vertical component of the gradient.
+% \begin{figure*}[!ht]
+%     \centering
+%     \includegraphics[width=\textwidth,\keepaspectratio]{Figures/SpatialFilter.png}
+%     \caption{A sample image $R$ and sample kernel $k$.}
+%     \label{fig:spatialfilter}
+% \end{figure*}
+% For example, using the image and $3 \times 3$ kernel given in Figure \ref{fig:spatialfilter}, we can calculate the value in the third row and fourth column of the resulting image $R^\prime$ by adding the products of entries in $k$ with the corresponding entries in $R$, found in an $3 \times 3$ region around $R(3,4)$.
+% \begin{align*}
+% 	R^\prime(3,4) &= \sum_{s=1}^m{\sum_{t=1}^n{k(s,t)R(3+s,4+t)}}\\
+% 	&= (0.0625\times 200) + (0.1250\times 249) + (0.0625\times 255) \\
+% 	&+ (0.1250\times 143) + (0.2500\times 223) + (0.1250\times 255) \\
+% 	&+ (0.0625\times 196) + (0.1250\times 236) + (0.0625\times 255)\\
+% 	&= 223.
+% \end{align*}
+% Since spatial filters take values from a contiguous region of pixels, this presents a difficulty in homomorphic cryptosystems: in order for spatial filters to be performed, the location of each pixel relative to neighboring pixels has to be preserved. This was performed in the implementation of spatial filters in the \textit{CryptoImg} library~\cite{ziad_cryptoimg:_2016}. We wish to implement spatial filters using a similar approach, and assess how preserving spatial correlation between pixels can impact the security of the encrypted image.
 
-There are also spatial filters that perform image smoothing (such as Gaussian blur and box blur, which use the kernels $b_g$ and $b$ respectively in Equation~\ref{eqn:smooth-filters}) and image sharpening~\cite{gonzalez_digital_2008}.
-\begin{equation}
-    \label{eqn:smooth-filters}
-    b_g = \frac{1}{16}
-    \begin{bmatrix}
-        1 & 2 & 1 \\
-        2 & 4 & 2 \\
-        1 & 2 & 1
-    \end{bmatrix}
-    \qquad
-    b = \frac{1}{9}
-    \begin{bmatrix}
-        1 & 1 & 1 \\
-        1 & 1 & 1 \\
-        1 & 1 & 1
-    \end{bmatrix}
-\end{equation}
+% \subsection{Common Spatial Filtering Kernels}
+% Edge detection is used to find and determine the boundaries in an image, commonly used in applications such as image segmentation and feature extraction. This works by detecting so-called \textit{edges}, areas that have abrupt changes in intensity.
+% One common method of performing edge detection is the Sobel operator, which uses two spatial filters to approximate the gradient of an image. Given an image $R$, and the kernels
+% \begin{equation}
+%     g_x =
+%     \begin{bmatrix}
+%         -1 & 0 & 1 \\
+%         -2 & 0 & 2 \\
+%         -1 & 0 & 1
+%     \end{bmatrix}
+%     \qquad\text{and}\qquad
+%     g_y =
+%     \begin{bmatrix}
+%         1 & 2 & 1 \\
+%         0 & 0 & 0 \\
+%         -1 & -2 & -1
+%     \end{bmatrix},
+% \end{equation}
+% $g_x \ast R$ yields the horizontal component of the gradient, while $g_y \ast R$ yields the vertical component of the gradient.
+
+% There are also spatial filters that perform image smoothing (such as Gaussian blur and box blur, which use the kernels $b_g$ and $b$ respectively in Equation~\ref{eqn:smooth-filters}) and image sharpening~\cite{gonzalez_digital_2008}.
+% \begin{equation}
+%     \label{eqn:smooth-filters}
+%     b_g = \frac{1}{16}
+%     \begin{bmatrix}
+%         1 & 2 & 1 \\
+%         2 & 4 & 2 \\
+%         1 & 2 & 1
+%     \end{bmatrix}
+%     \qquad
+%     b = \frac{1}{9}
+%     \begin{bmatrix}
+%         1 & 1 & 1 \\
+%         1 & 1 & 1 \\
+%         1 & 1 & 1
+%     \end{bmatrix}
+% \end{equation}
 
 %% TODO: specific list of kernels to use for this study
-\end{comment}
