@@ -1,0 +1,65 @@
+\section{Experiments on Accuracy}
+We implemented privacy-preserving floating-point arithmetic using the system described in Section~\ref{sec:fp_arithmetic}, through the \texttt{python-paillier} library (\url{https://github.com/n1analytics/python-paillier}) running on Python~3.6.5.
+
+We first summarize the approximations discussed in Sections~\ref{sec:logarithm_approximation} and~\ref{sec:arctan_approximation} in Table~\ref{tab:approximation_summary}.
+
+\begin{table*}[ht]
+	\caption{Summary of approximations for logarithm and inverse tangent}
+	\label{tab:approximation_summary}
+    \begin{tabular}{
+        p{\dimexpr 0.4\linewidth-2\tabcolsep}
+        p{\dimexpr 0.6\linewidth-2\tabcolsep}}
+		\toprule
+		Approximation & Derivation and formula\\
+		\midrule
+            Original quadrature for $\log\left(1+x\right)$ (equation \ref{eq:standard_logarithm_quadrature})
+            & Let $x=1/n$. Perform five-point Gauss--Legendre quadrature to approximate $\int_{n}^{n+1}{\frac{1}{t}\diff t} = \log\left(1+x\right)$ This yields the approximation:
+            \begin{center}
+                $\displaystyle 
+            \frac{137x^5 + 2310x^4 + 9870x^3 + 15120x^2 + 7560x}
+            {30x^5 + 900x^4 + 6300x^3 + 16800x^2 + 18900x + 7560}$.
+            \end{center}
+            \\[10pt]
+
+            Scaled quadrature for $\log\left(1+x\right)$ (equation \ref{eq:optimal_log_approximation})
+            & Let $x=1/n$ and $\alpha= 1/16$. Perform five-point Gauss--Legendre quadrature to approximate $\int_{n}^{\alpha n + \alpha}{\frac{1}{t}\diff t} = \log\left(1+x\right) + \log\alpha$. 
+            Then subtract $\log\alpha$, which can be computed in the plaintext domain. This yields the approximation:
+            \begin{center}
+            $\displaystyle 
+            \frac{137x^5 + 26685x^4 + 617370x^3 - 6498630x^2 - 121239315x - 257804775}
+            {30(x^5 + 405x^4 + 27210x^3 + 488810x^2 + 2536005x + 3122577)}
+            + \log{16}$.
+            \end{center}
+            \\[10pt]
+            
+            Partial sum of Euler's series for $\arctan{x}$ (equation \ref{eq:arctan_euler_partial})
+            & Compute the partial sum consisting of first five terms of Euler's series for the inverse tangent:
+            $\sum_{n=0}^{4}
+            {
+            \frac
+                {2^{2n}(n!)^2}
+                {(2n+1)!}
+            \frac
+                {x^{2n+1}}
+                {(1+x^2)^{n+1}}
+            }$. This yields the approximation:
+            \begin{center}
+                $\displaystyle 
+                \frac
+                {965x^9 + 2370x^7 + 2688x^5 + 1470x^3 + 315x}
+                {315\left(x^{10} + 5x^8 + 10x^6 + 10x^4 + 5x^2 + 1\right)}$.
+            \end{center}
+            \\[10pt]
+            
+            Quadrature approximation for $\arctan{x}$ (equation \ref{eq:arctan_quadrature})
+            & Perform five-point Gauss--Legendre quadrature to approximate $\int_0^x{\frac{1}{1+t^2}\diff t} = \arctan{x}$. This yields the approximation:
+            \begin{center}
+                $\displaystyle
+            \frac
+            {4\left(225x^9 + 15925x^7 + 144753x^5 + 350595x^3 + 238140x\right)}
+            {15\left(x^{10} + 480x^8 + 11760x^6 + 64120x^4 + 114660x^2 + 63504\right)}$.
+            \end{center}
+            \\
+	    \bottomrule
+    \end{tabular}
+\end{table*}
