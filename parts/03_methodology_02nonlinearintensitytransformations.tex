@@ -14,8 +14,7 @@
 %\end{description}
 
 \section{Non-Linear Intensity Transformations}
-Aside from implementing the homomorphic encryption and decryption algorithms, we will also implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}.
-We now describe how we implement the logarithm and power-law image intensity transformations. In the case of partially homomorphic cryptosystems (Paillier, DGK), if  exponentiation and multiplication is required, the secure protocols in section \ref{ssec:exponentiationprotocol} will be used.
+Aside from implementing the homomorphic encryption and decryption algorithms, we will also implement library functions for image negation, logarithm transformation and power-law transformation, as they are defined in~\cite{gonzalez_digital_2008}. We now describe how we implement the logarithm and power-law image intensity transformations.
 
 \subsection{Logarithm Transformation}
 The logarithm transformation of a pixel intensity value $x$ is defined as
@@ -42,8 +41,8 @@ The power-law transformation of a pixel intensity value $x$ is defined as
 where $c>0$ and $\gamma > 0$.
 
 Similar to the logarithm transformation, we must provide an approximation for $x^\gamma$.
-We have derived an infinite series in Appendix \ref{sec:logarithm_approximation}.
+We have derived an infinite series in Appendix \ref{sec:power_approximation}.
 \begin{align*}
 	x^\gamma &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
 \end{align*}
-Partial sums of the above infinite series can be calculated based on the closed form approximation for the logarithm in Equation \ref{eq:optimal_log_approximation_ch3}.
+Partial sums of the above infinite series can be calculated based on the closed form approximation for the logarithm in Equation \ref{eq:optimal_log_approximation_ch3}. For the implementation of the power-law transformation, a partial sum consisting of the first five terms of the infinite series were used.

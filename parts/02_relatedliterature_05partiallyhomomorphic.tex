@@ -85,7 +85,7 @@ As the multiplicative homomorphism was not presented in the original paper \cite
 
 \subsection{Floating-Point Arithmetic using PHE}
 \label{sec:fp_arithmetic}
-We have discussed the Paillier and DGK cryptosystems, which encrypt and allow similar operations on encrypted integers. We will now show how these PHE schemes may be extended to a system which allows for secure floating-point computation. In this section, we let $\oplus$ and $\otimes$ represent the homomorphic operations corresponding to the addition and multiplication of integers in a PHE scheme, respectively. 
+We have discussed the Paillier and DGK cryptosystems, which encrypt and allow similar operations on encrypted integers. We will now show how these PHE schemes may be extended to a system which allows for secure floating-point computation. In this section, we let $\oplus$ and $\otimes$ represent the homomorphic operations corresponding to the secure addition and multiplication of integers in a PHE scheme, respectively. 
 
 \subsubsection{Extension to Floating-Point Numbers}
 \label{sec:fp_number_extension}
@@ -137,7 +137,7 @@ Suppose Alice encrypts an integer $x$ and sends it so Bob has $E\left(x\right)$,
 	\item Alice squares $x+r$ and encrypts the result. She sends $E\left(\left(x+r\right)^2\right)$ to Bob.
 	\item Bob computes $E\left(-2rx + r^2\right)$. He then computes
 	\begin{align*}
-		E\left(\left(x+r\right)^2\right)E\left(-2rx + r^2\right) = E\left(x^2\right).
+		E\left(\left(x+r\right)^2+ \left(-2rx + r^2\right)\right) = E\left(x^2\right).
 	\end{align*}
 \end{itemize}
 
@@ -150,8 +150,7 @@ Suppose Alice encrypts integers $x$ and $y$, and Bob has $E\left(x\right), E\lef
 	\item Alice sends $E\left(\left(x+y\right)^2\right)$ to Bob.
 	\item Bob then computes
 	\begin{align*}
-		\frac{1}{2}E\left(\left(x+y\right)^2\right)E\left(x^2\right)^{-1}E\left(y^2\right)^{-1} &= \frac{1}{2}E\left(\left(x+y\right)^2 - x^2 - y^2\right)\\
-		&= \frac{1}{2}E\left(2xy\right)\\
+		E\left(\frac{1}{2}\left(\left(x+y\right)^2\ - x^2 - y^2\right)\right) 
 		&= E\left(xy\right).
 	\end{align*}
 \end{itemize}

@@ -1,5 +1,5 @@
 \chapter{RESULTS AND DISCUSSION}
-The results shown in this section are gathered from the tests for intensity transformations under Paillier and DGK cryptosystems. During testing, initial results obtained from BGV, particularly with image operations involving floating-point numbers like the logarithmic transformation, were unstable (i.e. the results vary drastically every time the same tests were done). This is because the Pyfhel library being used for the BGV cryptosystem is still in alpha development stage \cite{pyfhel_2018}.
+The results shown in this section are gathered from the tests for intensity transformations under Paillier and DGK cryptosystems. During testing, initial results obtained from BGV, particularly with image operations involving floating-point numbers like the logarithmic transformation, were unstable (i.e. the results vary drastically every time the same tests were done). This is because the Pyfhel library being used for the BGV cryptosystem is still in alpha development stage \cite{pyfhel_2018}. Results obtained from the DGHV cryptosystem were also unstable, but DGHV was also impractical, taking over 5 minutes to perform a single floating-point addition operation.
 
 % One of the authors has already informed the maintainers of the library about a bug involving exponentiation of two real numbers.
 
@@ -130,7 +130,7 @@ Unlike image negation, logarithm transformation involves more operations, so the
 \end{table}
 
 \subsection{Power-Law Transformation}
-Applying the power-law transformation under both cryptosystems produced less than accurate images. The accuracy varies greatly across all the images as in the case of Paillier, with mean squared errors as high as 8270.696 and as low as 616.419, and SSIM scores ranging from 0.43185 to 0.92334, as seen in Table~\ref{tbl:pwr-pal}. As expected, the total processing time now takes about 15 to 20 seconds per image since the power-law transformation is more computationally intensive due to its approximation of an infinite series consisting of terms using the logarithm function, which is also approximated using a combination of addition and multiplication operations.
+Applying the power-law transformation under both cryptosystems did not produce accurate images. The accuracy varies greatly across all the images. When Paillier was used, mean squared errors ranged from 616.419 to 8270.696, and SSIM scores ranged from 0.43185 to 0.92334, as seen in Table~\ref{tbl:pwr-pal}. As expected, the total processing time now takes about 15 to 20 seconds per image since the power-law transformation is more computationally intensive, requiring repeated evaluation of the logarithm approximation.
 
 \begin{table}[t]
 	\centering
@@ -153,9 +153,9 @@ Applying the power-law transformation under both cryptosystems produced less tha
         \end{tabular}
 \end{table}
 
-When DGK was used in the power-law transformation, it failed to produce a discernible image and only resulted in an almost black image with a faint shape of a face. The mean squared errors for this case is an order of magnitude higher than the results from using Paillier. Furthermore, doing a power-law transformation under DGK is not only impractical in terms of accuracy, but also it is somewhat impractical in terms of time efficiency because it took at most 4 minutes to process each image.
+When DGK was used in the power-law transformation, it failed to produce a discernible image and only resulted in an almost black image with a faint shape of a face. The mean squared errors under DGK are an order of magnitude higher than the results from using Paillier. Furthermore, doing a power-law transformation under DGK is somewhat impractical in terms of time efficiency because it took at most 4 minutes to process each image.
 
-\begin{table}[t]
+\begin{table}[!ht]
 	\centering
 	\caption{Power-law transformation under DGK}
 	\label{tbl:pwr-dgk}

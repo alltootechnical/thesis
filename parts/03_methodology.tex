@@ -13,7 +13,7 @@ Two experiments were conducted in this study:
 \section{Cryptosystem Implementation}
 % The current version of the OpenCV library (3.4.2) will be forked from the open-source GitHub repository at \url{https://github.com/opencv/opencv})~\cite{bradski_opencv_2000}.
 
-Four homomorphic encryption schemes were investigated. For cryptosystems with readily available open-source implementations, such implementations were used. For the remaining cryptosystems, the encryption and decryption methods were implemented in Python.
+Four homomorphic encryption schemes were investigated. For cryptosystems with readily available open-source implementations, such implementations were used. For the remaining cryptosystems, the encryption and decryption methods were implemented in Python 3.7.1.
 \begin{itemize}
 	\item The Paillier cryptosystem is incorporated using the \texttt{python-paillier} library at \url{https://github.com/n1analytics/python-paillier} developed by Data61 - CSIRO.
 	\item The DGK cryptosystem is ported from the C++ implementation at \url{https://github.com/encryptogroup/ENCRYPTO_utils}, developed by Daniel Demmler from EC-SPRIDE.
@@ -22,8 +22,7 @@ Four homomorphic encryption schemes were investigated. For cryptosystems with re
 	\item The BGV cryptosystem is implemented using the Pyfhel library (\url{https://github.com/ibarrond/Pyfhel}) using a HElib backend from (\url{https://github.com/shaih/HElib}).
 \end{itemize}
 
-For convenience, a wrapper library was created that integrates the four cryptosystems into a unified interface.
-
+A wrapper library was created that integrates the four cryptosystems into a unified interface.
 The Paillier and DGK cryptosystems were adapted for floating-point computations using the protocols described in section \ref{sec:fp_arithmetic}.
 
 \input{parts/03_methodology_02nonlinearintensitytransformations}
@@ -83,7 +82,6 @@ We first perform three tests to ascertain the preservation of image quality afte
 Computing for MSE, PSNR, and SSIM was done using the corresponding built-in functions from the scikit-image Python library \cite{scikit-image}.
 
 \subsection{Facial Recognition Tests}
-%% TODO: Brian, can you fill this part up? Yes. OK Thanks
 The method for secure facial recognition using eigenfaces by Erkin, et al. \cite{hutchison_privacy-preserving_2009-2} was implemented for this study.
 %Training data will be secured from The Database of Faces (\url{https://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html}) maintained by AT&T Laboratories Cambridge.
 Training and test data were secured from the \texttt{faces94} dataset (\url{https://cswww.essex.ac.uk/mv/allfaces/faces94.html}) maintained by the University of Essex. 

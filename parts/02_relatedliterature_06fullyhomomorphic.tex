@@ -1,11 +1,11 @@
 \section{Fully Homomorphic Cryptosystems}
 
-We will also be testing fully homomorphic encryption (FHEs), which allow aribitrary computation on encrypted data.
+We also test fully homomorphic encryption (FHE), which allow aribitrary computation on encrypted data.
 
 The first ever fully homomorphic cryptosystem was invented by Gentry \cite{gentry_fully_2009}, which operates over ideal lattices. Gentry's original construction showed that FHE are possible, although they are known to be significantly slower than PHE.
-Improving the efficiency of FHis an active area of research \cite{sen_homomorphic_2013}.
+Improving the efficiency of FHE is an active area of research \cite{sen_homomorphic_2013}.
 
-We will present two FHEs, the DGHV cryptosystem and the BGV cryptosystem, which both have open source implementations availble primarily used in homomorphic cryptography research. Since the mathematical details of these fully homomorphic cryptosystems are not relevant to describing their potential uses in secure image operations, we will instead briefly describe important developments and implementations of each cryptosystem.
+We will present two FHE schemes, the DGHV cryptosystem and the BGV cryptosystem, which both have open source implementations availble primarily used in homomorphic cryptography research. Since the mathematical details of these fully homomorphic cryptosystems are not relevant to describing their potential uses in secure image operations, we will instead briefly describe important developments and implementations of each cryptosystem.
 
 \subsection{The DGHV Cryptosystem}
 In 2009, Dijk, Gentry, Halevi, and Vaikuntanathan created a fully homomorphic cryptosystem which operates primarily through elementary modular arithmetic, commonly called the DGHV cryptosystem \cite{cryptoeprint:2009:616}. This was further improved in 2011 by Coron, Naccache, and Tibouchi, \cite{cryptoeprint:2011:277, cryptoeprint:2011:440} to support shorter public keys, reducing the size of secure public keys from 12.5 GB to 2.5 MB.

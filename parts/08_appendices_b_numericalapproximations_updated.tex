@@ -1,8 +1,8 @@
-\chapter{LOGARITHM APPROXIMATION}
+\chapter{PRIVACY-PRESERVING LOGARITHM APPROXIMATION}
 \label{chap:logarithm_approximation}
-Many methods to compute transcendental functions implemented in computer hardware and software libraries rely on direct knowledge of the function arguments. Several such approaches include CORDIC (coordinate rotation digital computer), pseudo-division and pseudo-multiplication algorithms~\cite{walther_cordic_2000}, as well as minimax polynomials, which are determined numerically using the Remez algorithm~\cite{harrison_computation_1999}. These algorithms, while efficient, rely on table lookups, which cannot be done in a privacy-preserving system where the function arguments cannot be directly determined.
+Many methods to compute transcendental functions implemented in computer hardware and software libraries rely on direct knowledge of the function arguments. Several such approaches include CORDIC (coordinate rotation digital computer), pseudo-division and pseudo-multiplication algorithms~\cite{walther_cordic_2000}, as well as minimax polynomials, which are determined numerically using the Remez algorithm~\cite{harrison_computation_1999}. These algorithms, while efficient, rely on table lookups, which cannot be done in a privacy-preserving system where the function arguments cannot be directly determined. We must rely on other methods such as series expansions.
 
-We must therefore rely on other methods, such as using the Taylor series expansions of these functions. While also in common use, not all Taylor series expansions have a convenient radius of convergence. To circumvent this, we can rely on an approach presented by Khattri in~\cite{khattri_new_2009} to obtain closed-form approximations to functions by approximating related integrals.
+While in common use, not all series expansions have a convenient radius of convergence. To circumvent this, we can rely on an approach presented by Khattri in~\cite{khattri_new_2009} to obtain closed-form approximations to functions by approximating related integrals.
 
 \section{Known Closed-Form Logarithm Approximations}
 Khattri ~\cite{khattri_new_2009} presents the following method to approximate the function $f(x)=\log\left(1+x\right)$.
@@ -74,7 +74,7 @@ However, the quadrature approach presented by Khattri allows us to approximate t
 
 \section{Scaled Approximation}
 \label{sec:logarithm_approximation}
-This appendix a general method to improve the general accuracy of the logarithm approximation given by Khattri in~\cite{khattri_new_2009} for use in privacy-preserving calculation, provided that accuracy is only required for a specific range.
+We now present a method to improve the general accuracy of the logarithm approximation given by Khattri in~\cite{khattri_new_2009} for use in privacy-preserving calculation, provided that accuracy is only required for a specific range.
 
 For this approximation, we assume we only require accurate results in the input range $x \in [0, 255]$, to reflect use as part of the logarithm image transformation.
 
@@ -192,13 +192,14 @@ It was determined numerically that the local maxima of $A\left(x,1/16\right)$ on
 We have shown how we can adapt Khattri's approximation to allow for privacy-preserving logarithm computation over a larger interval.
 
 \section{Approximation for $x^\gamma$}
+\label{sec:power_approximation}
 To approximate $x^\gamma$ for any $\gamma \in \mathbb{R}$, we rewrite $x^\gamma$ as follows:
 \begin{align*}
   x^\gamma = e^{\log{x^\gamma}} = e^{\gamma\log{x}}.
 \end{align*}
 This expression can then be approximated using the Maclaurin series expansion for $e^x$, which converges for all $x$.
 \begin{align*}
-  e^x &= \sum_{n=0}^{\infty}{\frac{x^n}{n!}}\\
-  \Rightarrow e^{\gamma\log{x}} &= \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
+  e^x &= \sum_{n=0}^{\infty}{\frac{x^n}{n!}}
+  &e^{\gamma\log{x}} = \sum_{n=0}^{\infty}{\frac{(\gamma\log{x})^n}{n!}}
 \end{align*}
 As we already have an approximation for the natural logarithm, we can evaluate partial sums of the above infinite series to arrive at approximations for $x^\gamma$.

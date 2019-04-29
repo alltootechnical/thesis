@@ -1,6 +1,6 @@
 \chapter{REVIEW OF RELATED LITERATURE}
 
-We will now describe homomorphic cryptosystems in detail to provide a concrete description of their current capabilities and limitations. Then, we will describe our target applications in image processing and facial recognition.
+We now describe homomorphic cryptosystems in detail to provide a concrete description of their current capabilities and limitations. We then describe our target applications in image processing and facial recognition.
 
 \input{parts/02_relatedliterature_04homomorphiccryptosystems}
 \input{parts/02_relatedliterature_05partiallyhomomorphic}
@@ -17,7 +17,7 @@ We have seen how privacy-preserving image operations have been implemented in th
 
 We have presented as well several areas in which our study will expand on the research so far.
 \begin{enumerate}
-  \item We have shown two fully homomorphic cryptosystems, the Dasgupta-Pal cryptosystem and the BGV cryptosystem. While these cryptosystems are generally less efficient than partially homomorphic cryptosystems, they do not require additional protocols for exponentiation.
-  \item Due to the general limitations of partially homomorphic systems, attempts at applying homomorphic cryptography to applications such as image processing and facial recognition have mainly been restricted to linear operations on ciphertext. We have shown that there are basic image processing operations which are non-linear, which we can implement.
+  \item We have shown two fully homomorphic cryptosystems, the DGHV cryptosystem and the BGV cryptosystem. While these cryptosystems are generally less efficient than partially homomorphic cryptosystems, they do not require additional protocols for division, multiplication, and exponentiation.
+  \item Due to the general limitations of partially homomorphic systems, attempts at applying homomorphic cryptography to applications such as image processing and facial recognition have mainly been restricted to linear operations on ciphertext. We have shown that there are basic image processing operations which are non-linear, which can be approximated.
   \item While privacy-preserving facial recognition has been accomplished by Erkin, et al., privacy-preserving facial detection has yet to explored.
 \end{enumerate}

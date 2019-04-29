@@ -7,15 +7,17 @@ Preliminary results have shown that both Paillier and DGK apply image negation a
 
 A wrapper library has been made which implements the various functions and methods of the cryptosystems into a single interface. This allowed us to express various image operations with a unified syntax, thus facilitating easier testing.
 
-\section{Ongoing and Future Work}
-Testing intensity transformations under the BGV cryptosystem will be started once the Pyfhel library is deemed stable enough to use, or another Python library that implements BGV becomes available.
+\section{Recommendations for Future Work}
+Testing intensity transformations under the BGV cryptosystem may be started once the Pyfhel library is deemed stable enough to use, or another Python library that implements BGV becomes available.
 One of the authors of this paper has already informed the developers of the Pyfhel library about a bug involving exponentiation of two real numbers.
 
-Efforts are ongoing with regard to the facial recognition tests. Our own implementation of the privacy-preserving eigenfaces by Erkin, et al. does not yet use the DGK cryptosystem for secure integer comparison in the match finding step.
+% Efforts are ongoing with regard to the facial recognition tests. Our own implementation of the privacy-preserving eigenfaces by Erkin, et al. does not yet use the DGK cryptosystem for secure integer comparison in the match finding step.
 
-Another promising image operation to consider is \textit{facial detection} under a homomorphic cryptosystem. Work has been started in order to assess the feasibility of using Haar cascades in a privacy-preserving manner.
+Another promising image operation to consider is \textit{facial detection} under a homomorphic cryptosystem. 
+As secure floating-point operations and secure comparisons are feasible, it may be feasible to implement secure Haar cascades.
+% Work has been started in order to assess the feasibility of using Haar cascades in a privacy-preserving manner.
 
-Future work would involve improving and optimizing our implementation of non-linear intensity transformations in terms of number of operations, numerical accuracy and stability, and time efficiency.
+Future studies would involve improving and optimizing our implementation of non-linear intensity transformations in terms of number of operations, numerical accuracy and stability, and time efficiency.
 % Future work would involve improving and optimizing our implementation of the DGK cryptosystem so that it performs faster.
 % A suggestion would be to port the existing implementation to C/C++ and then create a Python library that acts as a wrapper to the C/C++ methods.
-For future studies, an implementation of a client-server framework or system dealing with secure image processing can be considered.
+Furthermore, an implementation of a client-server framework or system dealing with secure image processing can be considered.
