@@ -5,15 +5,16 @@
 An intensity transformation on an image $R$ can be defined as a function $T$ which maps a pixel intensity value $r$ to a new value $r^\prime$, which we can write as $r^\prime = T\left(r\right)$. This function is then applied to every pixel in $R$.
 The \textit{CryptoImg} library implemented two types of linear intensity transformations: image negation and brightness control.
 
-An image negation transformation is defined as:
+An image negation transformation is defined as
 \begin{equation}
-    T\left(r\right) = L-1-r
+    T\left(r\right) = L-r
 \end{equation}
+where $L$ is the maximum pixel intensity value of an image.
 After applying image negation, the resulting image would be similar to a photographic negative~\cite{gonzalez_digital_2008}.
 
-A brightness control transformation with parameter $v$ is defined as:
+A brightness control transformation with parameter $v$ is defined as
 \begin{equation}
-    T\left(r,v\right) = r+v
+    T\left(r,v\right) = r+v.
 \end{equation}
 The above transformations are linear in terms of the input $r$, and are thus simple to implement under a homomorphic cryptosystem.
 

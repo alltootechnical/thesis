@@ -13,11 +13,9 @@ We now describe homomorphic cryptosystems in detail to provide a concrete descri
 \input{parts/02_relatedliterature_07previousimplementations}
 
 \section{Summary}
-We have seen how privacy-preserving image operations have been implemented in the literature using partially homomorphic cryptosystems. \textit{CryptoImg} provided a suite of linear image processing operations using the Paillier cryptosystem, while Erkin, et al. have implemented a privacy-preserving version of the eigenfaces approach to facial recognition developed by Turk and Pentland.
+We have seen how privacy-preserving image operations have been implemented in the literature using partially homomorphic cryptosystems. \textit{CryptoImg} provided a suite of linear image processing operations using the Paillier cryptosystem, while Erkin, et al. have implemented a privacy-preserving facial recognition system using eigenfaces.
 
-We have presented as well several areas in which our study will expand on the research so far.
-\begin{enumerate}
-  \item We have shown two fully homomorphic cryptosystems, the DGHV cryptosystem and the BGV cryptosystem. While these cryptosystems are generally less efficient than partially homomorphic cryptosystems, they do not require additional protocols for division, multiplication, and exponentiation.
-  \item Due to the general limitations of partially homomorphic systems, attempts at applying homomorphic cryptography to applications such as image processing and facial recognition have mainly been restricted to linear operations on ciphertext. We have shown that there are basic image processing operations which are non-linear, which can be approximated.
-  \item While privacy-preserving facial recognition has been accomplished by Erkin, et al., privacy-preserving facial detection has yet to explored.
+We have shown two fully homomorphic cryptosystems, the DGHV cryptosystem and the BGV cryptosystem. While these cryptosystems are generally less efficient than partially homomorphic cryptosystems, they do not require additional protocols for division, multiplication, and exponentiation. Due to the general limitations of partially homomorphic systems, attempts at applying homomorphic cryptography to applications such as image processing and facial recognition have mainly been restricted to linear operations on ciphertext. We have shown that there are basic image processing operations which are non-linear, which can be approximated.
+
+Lastly, while privacy-preserving facial recognition has been accomplished by Erkin, et al., privacy-preserving facial detection has yet to explored.
 \end{enumerate}

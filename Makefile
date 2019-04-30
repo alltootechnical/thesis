@@ -10,7 +10,7 @@ all: thesis
 .PHONY: clean thesis
 
 thesis: thesis_refs.bib $(TEXFILE).tex
-	$(LATEX) $(LFLAGS) $(TEXFILE).tex
+	-$(LATEX) $(LFLAGS) $(TEXFILE).tex
 reftest: thesis_refs.bib reftest.tex
 	$(LATEX) $(LFLAGS) reftest.tex
 	

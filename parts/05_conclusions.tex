@@ -3,7 +3,7 @@ In this study, we have assessed the feasibility and practicality of various homo
 
 Even though an operation in a partially homomorphic cryptosystem is not theoretically possible, like multiplication of two ciphertexts under Paillier, it has been shown that such operations are indeed possible in a two-party system. Protocols for secure multiplication and exponentiation have been proposed and also applied to more complex image operations such as facial recognition. Thus, a partially homomorphic cryptosystem can be modified to admit more image processing operations by assuming a two-party system.
 
-Preliminary results have shown that both Paillier and DGK apply image negation accurately and efficiently, as evidenced by the perfect zero MSE and infinite PSNR. For the logarithm transformation, Paillier was faster and accurate enough (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$) which was rather unexpected. However both Paillier and DGK fail to produce accurate results in applying the power-law transformation, with the latter failing to produce discernible results. Based from these results, the Paillier cryptosystem is consistent enough to produce reasonable to accurate results.
+Preliminary results have shown that both Paillier and DGK apply image negation accurately and efficiently, as evidenced by the perfect zero MSE and infinite PSNR. For the logarithm transformation, Paillier was faster and accurate enough (with $\text{MSE} \le 30$ and $\text{SSIM} \approx 0.99$) which was rather unexpected. However both Paillier and DGK fail to produce accurate results in applying the power-law transformation, with the latter failing to produce discernible results. Based on these results, the Paillier cryptosystem is consistent enough to produce reasonable to accurate results.
 
 A wrapper library has been made which implements the various functions and methods of the cryptosystems into a single interface. This allowed us to express various image operations with a unified syntax, thus facilitating easier testing.
 
@@ -20,4 +20,4 @@ As secure floating-point operations and secure comparisons are feasible, it may 
 Future studies would involve improving and optimizing our implementation of non-linear intensity transformations in terms of number of operations, numerical accuracy and stability, and time efficiency.
 % Future work would involve improving and optimizing our implementation of the DGK cryptosystem so that it performs faster.
 % A suggestion would be to port the existing implementation to C/C++ and then create a Python library that acts as a wrapper to the C/C++ methods.
-Furthermore, an implementation of a client-server framework or system dealing with secure image processing can be considered.
+Furthermore, an implementation of a client-server system dealing with secure image processing can be considered.

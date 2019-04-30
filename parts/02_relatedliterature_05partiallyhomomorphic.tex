@@ -18,9 +18,9 @@ The encryption function to encrypt a plaintext $m \in \mathbb{Z}_n$ given a publ
 \end{align*}
 where $r$ is a random non-negative integer less than $n^2$.
 
-The decryption function to decrypt a ciphertext $c \in \mathbb{Z}_{n^2}$ given a private key $(p,q)$ is defined as:
+The decryption function to decrypt a ciphertext $c \in \mathbb{Z}_{n^2}$ given a private key $(p,q)$ is defined as
 \begin{align*}
-  D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n
+  D(c) = L(c^\lambda \bmod n^2) \times (L(g^\lambda \bmod n^2))^{-1} \mod n.
 \end{align*}
 
 \subsubsection{Homomorphic Properties of the Paillier Cryptosystem}
@@ -57,7 +57,7 @@ To decrypt a ciphertext $c \in \mathbb{Z}_n^\ast$, decryption is achieved by fir
 \begin{align*}
 	c^{v_pv_q} \bmod n
 	&= (g^m \cdot h^r)^{v_pv_q} \bmod n\\
-	&= (g^{v_pv_q})^m \bmod n
+	&= (g^{v_pv_q})^m \bmod n.
 \end{align*}
 Since $(g^{v_pv_q})^m$ has order $u$, there is a one-to-one correspondence between plaintexts in $\mathbb{Z}_u$ and  $(g^{v_pv_q})^m$. A lookup table can thus be generated privately to successfully recover $m$.
 
